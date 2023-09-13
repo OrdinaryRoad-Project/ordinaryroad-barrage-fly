@@ -1,0 +1,59 @@
+# 需要的环境变量
+# MYSQL_ROOT_PASSWORD
+# SUB_BASE_URL
+# RSA_PUBLIC_KEY
+# ADMIN_USERNAME
+# ADMIN_PASSWORD
+# RSA_PRIVATE_KEY
+
+version: "3.0"
+services:
+  or-barrage-fly-mysql:
+    image: or-barrage-fly-mysql
+    container_name: or-barrage-fly-mysql
+    build:
+      context: ./or-barrage-fly-mysql
+    volumes:
+      - $PWD/or-barrage-fly-mysql/etc/my.cnf:/etc/my.cnf
+      - $PWD/or-barrage-fly-mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD:
+    ports:
+      - "33066:3306"
+    hostname: or-barrage-fly-mysql
+    restart: always
+
+  or-barrage-fly-ui:
+    image: or-barrage-fly-ui
+    container_name: or-barrage-fly-ui
+    build:
+      context: ./or-barrage-fly-ui
+    volumes:
+      - $PWD/or-barrage-fly-ui/app:/ordinaryroad/or-barrage-fly-ui/app
+    env_file:
+      - ./or-barrage-fly-ui/.env
+    environment:
+      RSA_PUBLIC_KEY:
+      SUB_BASE_URL:
+    ports:
+      - "30000:3000"
+    hostname: or-barrage-fly-ui
+    restart: always
+
+  or-barrage-fly:
+    image: or-barrage-fly
+    container_name: or-barrage-fly
+    build:
+      context: ./or-barrage-fly
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      ADMIN_USERNAME:
+      ADMIN_PASSWORD:
+      RSA_PUBLIC_KEY:
+      RSA_PRIVATE_KEY:
+    env_file:
+      - ./or-barrage-fly/.env
+    ports:
+      - "9898:9898"
+    hostname: or-barrage-fly
+    restart: always

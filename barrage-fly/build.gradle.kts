@@ -1,0 +1,106 @@
+/*
+ * Copyright 2023 OrdinaryRoad
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+plugins {
+    id("org.springframework.boot") version "2.6.11"
+    id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    kotlin("jvm") version "1.6.21"
+    kotlin("plugin.spring") version "1.6.21"
+
+    // https://kotlinlang.org/docs/lombok.html#gradle
+    kotlin("plugin.lombok") version "1.9.10"
+    id("io.freefair.lombok") version "8.1.0"
+}
+
+group = "tech.ordinaryroad"
+version = "1.0.0"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url = uri("https://maven.aliyun.com/nexus/content/groups/public/") }
+    maven { url = uri("https://ordinaryroad-maven.pkg.coding.net/repository/ordinaryroad/maven-pro/") }
+    mavenCentral()
+}
+
+dependencies {
+    val liveChatClientVersion = "0.0.9"
+
+    implementation("org.springframework.boot:spring-boot-starter-integration")
+    implementation("org.springframework.boot:spring-boot-starter-rsocket")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.springframework.integration:spring-integration-rsocket")
+    implementation("tech.ordinaryroad:live-chat-client-bilibili:$liveChatClientVersion")
+    implementation("tech.ordinaryroad:live-chat-client-douyu:$liveChatClientVersion")
+    implementation("tech.ordinaryroad:ordinaryroad-commons-core:1.5.5") {
+        exclude("org.springframework")
+        exclude("org.springframework.cloud")
+        exclude("org.springframework.boot")
+        exclude("com.alibaba.fastjson2")
+        exclude("org.mapstruct")
+        exclude("org.apache.commons")
+    }
+    implementation("tech.ordinaryroad:ordinaryroad-commons-mybatis:1.5.5") {
+        exclude("tech.ordinaryroad", "ordinaryroad-commons-satoken")
+        exclude("tech.ordinaryroad", "ordinaryroad-push-api")
+    }
+    // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
+    implementation("cn.dev33:sa-token-reactor-spring-boot-starter:1.35.0.RC")
+
+    compileOnly("org.projectlombok:lombok")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.projectreactor:reactor-test")
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+// 复制Jar包到docker目录下
+tasks.withType<BootJar> {
+    doLast {
+        file("$buildDir/libs/${project.name}-${project.version}.jar")
+            .copyTo(file("$projectDir/../docker/${project.name}/app/${project.name}.jar"), true)
+    }
+}
+

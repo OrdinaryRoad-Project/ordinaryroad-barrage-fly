@@ -1,0 +1,92 @@
+<!--
+  - Copyright 2023 OrdinaryRoad
+  -
+  - Licensed under the Apache License, Version 2.0 (the "License");
+  - you may not use this file except in compliance with the License.
+  - You may obtain a copy of the License at
+  -
+  -    http://www.apache.org/licenses/LICENSE-2.0
+  -
+  - Unless required by applicable law or agreed to in writing, software
+  - distributed under the License is distributed on an "AS IS" BASIS,
+  - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  - See the License for the specific language governing permissions and
+  - limitations under the License.
+  -->
+
+<template>
+  <v-form ref="form">
+    <v-row>
+      <v-col cols="12" md="4">
+        <v-select
+          v-model="model.platform"
+          :label="$t('barrageFlyTask.platform')"
+          :items="platformOptions"
+          :rules="[$or.rules.required]"
+        />
+      </v-col>
+      <v-col cols="12" md="8">
+        <v-text-field
+          v-model="model.roomId"
+          :rules="[$or.rules.notBlank,$or.rules.max50Chars]"
+          :label="$t('barrageFlyTask.roomId')"
+          @keydown.enter="$emit('submit')"
+        />
+      </v-col>
+    </v-row>
+    <v-textarea
+      v-model="model.cookie"
+      :label="$t('barrageFlyTask.cookie')"
+    />
+  </v-form>
+</template>
+
+<script>
+export default {
+  name: 'OrBarrageFlyTaskSaveForm',
+  props: {
+    preset: {
+      type: Object,
+      default: () => ({
+        platform: 'bilibili',
+        roomId: null,
+        cookie: null
+      })
+    }
+  },
+  data: () => ({
+    platformOptions: [
+      { text: 'bilibili', value: 'bilibili' },
+      { text: 'douyu', value: 'douyu' }
+    ],
+    model: {}
+  }),
+  watch: {
+    preset: {
+      handler (val) {
+        this.model = Object.assign({}, val)
+      },
+      deep: true,
+      immediate: true
+    },
+    model: {
+      handler (val) {
+        this.$emit('update', val)
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    validate () {
+      return this.$refs.form.validate()
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

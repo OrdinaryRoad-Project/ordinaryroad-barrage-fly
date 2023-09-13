@@ -1,0 +1,53 @@
+{
+  "name": "or-barrage-fly-ui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "lintfix": "npm run lint:js -- --fix"
+  },
+  "dependencies": {
+    "@assortment/darkmodejs": "^1.2.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dayjs": "^1.4.1",
+    "@nuxtjs/proxy": "^2.1.0",
+    "core-js": "^3.25.3",
+    "echarts": "^5.4.3",
+    "js-cookie": "^3.0.5",
+    "jsencrypt": "^3.3.2",
+    "nuxt": "^2.15.8",
+    "ordinaryroad-vuetify": "^1.5.8",
+    "rsocket-core": "^0.0.27",
+    "rsocket-flowable": "^0.0.27",
+    "rsocket-websocket-client": "^0.0.27",
+    "vue": "^2.7.10",
+    "vue-i18n": "^8.27.2",
+    "vue-json-viewer": "^2.2.22",
+    "vue-masonry-wall": "^0.3.2",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10",
+    "vuetify": "^2.7.1",
+    "vuetify2-expand": "^1.1.2"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@nuxt/types": "^2.17.0",
+    "@nuxtjs/eslint-config": "^11.0.0",
+    "@nuxtjs/eslint-module": "^3.1.0",
+    "@nuxtjs/vuetify": "^1.12.3",
+    "eslint": "^8.24.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-vue": "^9.5.1",
+    "less": "^3.13.1",
+    "less-loader": "^6.2.0",
+    "sass": "^1.22.10",
+    "sass-loader": "^10.4.1",
+    "stylus": "^0.59.0",
+    "stylus-loader": "^3.0.2"
+  }
+}

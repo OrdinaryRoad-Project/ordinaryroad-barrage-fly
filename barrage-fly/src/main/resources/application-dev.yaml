@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/or_barrage_fly_dev?useUnicode=true&characterEncoding=utf-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+          username: root
+          password: Root123.
+          driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    tech.ordinaryroad: DEBUG
+#    io.netty: WARN
+#    org.springframework: WARN
+#    io.rsocket: DEBUG

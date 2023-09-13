@@ -1,0 +1,60 @@
+{
+  "howToConnect": {
+    "title": "如何连接？",
+    "actions": {
+      "copy":"复制",
+      "copied":"已复制"
+    }
+  },
+  "barrageFlyUser": {
+    "username": "用户名",
+    "password": "密码",
+    "actions": {
+      "remember": "记住我",
+      "login": "登录",
+      "logout": "登出",
+      "logoutHint": "确定登出？",
+      "pleaseLoginHint": "请先登录"
+    }
+  },
+  "appName": "Barrage Fly",
+  "barrageFlyTask": {
+    "actions": {
+      "create": "新建任务",
+      "edit": "编辑任务",
+      "delete": "删除任务",
+      "deleteHint": "确定删除任务 {0} ？",
+      "detail": "详情",
+      "start": "开始",
+      "stop": "停止",
+      "stopHint": "确定终止任务 {0} ？",
+      "taskNotExistHint": "任务不存在"
+    },
+    "cookie": "Cookie",
+    "detail": {
+      "realTimeBarrage": "实时弹幕"
+    },
+    "platform": "平台",
+    "roomId": "房间号",
+    "statuses": "状态"
+  },
+  "feedback": "反馈",
+  "myStats": {
+    "clientsCount": "已连接的客户端数",
+    "task": {
+      "clients": "客户端连接数统计",
+      "statuses": "任务状态统计",
+      "title": "任务统计"
+    },
+    "tasksCount": "任务总数",
+    "title": "数据统计"
+  },
+  "other": "其他",
+  "themeTitles": {
+    "dark": "深色主题",
+    "hunk": "猛男配色",
+    "hunkDark": "深色猛男",
+    "light": "浅色主题",
+    "system": "跟随系统"
+  }
+}

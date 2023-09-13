@@ -1,0 +1,60 @@
+{
+  "howToConnect": {
+    "title": "How To Connect ?",
+    "actions": {
+      "copy":"Copy",
+      "copied":"Copied"
+    }
+  },
+  "barrageFlyUser": {
+    "username": "Username",
+    "password": "Password",
+    "actions": {
+      "remember": "Remember Me",
+      "login": "Login",
+      "logout": "Logout",
+      "logoutHint": "Confirm to logout ？",
+      "pleaseLoginHint": "Please login first"
+    }
+  },
+  "appName": "Barrage Fly",
+  "barrageFlyTask": {
+    "actions": {
+      "create": "New Task",
+      "edit": "Edit Task",
+      "delete": "Delete Task",
+      "deleteHint": "Are you sure to delete {0} ?",
+      "detail": "Detail",
+      "start": "Start",
+      "stop": "Stop",
+      "stopHint": "Are you sure to terminate {0} ?",
+      "taskNotExistHint": "The task is not exist"
+    },
+    "cookie": "Cookie",
+    "detail": {
+      "realTimeBarrage": "Real-Time Barrage"
+    },
+    "platform": "Platform",
+    "roomId": "Room Id",
+    "status": "Status"
+  },
+  "feedback": "Feedback",
+  "myStats": {
+    "clientsCount": "Connected Clients Count",
+    "task": {
+      "clients": "Task Clients",
+      "statuses": "Task Statuses",
+      "title": "Task Stats"
+    },
+    "tasksCount": "Tasks Total Count",
+    "title": "Stats"
+  },
+  "other": "Other",
+  "themeTitles": {
+    "dark": "Dark",
+    "hunk": "Hunk",
+    "hunkDark": "Dark Hunk",
+    "light": "Light",
+    "system": "System"
+  }
+}

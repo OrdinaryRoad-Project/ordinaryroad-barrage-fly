@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: ordinaryroad-barrage-fly
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:mysql://${MYSQL_HOST:or-barrage-fly-mysql}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:or_barrage_fly}?${MYSQL_PARAMS:useUnicode=true&characterEncoding=utf-8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true}
+          username: ${MYSQL_USERNAME:}
+          password: ${MYSQL_PASSWORD:}
+          driver-class-name: com.mysql.cj.jdbc.Driver
+  integration:
+    rsocket:
+      server:
+        message-mapping-enabled: true
+  rsocket:
+    server:
+      port: 9898
+      transport: websocket
+sa-token:
+  timeout: 60480 # 7天：3600*24*7
+  token-name: token
+tech:
+  ordinaryroad:
+    barrage:
+      fly:
+        config:
+          admin:
+            username: ${ADMIN_USERNAME:admin}
+            password: ${ADMIN_PASSWORD:admin}
+            rsa-private-key: ${RSA_PRIVATE_KEY:}
+            rsa-public-key: ${RSA_PUBLIC_KEY:}

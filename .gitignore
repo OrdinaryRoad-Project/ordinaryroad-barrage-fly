@@ -1,0 +1,6 @@
+.idea/**/*
+
+docker/**/*.jar
+docker/**/app
+docker/.env
+docker/or-barrage-fly-mysql/data
