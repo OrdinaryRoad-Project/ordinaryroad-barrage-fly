@@ -17,19 +17,6 @@ import { APPLICATION_JSON, JsonSerializer, RSocketClient } from 'rsocket-core'
 import RSocketWebSocketClient from 'rsocket-websocket-client'
 
 export default {
-  // create ({ commit }) {
-  //   return new RSocketClient({
-  //     setup: {
-  //       dataMimeType: 'application/json',
-  //       keepAlive: 30000,
-  //       lifetime: 30000,
-  //       metadataMimeType: 'application/json'
-  //     },
-  //     transport: new RSocketWebsocketClient({
-  //       url: 'ws://or-barrage-fly:9898/sub'
-  //     })
-  //   })
-  // },
   connect ({ commit }, { url, setupPayload = { data: {}, metadata: {} } }) {
     const client = new RSocketClient({
       serializers: {

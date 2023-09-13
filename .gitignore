@@ -3,4 +3,4 @@
 docker/**/*.jar
 docker/**/app
 docker/.env
-docker/or-barrage-fly-mysql/data
+docker/ordinaryroad-barrage-fly-mysql/data

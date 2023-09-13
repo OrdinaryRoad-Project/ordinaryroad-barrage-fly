@@ -98,9 +98,10 @@ tasks.withType<Test> {
 
 // 复制Jar包到docker目录下
 tasks.withType<BootJar> {
+    val appName = "ordinaryroad-barrage-fly"
     doLast {
         file("$buildDir/libs/${project.name}-${project.version}.jar")
-            .copyTo(file("$projectDir/../docker/${project.name}/app/${project.name}.jar"), true)
+            .copyTo(file("$projectDir/../docker/${appName}/app/${appName}.jar"), true)
     }
 }
 

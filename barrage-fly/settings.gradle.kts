@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = "or-barrage-fly"
+rootProject.name = "barrage-fly"

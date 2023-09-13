@@ -2,7 +2,7 @@ FROM node:16.18.0
 
 MAINTAINER mjz(or-mjz@qq.com)
 
-ARG APP_NAME=or-barrage-fly-ui
+ARG APP_NAME=ordinaryroad-barrage-fly-ui
 
 RUN mkdir -p /ordinaryroad/$APP_NAME/app
 

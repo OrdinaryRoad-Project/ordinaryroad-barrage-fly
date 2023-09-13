@@ -2,7 +2,7 @@ FROM btgoose/jdk17
 
 MAINTAINER mjz(or-mjz@qq.com)
 
-ARG APP_NAME=or-barrage-fly
+ARG APP_NAME=ordinaryroad-barrage-fly
 
 RUN mkdir -p /ordinaryroad/$APP_NAME/app
 

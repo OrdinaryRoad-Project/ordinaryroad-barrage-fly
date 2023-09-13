@@ -8,43 +8,43 @@
 
 version: "3.0"
 services:
-  or-barrage-fly-mysql:
-    image: or-barrage-fly-mysql
-    container_name: or-barrage-fly-mysql
+  ordinaryroad-barrage-fly-mysql:
+    image: ordinaryroad-barrage-fly-mysql
+    container_name: ordinaryroad-barrage-fly-mysql
     build:
-      context: ./or-barrage-fly-mysql
+      context: ./ordinaryroad-barrage-fly-mysql
     volumes:
-      - $PWD/or-barrage-fly-mysql/etc/my.cnf:/etc/my.cnf
-      - $PWD/or-barrage-fly-mysql/data:/var/lib/mysql
+      - $PWD/ordinaryroad-barrage-fly-mysql/etc/my.cnf:/etc/my.cnf
+      - $PWD/ordinaryroad-barrage-fly-mysql/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD:
     ports:
       - "33066:3306"
-    hostname: or-barrage-fly-mysql
+    hostname: ordinaryroad-barrage-fly-mysql
     restart: always
 
-  or-barrage-fly-ui:
-    image: or-barrage-fly-ui
-    container_name: or-barrage-fly-ui
+  ordinaryroad-barrage-fly-ui:
+    image: ordinaryroad-barrage-fly-ui
+    container_name: ordinaryroad-barrage-fly-ui
     build:
-      context: ./or-barrage-fly-ui
+      context: ./ordinaryroad-barrage-fly-ui
     volumes:
-      - $PWD/or-barrage-fly-ui/app:/ordinaryroad/or-barrage-fly-ui/app
+      - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
     env_file:
-      - ./or-barrage-fly-ui/.env
+      - ./ordinaryroad-barrage-fly-ui/.env
     environment:
       RSA_PUBLIC_KEY:
       SUB_BASE_URL:
     ports:
       - "30000:3000"
-    hostname: or-barrage-fly-ui
+    hostname: ordinaryroad-barrage-fly-ui
     restart: always
 
-  or-barrage-fly:
-    image: or-barrage-fly
-    container_name: or-barrage-fly
+  ordinaryroad-barrage-fly:
+    image: ordinaryroad-barrage-fly
+    container_name: ordinaryroad-barrage-fly
     build:
-      context: ./or-barrage-fly
+      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       ADMIN_USERNAME:
@@ -52,8 +52,8 @@ services:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
     env_file:
-      - ./or-barrage-fly/.env
+      - ./ordinaryroad-barrage-fly/.env
     ports:
       - "9898:9898"
-    hostname: or-barrage-fly
+    hostname: ordinaryroad-barrage-fly
     restart: always
