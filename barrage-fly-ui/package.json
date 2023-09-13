@@ -46,7 +46,7 @@
     "less": "^3.13.1",
     "less-loader": "^6.2.0",
     "sass": "^1.22.10",
-    "sass-loader": "^10.4.1",
+    "sass-loader": "^13.3.2",
     "stylus": "^0.59.0",
     "stylus-loader": "^3.0.2"
   }
