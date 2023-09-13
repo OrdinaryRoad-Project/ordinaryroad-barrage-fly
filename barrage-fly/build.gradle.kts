@@ -101,7 +101,7 @@ tasks.withType<BootJar> {
     val appName = "ordinaryroad-barrage-fly"
     doLast {
         file("$buildDir/libs/${project.name}-${project.version}.jar")
-            .copyTo(file("$projectDir/../docker/${appName}/app/${appName}.jar"), true)
+            .copyTo(file("$projectDir/../.docker/${appName}/app/${appName}.jar"), true)
     }
 }
 

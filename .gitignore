@@ -1,6 +1,6 @@
 .idea/**/*
 
-docker/**/*.jar
-docker/**/app
-docker/.env
-docker/ordinaryroad-barrage-fly-mysql/data
+.docker/**/*.jar
+.docker/**/app
+.docker/.env
+.docker/ordinaryroad-barrage-fly-mysql/data
