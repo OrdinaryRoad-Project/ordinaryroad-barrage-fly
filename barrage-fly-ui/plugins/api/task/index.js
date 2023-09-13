@@ -30,6 +30,10 @@ export default {
     delete: (id) => {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
+    update: ({ id, platform, roomId, cookie }) => {
+      const data = { platform, roomId, cookie }
+      return $axios({ url: `/task?id=${id}`, method: 'put', data })
+    },
     updateCookie: ({ id, cookie }) => {
       const data = cookie
       return $axios({

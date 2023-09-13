@@ -36,6 +36,7 @@ class BarrageFlyTaskRoutingConfiguration {
                 }
                 POST("", ACCEPT_JSON, handler::createTask)
                 DELETE("", handler::deleteTask)
+                PUT("", ACCEPT_JSON, handler::update)
                 PUT("/cookie", accept(MediaType.TEXT_PLAIN), handler::updateCookie)
             }
         }

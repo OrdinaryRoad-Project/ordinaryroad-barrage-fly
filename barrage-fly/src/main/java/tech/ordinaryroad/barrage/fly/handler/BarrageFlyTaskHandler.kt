@@ -52,6 +52,24 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
         return ServerResponse.ok().bodyValueAndAwait(delete)
     }
 
+    suspend fun update(request: ServerRequest): ServerResponse {
+        val id = request.queryParam("id").get()
+        val task = request.awaitBody<BarrageFlyTaskDO>()
+
+        barrageFlyTaskService.findById(id) ?: return ServerResponse.notFound().buildAndAwait()
+
+        val barrageFlyTaskDO = BarrageFlyTaskDO().apply {
+            uuid = id
+            platform = task.platform
+            roomId = task.roomId
+            cookie = task.cookie
+        }
+
+        val update = barrageFlyTaskService.updateSelective(barrageFlyTaskDO)
+
+        return ServerResponse.ok().bodyValueAndAwait(update.toDTO())
+    }
+
     suspend fun updateCookie(request: ServerRequest): ServerResponse {
         val id = request.queryParam("id").get()
         val string = request.awaitBody<String>()
