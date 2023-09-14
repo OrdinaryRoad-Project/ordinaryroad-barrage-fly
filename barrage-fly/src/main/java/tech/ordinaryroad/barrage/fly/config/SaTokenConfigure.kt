@@ -16,7 +16,6 @@
 package tech.ordinaryroad.barrage.fly.config
 
 import cn.dev33.satoken.reactor.filter.SaReactorFilter
-import cn.dev33.satoken.util.SaResult
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -30,7 +29,7 @@ class SaTokenConfigure {
      */
     @Bean
     fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
-        .setError { e: Throwable ->
-            SaResult.error(e.message)
-        }
+//        .setError { e: Throwable ->
+//            SaResult.error(e.message)
+//        }
 }

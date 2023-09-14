@@ -48,11 +48,11 @@ class BarrageController {
     @OptIn(DelicateCoroutinesApi::class)
     @ConnectMapping("")
     fun connect(
-//        payload: JsonNode,
+//        setupPayload: ConnectionSetupPayload,
         requester: RSocketRequester
     ) {
         if (log.isDebugEnabled) {
-//            log.debug("on connect {} {}", requester.hashCode(), payload)
+//            log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
             log.debug("on connect {}", requester.hashCode())
         }
         GlobalScope.launch {
