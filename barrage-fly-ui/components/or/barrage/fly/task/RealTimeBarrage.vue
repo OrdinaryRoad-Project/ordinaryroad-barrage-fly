@@ -63,7 +63,7 @@ export default {
     })
   },
   created () { // https://githubfast.com/rsocket/rsocket-js/issues/123#issuecomment-988515000
-    // 1 可以用SETUP认证
+    // 1 建立连接
     this.$store.dispatch('rsocket/connect', { url: this.$config.SUB_BASE_URL })
       .then((socket) => {
         this.socket = socket
