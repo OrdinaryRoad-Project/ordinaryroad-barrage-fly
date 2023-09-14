@@ -131,7 +131,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
     }
 
     fun start(request: ServerRequest): Mono<ServerResponse> {
-        val ids = request.queryParam("ids").stream().toList()
+        val ids = request.exchange().request.queryParams["ids"]!!
 
         return ServerResponse.ok().body(
             Flux.fromIterable(barrageFlyTaskService.findIds(ids))
@@ -145,7 +145,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
     }
 
     fun stop(request: ServerRequest): Mono<ServerResponse> {
-        val ids = request.queryParam("ids").stream().toList()
+        val ids = request.exchange().request.queryParams["ids"]!!
         ids.forEach { id -> BarrageFlyTaskContext.removeContext(id) }
         return ServerResponse.ok().build()
     }
