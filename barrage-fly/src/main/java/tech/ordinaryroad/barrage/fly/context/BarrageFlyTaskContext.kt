@@ -54,22 +54,25 @@ import java.util.concurrent.ConcurrentHashMap
  * @date 2023/9/10
  */
 class BarrageFlyTaskContext(
-    val platform: PlatformEnum,
-    val roomId: String,
+    /**
+     * taskId不可改变
+     */
     val taskId: String,
     /**
      * TODO 变化时重启
      */
+    var platform: PlatformEnum,
+    var roomId: String,
     var clientConfigJson: String,
     /**
      * 消息队列大小
      */
-    var MSG_QUEUE_MAX_SIZE :Int= 100,
+    var MSG_QUEUE_MAX_SIZE: Int = 100,
 
     /**
      * 每次可以消费的消息个数
      */
-    var CONSUME_MSG_MIN_SIZE :Int= 10,
+    var CONSUME_MSG_MIN_SIZE: Int = 10,
     var CONSUME_MSG_PERIOD: Long = 1000L * CONSUME_MSG_MIN_SIZE / MSG_QUEUE_MAX_SIZE
 ) {
 
@@ -118,7 +121,9 @@ class BarrageFlyTaskContext(
     }
 
     fun destroy() {
-        log.debug("destroy context")
+        if (log.isDebugEnabled) {
+            log.debug("destroy context")
+        }
         rSocketClientMsgQueues.clear()
         for (connectedClient in connectedClients) {
             connectedClient.dispose()
@@ -132,7 +137,9 @@ class BarrageFlyTaskContext(
     }
 
     fun start() {
-        log.debug("start client")
+        if (log.isDebugEnabled) {
+            log.debug("start client")
+        }
         (client ?: createClient(platform, clientConfigJson)).let {
             it.addStatusChangeListener(clientStatusChangeListener)
             it.connect()
@@ -258,12 +265,14 @@ class BarrageFlyTaskContext(
             }.toString()
             return taskContexts.getOrPut(barrageFlyTaskDO.uuid) {
                 BarrageFlyTaskContext(
+                    barrageFlyTaskDO.uuid,
                     barrageFlyTaskDO.platform,
                     barrageFlyTaskDO.roomId,
-                    barrageFlyTaskDO.uuid,
                     clientConfigJson
                 )
             }.apply {
+                this.platform = barrageFlyTaskDO.platform
+                this.roomId = barrageFlyTaskDO.roomId
                 this.clientConfigJson = clientConfigJson
             }
         }
