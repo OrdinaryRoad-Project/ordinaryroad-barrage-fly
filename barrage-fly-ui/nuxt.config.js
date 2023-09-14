@@ -128,9 +128,17 @@ export default {
     BASE_URL: process.env.BASE_URL,
     APP_VERSION: require('./package.json').version,
     RSA_PUBLIC_KEY: process.env.RSA_PUBLIC_KEY,
-    SUB_BASE_URL: process.env.SUB_BASE_URL
+    SUB_BASE_URL: process.env.SUB_BASE_URL,
+    FOOTER_LINKS: [
+      {
+        href: 'https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client',
+        title: 'Live-Chat-Client'
+      },
+      {
+        href: 'https://blog.ordinaryroad.tech',
+        title: 'OR BLOG'
+      }
+    ]
   },
-  privateRuntimeConfig: {
-
-  }
+  privateRuntimeConfig: {}
 }
