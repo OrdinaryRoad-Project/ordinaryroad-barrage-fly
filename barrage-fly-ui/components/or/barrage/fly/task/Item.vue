@@ -25,8 +25,8 @@
             :hover="hover"
             :item="item"
             @clickDetail="detail"
-            @delete="$emit('delete',item)"
-            @upadte="onUpdate"
+            @taskDeleted="$emit('taskDeleted',item)"
+            @taskUpdated="onTaskUpdated"
           />
         </v-card-title>
         <or-base-dialog
@@ -57,8 +57,8 @@ export default {
   created () {
   },
   methods: {
-    onUpdate (e) {
-      this.$emit('update', e)
+    onTaskUpdated (task) {
+      this.$emit('taskUpdated', task)
     },
     detail () {
       this.$refs.detailDialog.show()

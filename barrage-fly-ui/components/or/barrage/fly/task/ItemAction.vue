@@ -51,7 +51,7 @@
         fab
         small
         text
-        @click="onClickEdit"
+        @click="$refs.updateTaskDialog.show()"
       >
         <v-icon>
           mdi-pencil
@@ -81,15 +81,17 @@
     </span>
 
     <or-base-dialog
-      ref="editDialog"
+      ref="updateTaskDialog"
       persistent
       loading
       :title="$t('barrageFlyTask.actions.edit')"
       @onConfirm="edit"
     >
-      <v-textarea
-        v-model="inputModel"
-        :label="$t('barrageFlyTask.cookie')"
+      <or-barrage-fly-task-save-form
+        ref="taskSaveForm"
+        :preset="item"
+        @update="onItemUpdate"
+        @submit="$refs.updateTaskDialog.confirm()"
       />
     </or-base-dialog>
   </span>
@@ -114,7 +116,7 @@ export default {
     taskStatus: null,
 
     model: null,
-    inputModel: null
+    editedItem: null
   }),
   watch: {
     item () {
@@ -156,7 +158,7 @@ export default {
       this.$apis.task.start([this.item.id])
         .then((status) => {
           this.taskStatus = status[0]
-          this.$emit('start', this.item)
+          this.$emit('startTask', this.item)
           this.getStatus()
           this.startTaskStatusInterval()
           this.starting = false
@@ -178,7 +180,7 @@ export default {
         if (dialog.isConfirm) {
           this.$apis.task.stop([this.item.id])
             .then(() => {
-              this.$emit('stop', this.item)
+              this.$emit('stopTask', this.item)
               this.getStatus()
               dialog.cancel()
             })
@@ -201,7 +203,7 @@ export default {
         if (dialog.isConfirm) {
           this.$apis.task.delete([this.item.id])
             .then(() => {
-              this.$emit('delete', this.item)
+              this.$emit('taskDeleted', this.item)
               dialog.cancel()
             })
             .catch(() => {
@@ -211,22 +213,18 @@ export default {
       })
     },
     edit () {
-      this.$apis.task.updateCookie({
-        id: this.item.id,
-        cookie: this.inputModel
-      })
+      this.$apis.task.update(this.editedItem)
         .then((data) => {
-          this.$emit('update', data)
+          this.$emit('taskUpdated', data)
           this.model = data
-          this.$refs.editDialog.close()
+          this.$refs.updateTaskDialog.close()
         })
         .catch(() => {
-          this.$refs.editDialog.cancelLoading()
+          this.$refs.updateTaskDialog.cancelLoading()
         })
     },
-    onClickEdit () {
-      this.inputModel = this.model.cookie
-      this.$refs.editDialog.show()
+    onItemUpdate (item) {
+      this.editedItem = item
     }
   }
 }

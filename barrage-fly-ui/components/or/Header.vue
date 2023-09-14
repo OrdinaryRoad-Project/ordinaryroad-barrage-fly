@@ -87,16 +87,10 @@ export default {
     },
     createTask () {
       if (this.$refs.taskSaveForm.validate()) {
-        this.$apis.task.create({
-          platform: this.editedItem.platform,
-          roomId: this.editedItem.roomId,
-          clientConfigJson: JSON.stringify({
-            roomId: this.editedItem.roomId,
-            cookie: this.editedItem.cookie
-          })
-        })
-          .then(() => {
+        this.$apis.task.create(this.editedItem)
+          .then((data) => {
             this.$refs.createTaskDialog.close()
+            this.$emit('taskCreated', data)
           })
           .catch(() => {
             // 取消loading

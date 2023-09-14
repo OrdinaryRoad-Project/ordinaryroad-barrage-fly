@@ -15,12 +15,18 @@
   -->
 
 <template>
-  <or-barrage-fly-task-data-iterator-default />
+  <or-barrage-fly-task-data-iterator-default :task-created="taskCreated" />
 </template>
 
 <script>
 export default {
-  middleware: ['userInfo']
+  middleware: ['userInfo'],
+  props: {
+    taskCreated: {
+      type: Object,
+      default: null
+    }
+  }
 }
 </script>
 

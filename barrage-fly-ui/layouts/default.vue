@@ -16,31 +16,18 @@
 
 <template>
   <v-app>
-    <!-- 控制台侧边栏 -->
-    <v-navigation-drawer
-      v-if="$route.path.startsWith('/dashboard')"
-      v-model="localDashboardDrawerModel"
-      clipped
-      app
-    >
-      <OrBaseTreeList
-        :nav="true"
-        :items="accessibleDashboardMenuItems"
-      />
-    </v-navigation-drawer>
-
     <!-- 设置 -->
     <or-settings-drawer :show-i18n-setting="$vuetify.breakpoint.smAndDown" />
 
     <!-- 标题 用户名 -->
-    <or-header />
+    <or-header @taskCreated="onTaskCreated" />
 
     <v-main>
       <v-container
         fluid
         :class="$route.name==='index'?'pa-0':null"
       >
-        <nuxt />
+        <nuxt-child :task-created="taskCreated" />
       </v-container>
     </v-main>
 
@@ -74,7 +61,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      scrollToTopFab: false
+      scrollToTopFab: false,
+      taskCreated: null
     }
   },
   head () {
@@ -128,6 +116,10 @@ export default {
 
     handleScroll (event) {
       this.scrollToTopFab = event.target.scrollingElement.scrollTop !== 0
+    },
+
+    onTaskCreated (task) {
+      this.taskCreated = task
     }
   }
 }

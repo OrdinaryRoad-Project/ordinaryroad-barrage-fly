@@ -23,8 +23,8 @@ export default {
     $axios = $axios || axios
   },
   apis: {
-    create: ({ platform, roomId, clientConfigJson }) => {
-      const data = { platform, roomId, clientConfigJson }
+    create: ({ platform, roomId, cookie }) => {
+      const data = { platform, roomId, cookie }
       return $axios({ url: '/task', method: 'post', data })
     },
     delete: (id) => {

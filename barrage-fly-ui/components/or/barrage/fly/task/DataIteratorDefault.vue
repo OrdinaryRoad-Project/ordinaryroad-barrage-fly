@@ -36,8 +36,8 @@
           >
             <or-barrage-fly-task-item
               :item="item"
-              @delete="$refs.dataIterator.$refs.dataIterator.getItems()"
-              @update="$refs.dataIterator.$refs.dataIterator.getItems()"
+              @taskDeleted="$refs.dataIterator.$refs.dataIterator.getItems()"
+              @taskUpdated="$refs.dataIterator.$refs.dataIterator.getItems()"
             />
           </v-col>
         </v-row>
@@ -49,6 +49,17 @@
 <script>
 export default {
   name: 'OrBarrageFlyTaskDataIteratorDefault',
+  props: {
+    taskCreated: {
+      type: Object,
+      default: null
+    }
+  },
+  watch: {
+    taskCreated () {
+      this.$refs.dataIterator.$refs.dataIterator.getItems()
+    }
+  },
   methods: {
     onGetItems ({
       options,
@@ -68,7 +79,6 @@ export default {
           this.$refs.loadMoreFooter && this.$refs.loadMoreFooter.finishLoad()
         })
     }
-
   }
 }
 </script>

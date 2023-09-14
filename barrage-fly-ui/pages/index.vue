@@ -105,6 +105,12 @@
 
 <script>
 export default {
+  props: {
+    taskCreated: {
+      type: Object,
+      default: null
+    }
+  },
   data: () => ({
     taskStatuses: {},
     taskClients: [],
@@ -126,6 +132,11 @@ export default {
       data: null
     }
   }),
+  watch: {
+    taskCreated () {
+      this.tasksCountOptions.data = (this.tasksCountOptions.data ?? 0) + 1
+    }
+  },
   created () {
     this.countOptions.push(this.tasksCountOptions)
     this.countOptions.push(this.clientsCountOptions)
