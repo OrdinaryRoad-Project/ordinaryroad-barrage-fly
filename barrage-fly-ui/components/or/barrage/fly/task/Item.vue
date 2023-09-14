@@ -34,7 +34,10 @@
           :title="$t('barrageFlyTask.actions.detail')"
           @onConfirm="$refs.detailDialog.close()"
         >
-          <or-barrage-fly-task-detail-form :item="item" />
+          <or-barrage-fly-task-detail-form
+            :item="item"
+            @clickExpand="$refs.detailDialog.close()"
+          />
         </or-base-dialog>
       </v-card>
     </template>

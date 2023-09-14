@@ -42,7 +42,7 @@
         />
         {{ $t('barrageFlyTask.detail.realTimeBarrage') }}
         <v-spacer />
-        <v-btn icon :href="`/${item.id}/barrage/real-time`" target="_blank">
+        <v-btn icon :href="`/${item.id}/barrage/real-time`" target="_blank" @click="$emit('clickExpand')">
           <v-icon>mdi-arrow-expand-all</v-icon>
         </v-btn>
       </v-card-title>
