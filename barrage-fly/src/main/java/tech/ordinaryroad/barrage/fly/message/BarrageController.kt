@@ -32,6 +32,7 @@ import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import java.time.Duration
+import java.util.stream.Collectors
 
 /**
  *
@@ -142,7 +143,7 @@ class BarrageController {
                                 }
                                 Flux.fromIterable(msgList)
                             }
-                    }.toList()
+                    }.collect(Collectors.toList())
 
                     Flux.merge(
                         arrayListOf(Flux.just(OBJECT_MAPPER.createObjectNode().apply {
