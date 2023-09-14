@@ -139,7 +139,7 @@ export default {
     startTaskStatusInterval () {
       this.taskStatusInterval = setInterval(() => {
         this.getStatus()
-      }, 3000)
+      }, 5000)
     },
     stopTaskStatusInterval () {
       clearInterval(this.taskStatusInterval)
