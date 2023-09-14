@@ -14,5 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build the ordinaryroad-barrage-fly Docker image
+      run: |
+        cd ./barrage-fly
+        ./gradlew clean bootJar
+        cd ../.docker/ordinaryroad-barrage-fly
+        docker build . --file Dockerfile --tag ordinaryroad-barrage-fly:$(date +%s)
