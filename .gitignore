@@ -4,3 +4,5 @@
 .docker/**/app
 .docker/.env
 .docker/ordinaryroad-barrage-fly-mysql/data
+
+**/*/venv
