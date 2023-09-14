@@ -24,8 +24,8 @@ export default {
         metadata: JsonSerializer
       },
       setup: {
-        keepAlive: 60000,
-        lifetime: 180000,
+        keepAlive: 30 * 1000,
+        lifetime: 3600 * 24 * 1000,
         dataMimeType: APPLICATION_JSON.string,
         metadataMimeType: APPLICATION_JSON.string
         // payload: setupPayload
