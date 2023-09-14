@@ -32,7 +32,6 @@ import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO.Companion.toDTO
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 import tech.ordinaryroad.commons.core.base.request.query.BaseQueryRequest
 import tech.ordinaryroad.commons.mybatis.utils.PageUtils
-import kotlin.jvm.optionals.getOrNull
 
 @Component
 class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskService) {
@@ -102,8 +101,8 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
         val limit = request.pathVariable("limit").toInt()
         val sortBy = request.exchange().request.queryParams["sortBy"] ?: emptyList()
         val sortDesc = request.exchange().request.queryParams["sortDesc"] ?: emptyList()
-        val platform = request.queryParam("platform").getOrNull()
-        val roomId = request.queryParam("roomId").getOrNull()
+        val platform = request.queryParamOrNull("platform")
+        val roomId = request.queryParamOrNull("roomId")
 
         val baseQueryRequest = BaseQueryRequest()
             .apply {
@@ -153,7 +152,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
     fun statuses(request: ServerRequest): Mono<ServerResponse> {
         return ServerResponse.ok()
             .body(
-                Flux.fromArray(BarrageFlyTaskStatusEnum.entries.toTypedArray())
+                Flux.fromArray(BarrageFlyTaskStatusEnum.values())
                     .map {
                         HashMap<String, String>(2).apply {
                             this["label"] = it.name

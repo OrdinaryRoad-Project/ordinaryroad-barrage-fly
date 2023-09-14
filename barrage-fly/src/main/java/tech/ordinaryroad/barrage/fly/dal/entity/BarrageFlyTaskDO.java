@@ -16,9 +16,6 @@
 
 package tech.ordinaryroad.barrage.fly.dal.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum;
 import tech.ordinaryroad.barrage.fly.dal.entity.base.BaseBarrageFlyDO;
 
@@ -32,9 +29,6 @@ import java.io.Serial;
  * @author mjz
  * @date 2023/9/9
  */
-@Getter
-@Setter
-@ToString
 @Table(name = "barrage_fly_task")
 public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
@@ -62,4 +56,35 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      */
     private String clientConfigJson;
 
+    public PlatformEnum getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(PlatformEnum platform) {
+        this.platform = platform;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
+
+    public String getClientConfigJson() {
+        return clientConfigJson;
+    }
+
+    public void setClientConfigJson(String clientConfigJson) {
+        this.clientConfigJson = clientConfigJson;
+    }
 }

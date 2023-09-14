@@ -18,14 +18,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-    id("org.springframework.boot") version "2.6.11"
+    id("org.springframework.boot") version "2.7.15"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
-
-    // https://kotlinlang.org/docs/lombok.html#gradle
-    kotlin("plugin.lombok") version "1.9.10"
-    id("io.freefair.lombok") version "8.1.0"
 }
 
 group = "tech.ordinaryroad"
@@ -42,14 +38,18 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
-    maven { url = uri("https://maven.aliyun.com/nexus/content/groups/public/") }
+    maven { url = uri("https://maven.aliyun.com/repository/public") }
+    maven { url = uri("https://maven.aliyun.com/repository/central") }
+    maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
     maven { url = uri("https://ordinaryroad-maven.pkg.coding.net/repository/ordinaryroad/maven-pro/") }
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     val liveChatClientVersion = "0.0.9"
+    val ordinaryroadVersion = "1.6.0"
+    val saTokenVersion = "1.35.0.RC"
 
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-rsocket")
@@ -61,7 +61,7 @@ dependencies {
     implementation("org.springframework.integration:spring-integration-rsocket")
     implementation("tech.ordinaryroad:live-chat-client-bilibili:$liveChatClientVersion")
     implementation("tech.ordinaryroad:live-chat-client-douyu:$liveChatClientVersion")
-    implementation("tech.ordinaryroad:ordinaryroad-commons-core:1.5.5") {
+    implementation("tech.ordinaryroad:ordinaryroad-commons-core:$ordinaryroadVersion") {
         exclude("org.springframework")
         exclude("org.springframework.cloud")
         exclude("org.springframework.boot")
@@ -69,17 +69,15 @@ dependencies {
         exclude("org.mapstruct")
         exclude("org.apache.commons")
     }
-    implementation("tech.ordinaryroad:ordinaryroad-commons-mybatis:1.5.5") {
+    implementation("tech.ordinaryroad:ordinaryroad-commons-mybatis:$ordinaryroadVersion") {
         exclude("tech.ordinaryroad", "ordinaryroad-commons-satoken")
         exclude("tech.ordinaryroad", "ordinaryroad-push-api")
     }
     // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
-    implementation("cn.dev33:sa-token-reactor-spring-boot-starter:1.35.0.RC")
+    implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
 
-    compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    annotationProcessor("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
