@@ -18,7 +18,6 @@ package tech.ordinaryroad.barrage.fly.message
 
 import cn.hutool.http.HttpStatus
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.node.ObjectNode
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,8 +29,8 @@ import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
+import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
-import java.time.Duration
 import java.util.stream.Collectors
 
 /**
@@ -77,7 +76,7 @@ class BarrageController {
     }
 
     @MessageMapping("")
-    fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<ObjectNode> {
+    fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         if (log.isDebugEnabled) {
             log.debug("on channel {} {}", requester.hashCode(), requester)
         }
@@ -133,23 +132,28 @@ class BarrageController {
                     val hashCode = requester.hashCode()
                     val toList = subscribedTaskIds.stream().map { taskId ->
                         val context = BarrageFlyTaskContext.getContext(taskId)!!
-                        val msgList = ArrayList<ObjectNode>()
-                        return@map Flux.interval(Duration.ofMillis(context.CONSUME_MSG_PERIOD))
-                            .switchMap {
-                                msgList.clear()
-                                val msgQueue = context.rSocketClientMsgQueues[hashCode]!!
-                                for (i in 1..context.CONSUME_MSG_MIN_SIZE.coerceAtMost(msgQueue.size.coerceAtMost(1))) {
-                                    msgQueue.poll()?.let { msgList.add(it) }
-                                }
-                                Flux.fromIterable(msgList)
+                        val publisher = context.rSocketClientMsgPublishers[hashCode]!!
+                        val platform = context.platform
+                        val roomId = context.roomId
+                        Flux.from(publisher)
+                            .map { msg ->
+                                BarrageFlyMsgDTO(platform, roomId, msg)
+                            }
+                            .filter { msgDTO ->
+                                // TODO 过滤
+                                true
+                            }
+                            .map { any: Any ->
+                                // TODO 后置处理
+                                any
                             }
                     }.collect(Collectors.toList())
 
-                    Flux.merge(
+                    Flux.concat(
                         arrayListOf(Flux.just(OBJECT_MAPPER.createObjectNode().apply {
                             put("status", HttpStatus.HTTP_OK)
                             put("message", "ok")
-                        })).apply {
+                        }) as Flux<*>).apply {
                             addAll(toList)
                         }
                     )

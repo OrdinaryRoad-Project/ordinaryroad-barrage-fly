@@ -60,7 +60,7 @@ export default function (context, inject) {
     // } else if (message.includes('Request failed with status code')) {
     //   message = '系统接口' + message.substr(message.length - 3) + '异常'
     // }
-    process.client && context.$snackbar.error(response.data || response.data.message || error.message)
+    process.client && context.$snackbar.error(response.data.message || error.message || response.data)
     return Promise.reject(error)
   })
 }

@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    val liveChatClientVersion = "0.0.9"
+    val liveChatClientVersion = "0.0.10"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
 
@@ -73,7 +73,6 @@ dependencies {
         exclude("tech.ordinaryroad", "ordinaryroad-commons-satoken")
         exclude("tech.ordinaryroad", "ordinaryroad-push-api")
     }
-    // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
     implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
