@@ -27,17 +27,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 # DROP TABLE IF EXISTS `barrage_fly_task`;
 CREATE TABLE `barrage_fly_task`
 (
-    `id`                 bigint(20)                        NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `uuid`               varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '主键UUID',
-    `created_time`       datetime                          NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `create_by`          varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '创建者',
-    `update_time`        datetime                          NULL DEFAULT NULL COMMENT '更新时间',
-    `update_by`          varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '更新者',
+    `id`                   bigint(20)                        NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `uuid`                 varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '主键UUID',
+    `created_time`         datetime                          NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `create_by`            varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '创建者',
+    `update_time`          datetime                          NULL DEFAULT NULL COMMENT '更新时间',
+    `update_by`            varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '更新者',
 
-    `platform`           varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '平台',
-    `room_id`            varchar(50)                       NULL DEFAULT NULL COMMENT '房间号',
-    `cookie`             text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT 'Cookie',
-    `client_config_json` text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT 'Json序列化后的Client配置类',
+    `platform`             varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '平台',
+    `room_id`              varchar(50)                       NULL DEFAULT NULL COMMENT '房间号',
+    `cookie`               text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT 'Cookie',
+    `msg_pre_map_express`  text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT '消息前置处理规则引擎脚本',
+    `msg_filter_express`   text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT '消息过滤规则引擎脚本',
+    `msg_post_map_express` text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT '消息后置处理规则引擎脚本',
+    `client_config_json`   text CHARACTER SET utf8mb4        NULL DEFAULT NULL COMMENT 'Json序列化后的Client配置类',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `barrage_fly_task_uuid_uindex` (`uuid`) USING BTREE,
     INDEX `barrage_fly_task_platform_room_id_uindex` (`platform`, `room_id`) USING BTREE

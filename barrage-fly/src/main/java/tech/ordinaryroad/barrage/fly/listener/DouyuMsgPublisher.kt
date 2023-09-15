@@ -18,6 +18,7 @@ package tech.ordinaryroad.barrage.fly.listener
 
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.douyu.listener.IDouyuMsgListener
 import tech.ordinaryroad.live.chat.client.douyu.netty.handler.DouyuBinaryFrameHandler
@@ -26,20 +27,28 @@ import tech.ordinaryroad.live.chat.client.douyu.netty.handler.DouyuBinaryFrameHa
  * @author mjz
  * @date 2023/9/14
  */
-class DouyuMsgPublisher : IDouyuMsgListener, Publisher<IMsg> {
+class DouyuMsgPublisher : IDouyuMsgListener, Publisher<IMsg>, Subscription {
 
+
+    //    private val msgQueues = ConcurrentHashMap<Subscriber<*>,ArrayBlockingQueue<IMsg>>()
     private var subscriber: Subscriber<in IMsg>? = null
 
     override fun onMsg(binaryFrameHandler: DouyuBinaryFrameHandler, msg: IMsg) {
-        try {
-            this.subscriber?.onNext(msg)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        this.subscriber?.onNext(msg)
     }
 
     override fun subscribe(subscriber: Subscriber<in IMsg>) {
+        subscriber.onSubscribe(this)
         this.subscriber = subscriber
+//        this.msgQueues.put(subscriber,ArrayBlockingQueue(200))
+    }
+
+    override fun request(n: Long) {
+        println("request ${n}")
+    }
+
+    override fun cancel() {
+        println("cancel")
     }
 
 }

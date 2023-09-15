@@ -86,20 +86,20 @@ export default {
       this.editedItem = item
     },
     createTask () {
-      if (this.$refs.taskSaveForm.validate()) {
-        this.$apis.task.create(this.editedItem)
-          .then((data) => {
-            this.$refs.createTaskDialog.close()
-            this.$emit('taskCreated', data)
-          })
-          .catch(() => {
-            // 取消loading
-            this.$refs.createTaskDialog.cancelLoading()
-          })
-      } else {
-        // 取消loading
-        this.$refs.createTaskDialog.cancelLoading()
-      }
+      this.$refs.taskSaveForm.validate()
+        .then(() => {
+          this.$apis.task.create(this.editedItem)
+            .then((data) => {
+              this.$refs.createTaskDialog.close()
+              this.$emit('taskCreated', data)
+            })
+            .catch(() => {
+              this.$refs.createTaskDialog.cancelLoading()
+            })
+        })
+        .catch(() => {
+          this.$refs.createTaskDialog.cancelLoading()
+        })
     }
   }
 }

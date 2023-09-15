@@ -15,11 +15,33 @@
  */
 package tech.ordinaryroad.barrage.fly.constant
 
+import tech.ordinaryroad.live.chat.client.bilibili.msg.base.IBilibiliMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
+import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
+
 /**
  * @author mjz
  * @date 2023/9/9
  */
 enum class PlatformEnum {
-    bilibili,
-    douyu
+    BILIBILI,
+    DOUYU, ;
+
+    companion object {
+        fun getByMsg(msg: IMsg?): PlatformEnum? {
+            return when (msg) {
+                is IBilibiliMsg -> {
+                    BILIBILI
+                }
+
+                is IDouyuMsg -> {
+                    DOUYU
+                }
+
+                else -> {
+                    null
+                }
+            }
+        }
+    }
 }

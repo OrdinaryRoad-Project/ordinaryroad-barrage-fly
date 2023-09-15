@@ -33,7 +33,7 @@ import java.io.Serial;
 public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     @Serial
-    private static final long serialVersionUID = 3268817951814298976L;
+    private static final long serialVersionUID = -2610222833794398462L;
 
     /**
      * 平台，bilibili/douyu
@@ -50,6 +50,21 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      * Cookie
      */
     private String cookie;
+
+    /**
+     * 消息前置处理规则引擎脚本
+     */
+    private String msgPreMapExpress;
+
+    /**
+     * 消息过滤规则引擎脚本
+     */
+    private String msgFilterExpress;
+
+    /**
+     * 消息后置处理规则引擎脚本
+     */
+    private String msgPostMapExpress;
 
     /**
      * Json序列化后的Client配置类
@@ -78,6 +93,30 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     public void setCookie(String cookie) {
         this.cookie = cookie;
+    }
+
+    public String getMsgPreMapExpress() {
+        return msgPreMapExpress;
+    }
+
+    public void setMsgPreMapExpress(String msgPreMapExpress) {
+        this.msgPreMapExpress = msgPreMapExpress;
+    }
+
+    public String getMsgFilterExpress() {
+        return msgFilterExpress;
+    }
+
+    public void setMsgFilterExpress(String msgFilterExpress) {
+        this.msgFilterExpress = msgFilterExpress;
+    }
+
+    public String getMsgPostMapExpress() {
+        return msgPostMapExpress;
+    }
+
+    public void setMsgPostMapExpress(String msgPostMapExpress) {
+        this.msgPostMapExpress = msgPostMapExpress;
     }
 
     public String getClientConfigJson() {

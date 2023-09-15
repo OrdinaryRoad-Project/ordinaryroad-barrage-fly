@@ -50,6 +50,7 @@ dependencies {
     val liveChatClientVersion = "0.0.10"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
+    val qLExpressVersion = "3.3.2"
 
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-rsocket")
@@ -74,6 +75,7 @@ dependencies {
         exclude("tech.ordinaryroad", "ordinaryroad-push-api")
     }
     implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
+    implementation("com.alibaba:QLExpress:$qLExpressVersion")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

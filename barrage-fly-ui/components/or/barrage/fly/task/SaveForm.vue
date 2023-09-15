@@ -38,6 +38,45 @@
       v-model="model.cookie"
       :label="$t('barrageFlyTask.cookie')"
     />
+    <v-expansion-panels
+      class="mb-2 pa-0 v-sheet--outlined"
+      flat
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          高级设置
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-alert
+            type="info"
+            dismissible
+          >
+            以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
+              QLExpress
+            </or-link>
+          </v-alert>
+          <v-textarea
+            v-model="model.msgPreMapExpress"
+            persistent-hint
+            hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
+            :label="$t('barrageFlyTask.msgPreMapExpress')"
+          />
+          <v-textarea
+            v-model="model.msgFilterExpress"
+            persistent-hint
+            hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
+            :label="$t('barrageFlyTask.msgFilterExpress')"
+          />
+          <v-textarea
+            v-model="model.msgPostMapExpress"
+            persistent-hint
+            hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
+            :label="$t('barrageFlyTask.msgPostMapExpress')"
+          />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-form>
 </template>
 
@@ -48,16 +87,19 @@ export default {
     preset: {
       type: Object,
       default: () => ({
-        platform: 'bilibili',
+        platform: 'BILIBILI',
         roomId: null,
-        cookie: null
+        cookie: null,
+        msgPreMapExpress: null,
+        msgFilterExpress: null,
+        msgPostMapExpress: null
       })
     }
   },
   data: () => ({
     platformOptions: [
-      { text: 'bilibili', value: 'bilibili' },
-      { text: 'douyu', value: 'douyu' }
+      { text: 'B站', value: 'BILIBILI' },
+      { text: '斗鱼', value: 'DOUYU' }
     ],
     model: {}
   }),
@@ -81,7 +123,19 @@ export default {
   },
   methods: {
     validate () {
-      return this.$refs.form.validate()
+      return new Promise((resolve, reject) => {
+        if (!this.$refs.form.validate()) {
+          reject(Error('failed'))
+        } else {
+          this.$apis.task.validate(this.model)
+            .then(() => {
+              resolve()
+            })
+            .catch(() => {
+              reject(Error('failed'))
+            })
+        }
+      })
     }
   }
 }

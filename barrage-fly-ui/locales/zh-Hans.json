@@ -36,7 +36,10 @@
     },
     "platform": "平台",
     "roomId": "房间号",
-    "statuses": "状态"
+    "statuses": "状态",
+    "msgPreMapExpress": "消息前置处理规则引擎脚本",
+    "msgFilterExpress": "消息过滤规则引擎脚本",
+    "msgPostMapExpress": "消息后置处理规则引擎脚本"
   },
   "feedback": "反馈",
   "myStats": {

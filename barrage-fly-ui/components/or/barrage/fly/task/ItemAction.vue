@@ -213,11 +213,17 @@ export default {
       })
     },
     edit () {
-      this.$apis.task.update(this.editedItem)
-        .then((data) => {
-          this.$emit('taskUpdated', data)
-          this.model = data
-          this.$refs.updateTaskDialog.close()
+      this.$refs.taskSaveForm.validate()
+        .then(() => {
+          this.$apis.task.update(this.editedItem)
+            .then((data) => {
+              this.$emit('taskUpdated', data)
+              this.model = data
+              this.$refs.updateTaskDialog.close()
+            })
+            .catch(() => {
+              this.$refs.updateTaskDialog.cancelLoading()
+            })
         })
         .catch(() => {
           this.$refs.updateTaskDialog.cancelLoading()

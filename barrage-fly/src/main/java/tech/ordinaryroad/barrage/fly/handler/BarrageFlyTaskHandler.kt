@@ -30,6 +30,8 @@ import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO.Companion.toDTO
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
+import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validate
+import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validateTaskExpress
 import tech.ordinaryroad.commons.core.base.request.query.BaseQueryRequest
 import tech.ordinaryroad.commons.mybatis.utils.PageUtils
 
@@ -51,17 +53,36 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
         return ServerResponse.ok().bodyValueAndAwait(delete)
     }
 
+    suspend fun validate(request: ServerRequest): ServerResponse {
+        val task = request.awaitBody<BarrageFlyTaskDO>()
+        return if (task.validate() && task.validateTaskExpress()) ServerResponse.ok().buildAndAwait()
+        else ServerResponse.badRequest().buildAndAwait()
+    }
+
+    suspend fun validateExpress(request: ServerRequest): ServerResponse {
+        val task = request.awaitBody<BarrageFlyTaskDO>()
+        return if (task.validateTaskExpress()) ServerResponse.ok().buildAndAwait()
+        else ServerResponse.badRequest().buildAndAwait()
+    }
+
     suspend fun update(request: ServerRequest): ServerResponse {
         val id = request.queryParam("id").get()
         val task = request.awaitBody<BarrageFlyTaskDO>()
 
         barrageFlyTaskService.findById(id) ?: return ServerResponse.notFound().buildAndAwait()
 
+        if (!task.validateTaskExpress()) {
+            return ServerResponse.badRequest().buildAndAwait()
+        }
+
         val barrageFlyTaskDO = BarrageFlyTaskDO().apply {
             uuid = id
             platform = task.platform
             roomId = task.roomId
             cookie = task.cookie
+            msgPreMapExpress = task.msgPreMapExpress
+            msgFilterExpress = task.msgFilterExpress
+            msgPostMapExpress = task.msgPostMapExpress
         }
 
         val update = barrageFlyTaskService.updateSelective(barrageFlyTaskDO)

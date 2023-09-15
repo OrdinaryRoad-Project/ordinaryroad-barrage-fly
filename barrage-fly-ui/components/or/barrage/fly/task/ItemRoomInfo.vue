@@ -19,7 +19,7 @@
     <img
       style="height: 48px; width: 48px"
       :style="{
-        padding: item.platform==='bilibili'?'10px':null
+        padding: item.platform==='BILIBILI'?'10px':null
       }"
       :alt="`${item.platform}`"
       :src="`/logo/${item.platform}.svg`"
@@ -44,9 +44,9 @@ export default {
   data: () => ({}),
   computed: {
     roomUrl () {
-      if (this.item.platform === 'bilibili') {
+      if (this.item.platform === 'BILIBILI') {
         return `https://live.bilibili.com/${this.item.roomId}`
-      } else if (this.item.platform === 'douyu') {
+      } else if (this.item.platform === 'DOUYU') {
         return `https://www.douyu.com/${this.item.roomId}`
       } else {
         return null

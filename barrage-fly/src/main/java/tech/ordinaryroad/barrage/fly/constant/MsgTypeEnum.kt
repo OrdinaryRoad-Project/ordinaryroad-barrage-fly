@@ -15,11 +15,33 @@
  */
 package tech.ordinaryroad.barrage.fly.constant
 
+import tech.ordinaryroad.live.chat.client.commons.base.msg.IDanmuMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.IGiftMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
+
 /**
  * @author mjz
  * @date 2023/9/14
  */
 enum class MsgTypeEnum {
     DANMU,
-    GIFT
+    GIFT, ;
+
+    companion object {
+        fun getByMsg(msg: IMsg?): MsgTypeEnum? {
+            return when (msg) {
+                is IDanmuMsg -> {
+                    DANMU
+                }
+
+                is IGiftMsg -> {
+                    GIFT
+                }
+
+                else -> {
+                    null
+                }
+            }
+        }
+    }
 }

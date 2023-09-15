@@ -18,8 +18,6 @@ package tech.ordinaryroad.barrage.fly.dto.msg;
 
 import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum;
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum;
-import tech.ordinaryroad.live.chat.client.commons.base.msg.IDanmuMsg;
-import tech.ordinaryroad.live.chat.client.commons.base.msg.IGiftMsg;
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg;
 
 /**
@@ -32,17 +30,11 @@ public class BarrageFlyMsgDTO {
     private MsgTypeEnum type;
     private IMsg msg;
 
-    public BarrageFlyMsgDTO(PlatformEnum platform, String roomId, IMsg msg) {
-        this.platform = platform;
+    public BarrageFlyMsgDTO(String roomId, IMsg msg) {
         this.roomId = roomId;
         this.msg = msg;
-        if (msg instanceof IDanmuMsg) {
-            this.type = MsgTypeEnum.DANMU;
-        } else if (msg instanceof IGiftMsg) {
-            this.type = MsgTypeEnum.GIFT;
-        } else {
-            this.type = null;
-        }
+        this.platform = PlatformEnum.Companion.getByMsg(msg);
+        this.type = MsgTypeEnum.Companion.getByMsg(msg);
     }
 
     public PlatformEnum getPlatform() {

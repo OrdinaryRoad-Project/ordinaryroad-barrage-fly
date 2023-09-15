@@ -44,8 +44,8 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
             val taskStatus = it.value.status
             OBJECT_MAPPER.createObjectNode().apply {
                 put("status", taskStatus.name)
-                put("platform", it.value.platform.name)
-                put("roomId", it.value.roomId)
+                put("platform", it.value.barrageFlyTaskDO.platform.name)
+                put("roomId", it.value.barrageFlyTaskDO.roomId)
                 put("taskId", it.value.taskId)
             }
         }.groupBy {

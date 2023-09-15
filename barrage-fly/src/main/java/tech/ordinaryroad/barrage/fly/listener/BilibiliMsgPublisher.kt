@@ -18,6 +18,7 @@ package tech.ordinaryroad.barrage.fly.listener
 
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 import tech.ordinaryroad.live.chat.client.bilibili.constant.BilibiliCmdEnum
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
 import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
@@ -30,7 +31,7 @@ import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
  * @author mjz
  * @date 2023/9/14
  */
-class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg> {
+class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription {
 
     private var subscriber: Subscriber<in IMsg>? = null
 
@@ -53,7 +54,16 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg> {
     }
 
     override fun subscribe(subscriber: Subscriber<in IMsg>) {
+        subscriber.onSubscribe(this)
         this.subscriber = subscriber
+    }
+
+    override fun request(n: Long) {
+        // TODO("Not yet implemented")
+    }
+
+    override fun cancel() {
+        // TODO("Not yet implemented")
     }
 
 }

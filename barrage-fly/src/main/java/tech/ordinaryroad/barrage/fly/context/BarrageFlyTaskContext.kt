@@ -55,8 +55,7 @@ class BarrageFlyTaskContext(
      * taskId不可改变，其他改变需要重启任务
      */
     val taskId: String,
-    var platform: PlatformEnum,
-    var roomId: String,
+    var barrageFlyTaskDO: BarrageFlyTaskDO,
     var clientConfigJson: String
 ) {
 
@@ -120,7 +119,7 @@ class BarrageFlyTaskContext(
         if (log.isDebugEnabled) {
             log.debug("start client")
         }
-        (client ?: createClient(platform, clientConfigJson)).let {
+        (client ?: createClient(barrageFlyTaskDO.platform, clientConfigJson)).let {
             it.addStatusChangeListener(clientStatusChangeListener)
             it.connect()
             this.client = it
@@ -132,11 +131,11 @@ class BarrageFlyTaskContext(
         clientConfigJson: String
     ): Config {
         return when (platform) {
-            PlatformEnum.bilibili -> {
+            PlatformEnum.BILIBILI -> {
                 OBJECT_MAPPER.readValue(clientConfigJson, BilibiliLiveChatClientConfig::class.java) as Config
             }
 
-            PlatformEnum.douyu -> {
+            PlatformEnum.DOUYU -> {
                 OBJECT_MAPPER.readValue(clientConfigJson, DouyuLiveChatClientConfig::class.java) as Config
             }
         }
@@ -144,11 +143,11 @@ class BarrageFlyTaskContext(
 
     private fun <MsgListener : Publisher<IMsg>> createMsgListener(platform: PlatformEnum): MsgListener {
         return when (platform) {
-            PlatformEnum.bilibili -> {
+            PlatformEnum.BILIBILI -> {
                 BilibiliMsgPublisher() as MsgListener
             }
 
-            PlatformEnum.douyu -> {
+            PlatformEnum.DOUYU -> {
                 DouyuMsgPublisher() as MsgListener
             }
         }
@@ -158,8 +157,8 @@ class BarrageFlyTaskContext(
         platform: PlatformEnum, clientConfigJson: String
     ): Client {
         return when (platform) {
-            PlatformEnum.bilibili -> BilibiliLiveChatClient(createClientConfig(platform, clientConfigJson))
-            PlatformEnum.douyu -> DouyuLiveChatClient(createClientConfig(platform, clientConfigJson))
+            PlatformEnum.BILIBILI -> BilibiliLiveChatClient(createClientConfig(platform, clientConfigJson))
+            PlatformEnum.DOUYU -> DouyuLiveChatClient(createClientConfig(platform, clientConfigJson))
         } as Client
     }
 
@@ -173,15 +172,19 @@ class BarrageFlyTaskContext(
 
         val hashCode = requester.hashCode()
         val msgListener: Publisher<IMsg>
-        when (platform) {
-            PlatformEnum.bilibili -> {
+        when (val platform = barrageFlyTaskDO.platform) {
+            PlatformEnum.BILIBILI -> {
                 msgListener = createMsgListener<BilibiliMsgPublisher>(platform)
                 (this.client as BilibiliLiveChatClient).addMsgListener(msgListener)
             }
 
-            PlatformEnum.douyu -> {
+            PlatformEnum.DOUYU -> {
                 msgListener = createMsgListener<DouyuMsgPublisher>(platform)
                 (this.client as DouyuLiveChatClient).addMsgListener(msgListener)
+            }
+
+            else -> {
+                return
             }
         }
         this.rSocketClientMsgPublishers[hashCode] = msgListener
@@ -194,13 +197,17 @@ class BarrageFlyTaskContext(
 
         val hashCode = requester.hashCode()
         val publisher = this.rSocketClientMsgPublishers.remove(hashCode) ?: return
-        when (platform) {
-            PlatformEnum.bilibili -> {
+        when (barrageFlyTaskDO.platform) {
+            PlatformEnum.BILIBILI -> {
                 (this.client as BilibiliLiveChatClient).removeMsgListener(publisher as IBilibiliMsgListener)
             }
 
-            PlatformEnum.douyu -> {
+            PlatformEnum.DOUYU -> {
                 (this.client as DouyuLiveChatClient).removeMsgListener(publisher as IDouyuMsgListener)
+            }
+
+            else -> {
+                return
             }
         }
     }
@@ -231,13 +238,11 @@ class BarrageFlyTaskContext(
             return taskContexts.getOrPut(barrageFlyTaskDO.uuid) {
                 BarrageFlyTaskContext(
                     barrageFlyTaskDO.uuid,
-                    barrageFlyTaskDO.platform,
-                    barrageFlyTaskDO.roomId,
+                    barrageFlyTaskDO,
                     clientConfigJson
                 )
             }.apply {
-                this.platform = barrageFlyTaskDO.platform
-                this.roomId = barrageFlyTaskDO.roomId
+                this.barrageFlyTaskDO = barrageFlyTaskDO
                 this.clientConfigJson = clientConfigJson
             }
         }
@@ -268,7 +273,7 @@ class BarrageFlyTaskContext(
         }
 
         fun getContexts(platform: PlatformEnum, roomId: String): List<BarrageFlyTaskContext> {
-            return taskContexts.filterValues { it.platform == platform && it.roomId == roomId }
+            return taskContexts.filterValues { it.barrageFlyTaskDO.platform == platform && it.barrageFlyTaskDO.roomId == roomId }
                 .map { it.value }
         }
 
