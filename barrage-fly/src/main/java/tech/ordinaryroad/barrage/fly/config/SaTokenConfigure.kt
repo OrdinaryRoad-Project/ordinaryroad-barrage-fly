@@ -29,7 +29,4 @@ class SaTokenConfigure {
      */
     @Bean
     fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
-//        .setError { e: Throwable ->
-//            SaResult.error(e.message)
-//        }
 }
