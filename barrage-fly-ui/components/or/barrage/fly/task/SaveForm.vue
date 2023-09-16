@@ -18,6 +18,14 @@
   <v-form ref="form">
     <v-row>
       <v-col cols="12" md="4">
+        <v-text-field
+          v-if="preset.id"
+          v-model="model.id"
+          readonly
+          label="taskId"
+        />
+      </v-col>
+      <v-col cols="12" md="4">
         <v-select
           v-model="model.platform"
           :label="$t('barrageFlyTask.platform')"

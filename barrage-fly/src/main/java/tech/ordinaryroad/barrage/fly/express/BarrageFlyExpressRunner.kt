@@ -17,7 +17,10 @@
 package tech.ordinaryroad.barrage.fly.express
 
 import com.ql.util.express.ExpressRunner
- import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory
+import tech.ordinaryroad.barrage.fly.express.operator.OperatorContextPut
+import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu
+
 
 /**
  *
@@ -55,6 +58,16 @@ object BarrageFlyExpressRunner : ExpressRunner() {
     }
 
     init {
+        // 支持 contextPut(key, value)
+        val operatorContextPut = OperatorContextPut()
+        OperatorContextPut.names.forEach { name ->
+            addFunction(name, operatorContextPut)
+        }
 
+        // 支持 sendDanmu(taskId, danmu)
+        val operatorSendDanmu = OperatorSendDanmu()
+        OperatorSendDanmu.names.forEach { name ->
+            addFunction(name, operatorSendDanmu)
+        }
     }
 }

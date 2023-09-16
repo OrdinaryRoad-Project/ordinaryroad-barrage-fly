@@ -212,6 +212,10 @@ class BarrageFlyTaskContext(
         }
     }
 
+    fun sendDanmu(danmu: String) {
+        client!!.sendDanmu(danmu)
+    }
+
     companion object {
         val connectedClients = TimedCache(
             24 * 3600 * 1000L, ConcurrentHashMap<Mutable<Int>, CacheObj<Int, RSocketRequester>>()

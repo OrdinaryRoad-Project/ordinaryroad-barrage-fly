@@ -24,6 +24,7 @@ import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
+import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu.Companion.KEY_DO_SEND_DANMU_BOOLEAN
 import tech.ordinaryroad.live.chat.client.bilibili.constant.OperationEnum
 import tech.ordinaryroad.live.chat.client.bilibili.util.BilibiliCodecUtil
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
@@ -78,7 +79,8 @@ object BarrageFlyUtil {
 
     fun BarrageFlyTaskDO.validateTaskExpress(): Boolean {
         try {
-            var context = BarrageFlyExpressContext()
+            val context = BarrageFlyExpressContext()
+            context[KEY_DO_SEND_DANMU_BOOLEAN] = false
             generateRandomMsgDTOs()
                 .map {
                     context.setMsg(it)
