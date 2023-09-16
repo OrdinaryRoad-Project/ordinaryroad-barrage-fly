@@ -144,9 +144,9 @@ class BarrageController {
                                     msgDTO
                                 )
                             }
-                            .filterWhen { any ->
-                                Flux.just(any)
-                                    .map {
+                            .filterWhen { justAny ->
+                                Flux.just(justAny)
+                                    .map { any ->
                                         // 过滤
                                         BarrageFlyExpressRunner.executeFilterExpress(
                                             context.barrageFlyTaskDO.msgFilterExpress,

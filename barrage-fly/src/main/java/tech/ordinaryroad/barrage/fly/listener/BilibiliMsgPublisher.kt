@@ -59,11 +59,11 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun request(n: Long) {
-        // TODO("Not yet implemented")
+        // ignored
     }
 
     override fun cancel() {
-        // TODO("Not yet implemented")
+        // ignored
     }
 
 }

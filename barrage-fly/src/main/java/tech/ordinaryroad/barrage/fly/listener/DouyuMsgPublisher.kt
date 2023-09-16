@@ -29,7 +29,6 @@ import tech.ordinaryroad.live.chat.client.douyu.netty.handler.DouyuBinaryFrameHa
  */
 class DouyuMsgPublisher : IDouyuMsgListener, Publisher<IMsg>, Subscription {
 
-
     //    private val msgQueues = ConcurrentHashMap<Subscriber<*>,ArrayBlockingQueue<IMsg>>()
     private var subscriber: Subscriber<in IMsg>? = null
 
@@ -44,11 +43,11 @@ class DouyuMsgPublisher : IDouyuMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun request(n: Long) {
-        println("request ${n}")
+        // ignored
     }
 
     override fun cancel() {
-        println("cancel")
+        // ignored
     }
 
 }

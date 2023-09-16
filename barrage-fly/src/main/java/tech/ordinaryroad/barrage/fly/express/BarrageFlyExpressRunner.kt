@@ -46,30 +46,21 @@ object BarrageFlyExpressRunner : ExpressRunner() {
         if (express.isNullOrBlank()) {
             return context.get("msg")
         }
-        val errorList = listOf<String>()
-        val execute = execute(express, context, errorList, true, log.isDebugEnabled)
-        // TODO errorList
-        println(errorList)
-        return execute
+        return execute(express, context, null, true, log.isDebugEnabled)
     }
 
     fun executeFilterExpress(express: String?, msg: Any, clientId: String = ""): Boolean {
-        val b = executeFilterExpress(express, BarrageFlyExpressContext().apply {
+        return executeFilterExpress(express, BarrageFlyExpressContext().apply {
             setMsg(msg)
             setClientId(clientId)
         }) ?: true
-        return b
     }
 
     fun executeFilterExpress(express: String?, context: IExpressContext<String, Any>): Boolean? {
         if (express.isNullOrBlank()) {
             return true
         }
-        val errorList = listOf<String>()
-        val execute = execute(express, context, errorList, true, log.isDebugEnabled)
-        // TODO errorList
-        println(errorList)
-        return execute as Boolean?
+        return execute(express, context, null, true, log.isDebugEnabled) as Boolean?
     }
 
     fun executePostMapExpress(express: String?, msg: Any, clientId: String = ""): Any {
@@ -84,9 +75,6 @@ object BarrageFlyExpressRunner : ExpressRunner() {
         if (express.isNullOrBlank()) {
             return context.get("msg")
         }
-        val errorList = listOf<String>()
-        val execute = execute(express, context, errorList, true, log.isDebugEnabled)
-        println(errorList)
-        return execute
+        return execute(express, context, null, true, log.isDebugEnabled)
     }
 }
