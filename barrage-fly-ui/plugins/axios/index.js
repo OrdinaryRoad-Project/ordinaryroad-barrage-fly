@@ -57,7 +57,7 @@ export default function (context, inject) {
     //   message = '系统接口' + message.substr(message.length - 3) + '异常'
     // }
     if (process.client) {
-      if (response.data.message.startsWith('token 无效：')) {
+      if (response.data && response.data.message && response.data.message.startsWith('token 无效：')) {
         store.commit('user/REMOVE_USER_INFO')
         context.$dialog({
           persistent: true,
@@ -69,9 +69,9 @@ export default function (context, inject) {
             redirect({ path: '/user/login', query: { redirect: route.fullPath } })
           }
         })
+      } else {
+        context.$snackbar.error(response.data.message || error.message || response.data)
       }
-    } else {
-      context.$snackbar.error(response.data.message || error.message || response.data)
     }
     return Promise.reject(error)
   })
