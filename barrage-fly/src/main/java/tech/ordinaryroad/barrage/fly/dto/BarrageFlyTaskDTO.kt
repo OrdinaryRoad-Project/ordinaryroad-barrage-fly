@@ -31,11 +31,26 @@ data class BarrageFlyTaskDTO(
     var platform: String = "",
     var roomId: String = "",
     var cookie: String? = null,
+    var msgPreMapExpress: String? = null,
+    var msgFilterExpress: String? = null,
+    var msgPostMapExpress: String? = null,
     var status: BarrageFlyTaskStatusEnum? = null,
 ) {
     companion object {
-        fun BarrageFlyTaskDO.toDTO(): BarrageFlyTaskDTO = BeanUtil.copyProperties(this, BarrageFlyTaskDTO::class.java).apply {
-            status = BarrageFlyTaskContext.getTaskStatus(uuid)
+        fun BarrageFlyTaskDO.toDTO(ignoreExpress: Boolean = false): BarrageFlyTaskDTO {
+            return if (ignoreExpress) {
+                BeanUtil.copyProperties(
+                    this,
+                    BarrageFlyTaskDTO::class.java,
+                    "msgPreMapExpress",
+                    "msgFilterExpress",
+                    "msgPostMapExpress"
+                )
+            } else {
+                BeanUtil.copyProperties(this, BarrageFlyTaskDTO::class.java)
+            }.apply {
+                status = BarrageFlyTaskContext.getTaskStatus(uuid)
+            }
         }
     }
 }

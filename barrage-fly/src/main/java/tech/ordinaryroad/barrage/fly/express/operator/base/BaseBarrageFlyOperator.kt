@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tech.ordinaryroad.barrage.fly.config
 
-import cn.dev33.satoken.reactor.filter.SaReactorFilter
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+package tech.ordinaryroad.barrage.fly.express.operator.base
+
+import com.ql.util.express.instruction.op.OperatorBase
 
 /**
- * [Sa-Token 权限认证] 全局配置类
+ *
+ *
+ * @author mjz
+ * @date 2023/9/16
  */
-@Configuration
-class SaTokenConfigure {
-    /**
-     * 注册 [Sa-Token全局过滤器]
-     */
-    @Bean
-    fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
+abstract class BaseBarrageFlyOperator : OperatorBase() {
+
+    abstract fun getNames(): Array<String>
+
 }

@@ -19,15 +19,11 @@ import errorCode from './errorCode'
 // Create a custom axios instance
 export default function (context, inject) {
   // $dialog和$snackbar必须通过context.$xxx方式调用
+  const { $axios, route, app, redirect } = context
   const {
-    $axios
-    // route,
-    // app
-  } = context
-  // const {
-  // store
-  // router
-  // } = app
+    store
+    // router
+  } = app
   // 请求拦截器
   $axios.onRequest((config) => {
     // ignore
@@ -60,7 +56,23 @@ export default function (context, inject) {
     // } else if (message.includes('Request failed with status code')) {
     //   message = '系统接口' + message.substr(message.length - 3) + '异常'
     // }
-    process.client && context.$snackbar.error(response.data || response.data.message || error.message)
+    if (process.client) {
+      if (response.data && response.data.message && response.data.message.startsWith('token 无效：')) {
+        store.commit('user/REMOVE_USER_INFO')
+        context.$dialog({
+          persistent: true,
+          content: '登录状态已过期，您可以继续留在该页面，或者重新登录。',
+          confirmText: '重新登录'
+        }).then((dialog) => {
+          if (dialog.isConfirm) {
+            console.log('dialog.isConfirm')
+            redirect({ path: '/user/login', query: { redirect: route.fullPath } })
+          }
+        })
+      } else {
+        context.$snackbar.error(response.data.message || error.message || response.data)
+      }
+    }
     return Promise.reject(error)
   })
 }

@@ -16,10 +16,66 @@
 
 <template>
   <v-container>
+    <v-card outlined>
+      <v-card-title>
+        <or-barrage-fly-task-item-room-info
+          class="me-2"
+          :item="item"
+        />
+        {{ $t('barrageFlyTask.detail.realTimeBarrage') }}
+        <v-spacer />
+        <v-btn icon :href="`/${item.id}/barrage/real-time`" target="_blank" @click="$emit('clickExpand')">
+          <v-icon>mdi-arrow-expand-all</v-icon>
+        </v-btn>
+      </v-card-title>
+      <or-barrage-fly-task-real-time-barrage :task-ids="[item.id]" />
+    </v-card>
+
     <v-expansion-panels
-      v-model="panel"
-      class="mb-2 pa-0 v-sheet--outlined"
+      class="mt-2 pa-0 v-sheet--outlined"
       flat
+      multiple
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            消息处理、过滤规则
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-textarea
+            :value="item.msgPreMapExpress"
+            :label="$t('barrageFlyTask.msgPreMapExpress')"
+            dense
+            rows="1"
+            auto-grow
+            readonly
+          />
+          <v-textarea
+            :value="item.msgFilterExpress"
+            :label="$t('barrageFlyTask.msgFilterExpress')"
+            dense
+            rows="1"
+            auto-grow
+            readonly
+          />
+          <v-textarea
+            :value="item.msgPostMapExpress"
+            :label="$t('barrageFlyTask.msgPostMapExpress')"
+            rows="1"
+            auto-grow
+            dense
+            readonly
+          />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      multiple
       hover
     >
       <v-expansion-panel>
@@ -33,21 +89,6 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-
-    <v-card outlined>
-      <v-card-title>
-        <or-barrage-fly-task-item-room-info
-          class="me-2"
-          :item="item"
-        />
-        {{ $t('barrageFlyTask.detail.realTimeBarrage') }}
-        <v-spacer />
-        <v-btn icon :href="`/${item.id}/barrage/real-time`" target="_blank">
-          <v-icon>mdi-arrow-expand-all</v-icon>
-        </v-btn>
-      </v-card-title>
-      <or-barrage-fly-task-real-time-barrage :task-ids="[item.id]" />
-    </v-card>
   </v-container>
 </template>
 
@@ -62,7 +103,6 @@ export default {
     }
   },
   data: () => ({
-    panel: 0
   }),
   mounted () {
   },

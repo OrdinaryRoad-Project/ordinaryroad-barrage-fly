@@ -18,6 +18,14 @@
   <v-form ref="form">
     <v-row>
       <v-col cols="12" md="4">
+        <v-text-field
+          v-if="preset.id"
+          v-model="model.id"
+          readonly
+          label="taskId"
+        />
+      </v-col>
+      <v-col cols="12" md="4">
         <v-select
           v-model="model.platform"
           :label="$t('barrageFlyTask.platform')"
@@ -37,7 +45,53 @@
     <v-textarea
       v-model="model.cookie"
       :label="$t('barrageFlyTask.cookie')"
+      hint="浏览器Cookie，一般只有要发送弹幕时才需要（B站未设置Cookie无法查看用户信息）"
     />
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            高级设置
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-alert
+            outlined
+            type="info"
+            dismissible
+          >
+            以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
+              QLExpress
+            </or-link><br>
+            <or-link href="https://ordinaryroad.tech/or_module/barrage-fly/#_4-4-一些例子">
+              一些例子
+            </or-link>
+          </v-alert>
+          <v-textarea
+            v-model="model.msgPreMapExpress"
+            persistent-hint
+            hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
+            :label="$t('barrageFlyTask.msgPreMapExpress')"
+          />
+          <v-textarea
+            v-model="model.msgFilterExpress"
+            persistent-hint
+            hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
+            :label="$t('barrageFlyTask.msgFilterExpress')"
+          />
+          <v-textarea
+            v-model="model.msgPostMapExpress"
+            persistent-hint
+            hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
+            :label="$t('barrageFlyTask.msgPostMapExpress')"
+          />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-form>
 </template>
 
@@ -48,16 +102,19 @@ export default {
     preset: {
       type: Object,
       default: () => ({
-        platform: 'bilibili',
+        platform: 'BILIBILI',
         roomId: null,
-        cookie: null
+        cookie: null,
+        msgPreMapExpress: null,
+        msgFilterExpress: null,
+        msgPostMapExpress: null
       })
     }
   },
   data: () => ({
     platformOptions: [
-      { text: 'bilibili', value: 'bilibili' },
-      { text: 'douyu', value: 'douyu' }
+      { text: 'B站', value: 'BILIBILI' },
+      { text: '斗鱼', value: 'DOUYU' }
     ],
     model: {}
   }),
@@ -81,7 +138,19 @@ export default {
   },
   methods: {
     validate () {
-      return this.$refs.form.validate()
+      return new Promise((resolve, reject) => {
+        if (!this.$refs.form.validate()) {
+          reject(Error('failed'))
+        } else {
+          this.$apis.task.validate(this.model)
+            .then(() => {
+              resolve()
+            })
+            .catch(() => {
+              reject(Error('failed'))
+            })
+        }
+      })
     }
   }
 }

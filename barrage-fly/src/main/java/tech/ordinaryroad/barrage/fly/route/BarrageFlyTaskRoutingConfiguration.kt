@@ -38,6 +38,8 @@ class BarrageFlyTaskRoutingConfiguration {
                 DELETE("", handler::deleteTask)
                 PUT("", ACCEPT_JSON, handler::update)
                 PUT("/cookie", accept(MediaType.TEXT_PLAIN), handler::updateCookie)
+                PUT("/validate", accept(MediaType.APPLICATION_JSON), handler::validate)
+                PUT("/validate/express", accept(MediaType.APPLICATION_JSON), handler::validateExpress)
             }
         }
     }

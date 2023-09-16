@@ -26,8 +26,14 @@
         class="d-flex justify-center align-center font-weight-light"
         :class="$vuetify.breakpoint.smAndDown?'flex-column':null"
       >
-        <or-link href="https://blog.ordinaryroad.tech" hover-able>
-          OR BLOG
+        <or-link
+          v-for="item in footerLinks"
+          :key="item.href"
+          :href="item.href"
+          hover-able
+          class="mx-1"
+        >
+          {{ item.title }}
         </or-link>
       </div>
       <div
@@ -73,6 +79,14 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  data: function () {
+    return {
+      footerLinks: []
+    }
+  },
+  created () {
+    this.footerLinks = this.$config.FOOTER_LINKS
   }
 }
 </script>

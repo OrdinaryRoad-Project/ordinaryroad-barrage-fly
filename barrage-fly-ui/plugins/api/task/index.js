@@ -30,9 +30,17 @@ export default {
     delete: (id) => {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
-    update: ({ id, platform, roomId, cookie }) => {
-      const data = { platform, roomId, cookie }
+    update: ({ id, platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
+      const data = { platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
       return $axios({ url: `/task?id=${id}`, method: 'put', data })
+    },
+    validate: ({ platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
+      const data = { platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+      return $axios({ url: '/task/validate', method: 'put', data })
+    },
+    validateExpress: ({ msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
+      const data = { msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+      return $axios({ url: '/task/validate/express', method: 'put', data })
     },
     updateCookie: ({ id, cookie }) => {
       const data = cookie
@@ -50,7 +58,10 @@ export default {
       return $axios({ url: `/task/status/?id=${id}`, method: 'get' })
     },
     page: (offset, limit, sortBy = [], sortDesc = [], searchParams = { platform: '', roomId: '' }) => {
-      return $axios({ url: `/task/page/${offset}/${limit}/?${urlEncode(searchParams)}&${urlEncode(sortBy, 'sortBy')}${urlEncode(sortDesc, 'sortDesc')}`, method: 'get' })
+      return $axios({
+        url: `/task/page/${offset}/${limit}/?${urlEncode(searchParams)}&${urlEncode(sortBy, 'sortBy')}${urlEncode(sortDesc, 'sortDesc')}`,
+        method: 'get'
+      })
     },
     start: (ids = []) => {
       return $axios({ url: `/task/start?${urlEncode(ids, 'ids')}`, method: 'get' })

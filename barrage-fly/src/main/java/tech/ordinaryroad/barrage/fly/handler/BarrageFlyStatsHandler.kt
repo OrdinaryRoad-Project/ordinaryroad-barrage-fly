@@ -37,15 +37,15 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
 
         // 已连接的客户端总数
         var clientsCount = 0
-        taskContexts.forEach { (_, v) -> clientsCount += v.rSocketClientMsgQueues.size }
+        taskContexts.forEach { (_, v) -> clientsCount += v.rSocketClientMsgPublishers.size }
 
         // 已创建不同状态的任务个数
         val taskStatuses = taskContexts.map {
             val taskStatus = it.value.status
             OBJECT_MAPPER.createObjectNode().apply {
                 put("status", taskStatus.name)
-                put("platform", it.value.platform.name)
-                put("roomId", it.value.roomId)
+                put("platform", it.value.barrageFlyTaskDO.platform.name)
+                put("roomId", it.value.barrageFlyTaskDO.roomId)
                 put("taskId", it.value.taskId)
             }
         }.groupBy {
@@ -65,7 +65,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
                         put("roomId", it.roomId)
                         put("id", it.uuid)
                     })
-                    put("clientCount", runningTasks[it.uuid]?.rSocketClientMsgQueues?.size ?: 0)
+                    put("clientCount", runningTasks[it.uuid]?.rSocketClientMsgPublishers?.size ?: 0)
                 }
             }
 

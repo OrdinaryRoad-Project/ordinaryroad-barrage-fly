@@ -22,13 +22,22 @@
     </span>
     <span v-if="['RUNNING'].includes(taskStatus)">
       <v-slide-x-reverse-transition>
-        <v-btn
-          v-if="hover"
-          text
-          @click="$emit('clickDetail')"
-        >
-          {{ $t('barrageFlyTask.actions.detail') }}
-        </v-btn>
+        <span v-if="hover">
+          <v-btn
+            icon
+            :href="`/${item.id}/barrage/real-time`"
+            target="_blank"
+            @click="$emit('clickExpand')"
+          >
+            <v-icon>mdi-arrow-expand-all</v-icon>
+          </v-btn>
+          <v-btn
+            text
+            @click="$emit('clickDetail')"
+          >
+            {{ $t('barrageFlyTask.actions.detail') }}
+          </v-btn>
+        </span>
       </v-slide-x-reverse-transition>
     </span>
     <v-slide-x-reverse-transition>
@@ -213,11 +222,17 @@ export default {
       })
     },
     edit () {
-      this.$apis.task.update(this.editedItem)
-        .then((data) => {
-          this.$emit('taskUpdated', data)
-          this.model = data
-          this.$refs.updateTaskDialog.close()
+      this.$refs.taskSaveForm.validate()
+        .then(() => {
+          this.$apis.task.update(this.editedItem)
+            .then((data) => {
+              this.$emit('taskUpdated', data)
+              this.model = data
+              this.$refs.updateTaskDialog.close()
+            })
+            .catch(() => {
+              this.$refs.updateTaskDialog.cancelLoading()
+            })
         })
         .catch(() => {
           this.$refs.updateTaskDialog.cancelLoading()

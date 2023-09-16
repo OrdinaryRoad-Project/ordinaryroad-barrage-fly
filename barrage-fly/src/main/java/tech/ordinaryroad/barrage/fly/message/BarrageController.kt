@@ -18,7 +18,6 @@ package tech.ordinaryroad.barrage.fly.message
 
 import cn.hutool.http.HttpStatus
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.node.ObjectNode
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,8 +29,10 @@ import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
+import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
+import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
-import java.time.Duration
 import java.util.stream.Collectors
 
 /**
@@ -41,18 +42,18 @@ import java.util.stream.Collectors
  * @date 2023/9/10
  */
 @Controller
-class BarrageController {
+class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
     private val log = LoggerFactory.getLogger(BarrageController::class.java)
 
     @OptIn(DelicateCoroutinesApi::class)
     @ConnectMapping("")
     fun connect(
-//        payload: JsonNode,
+//        setupPayload: ConnectionSetupPayload,
         requester: RSocketRequester
     ) {
         if (log.isDebugEnabled) {
-//            log.debug("on connect {} {}", requester.hashCode(), payload)
+//            log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
             log.debug("on connect {}", requester.hashCode())
         }
         GlobalScope.launch {
@@ -77,7 +78,7 @@ class BarrageController {
     }
 
     @MessageMapping("")
-    fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<ObjectNode> {
+    fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         if (log.isDebugEnabled) {
             log.debug("on channel {} {}", requester.hashCode(), requester)
         }
@@ -133,26 +134,52 @@ class BarrageController {
                     val hashCode = requester.hashCode()
                     val toList = subscribedTaskIds.stream().map { taskId ->
                         val context = BarrageFlyTaskContext.getContext(taskId)!!
-                        val msgList = ArrayList<ObjectNode>()
-                        return@map Flux.interval(Duration.ofMillis(context.CONSUME_MSG_PERIOD))
-                            .switchMap {
-                                msgList.clear()
-                                val msgQueue = context.rSocketClientMsgQueues[hashCode]!!
-                                for (i in 1..context.CONSUME_MSG_MIN_SIZE.coerceAtMost(msgQueue.size.coerceAtMost(1))) {
-                                    msgQueue.poll()?.let { msgList.add(it) }
-                                }
-                                Flux.fromIterable(msgList)
+                        val publisher = context.rSocketClientMsgPublishers[hashCode]!!
+                        val roomId = context.barrageFlyTaskDO.roomId
+                        val expressContext = BarrageFlyExpressContext()
+                        Flux.from(publisher)
+                            .map { msg ->
+                                expressContext.setMsg(BarrageFlyMsgDTO(roomId, msg))
+                                expressContext.getMsg()
+                            }
+                            .map {
+                                // 前置操作
+                                val result = expressRunner.executePreMapExpress(
+                                    context.barrageFlyTaskDO.msgPreMapExpress,
+                                    expressContext
+                                )
+                                expressContext.setMsg(result)
+                                result
+                            }
+                            .filterWhen { result ->
+                                Flux.just(result)
+                                    .map {
+                                        // 过滤
+                                        expressRunner.executeFilterExpress(
+                                            context.barrageFlyTaskDO.msgFilterExpress,
+                                            expressContext
+                                        )
+                                    }
+                            }
+                            .map {
+                                // 后置操作
+                                val result = expressRunner.executePostMapExpress(
+                                    context.barrageFlyTaskDO.msgPostMapExpress,
+                                    expressContext
+                                )
+                                expressContext.setMsg(result)
+                                result
                             }
                     }.collect(Collectors.toList())
-
-                    Flux.merge(
-                        arrayListOf(Flux.just(OBJECT_MAPPER.createObjectNode().apply {
-                            put("status", HttpStatus.HTTP_OK)
-                            put("message", "ok")
-                        })).apply {
-                            addAll(toList)
-                        }
-                    )
+                    val just = Flux.just(OBJECT_MAPPER.createObjectNode().apply {
+                        put("status", HttpStatus.HTTP_OK)
+                        put("message", "ok")
+                    }) as Flux<Any>
+                    if (toList.isEmpty()) {
+                        just
+                    } else {
+                        just.mergeWith(Flux.merge(toList))
+                    }
                 }
             }
     }

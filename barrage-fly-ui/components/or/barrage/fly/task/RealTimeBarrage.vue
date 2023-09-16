@@ -19,10 +19,10 @@
     <div ref="list">
       <v-list dense>
         <v-list-item v-for="(msg,index) in msgs" :key="index">
-          <v-list-item-title v-if="msg.type==='danmu'">
+          <v-list-item-title v-if="'DANMU'===msg.type">
             {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
           </v-list-item-title>
-          <v-list-item-title v-else-if="msg.type==='gift'">
+          <v-list-item-title v-else-if="msg.type==='GIFT'">
             {{ msg.msg.username }}({{ msg.msg.uid }}) {{ msg.msg.data?.action ?? '赠送' }} {{
               msg.msg.giftName
             }}({{ msg.msg.giftId }})x{{ msg.msg.giftCount }}({{ msg.msg.giftPrice }})
@@ -63,7 +63,7 @@ export default {
     })
   },
   created () { // https://githubfast.com/rsocket/rsocket-js/issues/123#issuecomment-988515000
-    // 1 可以用SETUP认证
+    // 1 建立连接
     this.$store.dispatch('rsocket/connect', { url: this.$config.SUB_BASE_URL })
       .then((socket) => {
         this.socket = socket

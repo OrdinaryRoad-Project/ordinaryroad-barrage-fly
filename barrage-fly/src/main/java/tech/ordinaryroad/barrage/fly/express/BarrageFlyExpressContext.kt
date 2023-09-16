@@ -13,20 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tech.ordinaryroad.barrage.fly.config
 
-import cn.dev33.satoken.reactor.filter.SaReactorFilter
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+package tech.ordinaryroad.barrage.fly.express
 
-/**
- * [Sa-Token 权限认证] 全局配置类
- */
-@Configuration
-class SaTokenConfigure {
-    /**
-     * 注册 [Sa-Token全局过滤器]
-     */
-    @Bean
-    fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
+import com.ql.util.express.DefaultContext
+
+class BarrageFlyExpressContext : DefaultContext<String, Any>() {
+
+    fun setMsg(msg: Any): BarrageFlyExpressContext {
+        put("msg", msg)
+        return this
+    }
+
+    fun getMsg(): Any {
+        return get("msg") as Any
+    }
+
+    fun setClientId(clientId: String): BarrageFlyExpressContext {
+        put("clientId", clientId)
+        return this
+    }
+
+    fun getClientId(): String {
+        return get("clientId") as String
+    }
+
 }

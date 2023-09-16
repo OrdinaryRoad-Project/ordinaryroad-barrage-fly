@@ -36,7 +36,10 @@
     },
     "platform": "Platform",
     "roomId": "Room Id",
-    "status": "Status"
+    "status": "Status",
+    "msgPreMapExpress": "Message pre-processing rule engine script",
+    "msgFilterExpress": "Message filtering rule engine script",
+    "msgPostMapExpress": "Message post-processing rule engine script"
   },
   "feedback": "Feedback",
   "myStats": {
