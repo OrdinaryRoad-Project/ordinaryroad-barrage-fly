@@ -18,8 +18,8 @@ package tech.ordinaryroad.barrage.fly.express
 
 import com.ql.util.express.ExpressRunner
 import org.slf4j.LoggerFactory
-import tech.ordinaryroad.barrage.fly.express.operator.OperatorContextPut
-import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu
+import org.springframework.stereotype.Component
+import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
 
 
 /**
@@ -28,9 +28,14 @@ import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu
  * @author mjz
  * @date 2023/9/15
  */
-object BarrageFlyExpressRunner : ExpressRunner() {
+@Component
+class BarrageFlyExpressRunner(private val operators: List<BaseBarrageFlyOperator>) : ExpressRunner() {
 
     val log = LoggerFactory.getLogger(BarrageFlyExpressRunner::class.java)
+
+    init {
+        operators.forEach { operator -> addOperator(operator) }
+    }
 
     /**
      * 前置操作
@@ -57,17 +62,11 @@ object BarrageFlyExpressRunner : ExpressRunner() {
         return execute(express, context, null, true, log.isDebugEnabled) ?: context.getMsg()
     }
 
-    init {
-        // 支持 contextPut(key, value)
-        val operatorContextPut = OperatorContextPut()
-        OperatorContextPut.names.forEach { name ->
-            addFunction(name, operatorContextPut)
-        }
-
-        // 支持 sendDanmu(taskId, danmu)
-        val operatorSendDanmu = OperatorSendDanmu()
-        OperatorSendDanmu.names.forEach { name ->
-            addFunction(name, operatorSendDanmu)
+    companion object {
+        fun BarrageFlyExpressRunner.addOperator(operator: BaseBarrageFlyOperator) {
+            operator.getNames().forEach {
+                addFunction(it, operator)
+            }
         }
     }
 }

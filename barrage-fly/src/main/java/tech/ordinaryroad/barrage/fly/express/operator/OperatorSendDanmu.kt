@@ -19,11 +19,11 @@ package tech.ordinaryroad.barrage.fly.express.operator
 import com.ql.util.express.ArraySwap
 import com.ql.util.express.InstructionSetContext
 import com.ql.util.express.OperateData
-import com.ql.util.express.exception.QLBizException
-import com.ql.util.express.instruction.op.OperatorBase
+import org.springframework.stereotype.Component
 import tech.ordinaryroad.barrage.fly.constant.BarrageFlyTaskStatusEnum
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.exception.BaseBarrageFlyException
+import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
 
 /**
  * 发送弹幕
@@ -31,13 +31,15 @@ import tech.ordinaryroad.barrage.fly.exception.BaseBarrageFlyException
  * @author mjz
  * @date 2023/9/16
  */
-class OperatorSendDanmu : OperatorBase() {
+@Component
+class OperatorSendDanmu : BaseBarrageFlyOperator() {
+    override fun getNames() = arrayOf("sendDanmu", "发送弹幕")
 
     override fun executeInner(parent: InstructionSetContext, list: ArraySwap): OperateData? {
         val taskId = list[0].toString() as String?
         val danmu = list[1].toString() as String?
         if (taskId.isNullOrBlank() || danmu.isNullOrBlank()) {
-            throw QLBizException("请检查参数 taskId:${taskId} danmu:${danmu}")
+            throw BaseBarrageFlyException("请检查参数 taskId:${taskId} danmu:${danmu}")
         }
         val context = BarrageFlyTaskContext.getContext(taskId)
         if ((parent.get(KEY_DO_SEND_DANMU_BOOLEAN) ?: true) as Boolean) {
@@ -52,7 +54,6 @@ class OperatorSendDanmu : OperatorBase() {
 
     companion object {
         const val KEY_DO_SEND_DANMU_BOOLEAN = "_doSendDanmuBoolean"
-        val names = arrayOf("sendDanmu", "发送弹幕")
     }
 
 }

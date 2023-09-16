@@ -20,23 +20,28 @@ import com.ql.util.express.ArraySwap
 import com.ql.util.express.InstructionSetContext
 import com.ql.util.express.OperateData
 import org.springframework.stereotype.Component
+import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
+import tech.ordinaryroad.barrage.fly.exception.BaseBarrageFlyException
 import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
+import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 
 /**
- * 添加参数到上下文
+ * 根据taskId获取Task
  *
  * @author mjz
  * @date 2023/9/16
  */
 @Component
-class OperatorContextPut : BaseBarrageFlyOperator() {
-    override fun getNames() = arrayOf("contextPut")
+class OperatorGetTask(private val taskService: BarrageFlyTaskService) : BaseBarrageFlyOperator() {
+    override fun getNames() = arrayOf("getTask")
 
     override fun executeInner(parent: InstructionSetContext, list: ArraySwap): OperateData? {
-        val key = list[0].toString()
-        val value: Any = list[1]
-        parent.put(key, value)
-        return null
+        val taskId = list[0].toString() as String?
+        if (taskId.isNullOrBlank()) {
+            throw BaseBarrageFlyException("请检查参数 taskId:${taskId}")
+        }
+        val findById = taskService.findById(taskId)
+        return OperateData(findById, BarrageFlyTaskDO::class.java)
     }
 
 }

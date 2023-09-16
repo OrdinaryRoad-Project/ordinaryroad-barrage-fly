@@ -19,6 +19,7 @@ package tech.ordinaryroad.barrage.fly.util
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.util.EnumUtil
 import cn.hutool.core.util.RandomUtil
+import cn.hutool.extra.spring.SpringUtil
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
@@ -79,20 +80,21 @@ object BarrageFlyUtil {
 
     fun BarrageFlyTaskDO.validateTaskExpress(): Boolean {
         try {
+            val expressRunner = SpringUtil.getBean(BarrageFlyExpressRunner::class.java)
             val context = BarrageFlyExpressContext()
             context[KEY_DO_SEND_DANMU_BOOLEAN] = false
             generateRandomMsgDTOs()
                 .map {
                     context.setMsg(it)
-                    val result = BarrageFlyExpressRunner.executePreMapExpress(this.msgPreMapExpress, context)
+                    val result = expressRunner.executePreMapExpress(this.msgPreMapExpress, context)
                     context.setMsg(result)
                     result
                 }
                 .filter {
-                    BarrageFlyExpressRunner.executeFilterExpress(this.msgFilterExpress, context)
+                    expressRunner.executeFilterExpress(this.msgFilterExpress, context)
                 }
                 .map {
-                    val result = BarrageFlyExpressRunner.executePostMapExpress(this.msgPostMapExpress, context)
+                    val result = expressRunner.executePostMapExpress(this.msgPostMapExpress, context)
                     context.setMsg(result)
                     result
                 }

@@ -42,7 +42,7 @@ import java.util.stream.Collectors
  * @date 2023/9/10
  */
 @Controller
-class BarrageController {
+class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
     private val log = LoggerFactory.getLogger(BarrageController::class.java)
 
@@ -144,7 +144,7 @@ class BarrageController {
                             }
                             .map {
                                 // 前置操作
-                                val result = BarrageFlyExpressRunner.executePreMapExpress(
+                                val result = expressRunner.executePreMapExpress(
                                     context.barrageFlyTaskDO.msgPreMapExpress,
                                     expressContext
                                 )
@@ -155,7 +155,7 @@ class BarrageController {
                                 Flux.just(result)
                                     .map {
                                         // 过滤
-                                        BarrageFlyExpressRunner.executeFilterExpress(
+                                        expressRunner.executeFilterExpress(
                                             context.barrageFlyTaskDO.msgFilterExpress,
                                             expressContext
                                         )
@@ -163,7 +163,7 @@ class BarrageController {
                             }
                             .map {
                                 // 后置操作
-                                val result = BarrageFlyExpressRunner.executePostMapExpress(
+                                val result = expressRunner.executePostMapExpress(
                                     context.barrageFlyTaskDO.msgPostMapExpress,
                                     expressContext
                                 )
