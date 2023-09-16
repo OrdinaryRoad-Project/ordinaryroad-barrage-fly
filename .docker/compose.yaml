@@ -1,38 +1,24 @@
-# 需要的环境变量
-# MYSQL_ROOT_PASSWORD
-# SUB_BASE_URL
-# RSA_PUBLIC_KEY
-# ADMIN_USERNAME
-# ADMIN_PASSWORD
-# RSA_PRIVATE_KEY
+# 需要的环境变量，其他可以环境变量可看每个目录下的.env文件，初始化sql位于`.docker/ordinaryroad-barrage-fly-mysql/sql/or_barrage_fly.sql`
+# MYSQL_HOST（注意请勿用localhost、127.0.0.1）
+# MYSQL_PORT
+# MYSQL_DATABASE
+# MYSQL_USERNAME
+# MYSQL_PASSWORD
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
+# RSA_PUBLIC_KEY（RSA）
+# ADMIN_USERNAME（任务管理后台登录用户名）
+# ADMIN_PASSWORD（任务管理后台登录密码）
+# RSA_PRIVATE_KEY（RSA）
 
 version: "3.0"
 services:
-  ordinaryroad-barrage-fly-mysql:
-    image: ordinaryroad-barrage-fly-mysql
-    container_name: ordinaryroad-barrage-fly-mysql
-    build:
-      context: ./ordinaryroad-barrage-fly-mysql
-    volumes:
-      - $PWD/ordinaryroad-barrage-fly-mysql/etc/my.cnf:/etc/my.cnf
-      - $PWD/ordinaryroad-barrage-fly-mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD:
-    ports:
-      - "33066:3306"
-    hostname: ordinaryroad-barrage-fly-mysql
-    restart: always
-
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
     build:
       context: ./ordinaryroad-barrage-fly-ui
-    volumes:
-      - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
-    env_file:
-      - ./ordinaryroad-barrage-fly-ui/.env
     environment:
+      BASE_URL: http://ordinaryroad-barrage-fly:8080
       RSA_PUBLIC_KEY:
       SUB_BASE_URL:
     ports:
@@ -46,13 +32,15 @@ services:
     build:
       context: ./ordinaryroad-barrage-fly
     environment:
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_HOST:
+      MYSQL_PORT:
+      MYSQL_DATABASE:
+      MYSQL_USERNAME:
+      MYSQL_PASSWORD:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
-    env_file:
-      - ./ordinaryroad-barrage-fly/.env
     ports:
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly

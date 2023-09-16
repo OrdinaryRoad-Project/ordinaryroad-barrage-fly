@@ -10,7 +10,7 @@ WORKDIR /ordinaryroad/$APP_NAME/app
 
 COPY ./app/$APP_NAME.jar app.jar
 
-EXPOSE 8080 9090/udp
+EXPOSE 8080 9898
 
 # 防止日志中文乱码
 ENV LANG=C.UTF-8
