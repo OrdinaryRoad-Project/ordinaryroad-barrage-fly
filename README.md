@@ -34,10 +34,12 @@
 ### 2.1 Docker Compose
 
 > Docker Compose示例位于`.docker`目录中
->
-> arm64系统时，后端镜像请使用 `ordinaryroad-barrage-fly-arm64`
->
-> 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
+
+- arm64系统时，后端镜像请使用 `ordinaryroad-barrage-fly-arm64`
+- 使用mysql、nginx时需要先build
+    - `docker compose build ordinaryroad-barrage-fly-mysql`
+    - `docker compose build ordinaryroad-barrage-fly-nginx`
+- 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
 
 #### 2.1.1 前端+后端
 
