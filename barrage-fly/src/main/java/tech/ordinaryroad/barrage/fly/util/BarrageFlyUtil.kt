@@ -22,6 +22,7 @@ import cn.hutool.core.util.RandomUtil
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.live.chat.client.bilibili.constant.OperationEnum
 import tech.ordinaryroad.live.chat.client.bilibili.util.BilibiliCodecUtil
@@ -77,15 +78,21 @@ object BarrageFlyUtil {
 
     fun BarrageFlyTaskDO.validateTaskExpress(): Boolean {
         try {
+            var context = BarrageFlyExpressContext()
             generateRandomMsgDTOs()
                 .map {
-                    BarrageFlyExpressRunner.executePreMapExpress(this.msgPreMapExpress, it)
+                    context.setMsg(it)
+                    val result = BarrageFlyExpressRunner.executePreMapExpress(this.msgPreMapExpress, context)
+                    context.setMsg(result)
+                    result
                 }
                 .filter {
-                    BarrageFlyExpressRunner.executeFilterExpress(this.msgFilterExpress, it)
+                    BarrageFlyExpressRunner.executeFilterExpress(this.msgFilterExpress, context)
                 }
                 .map {
-                    BarrageFlyExpressRunner.executePostMapExpress(this.msgPostMapExpress, it)
+                    val result = BarrageFlyExpressRunner.executePostMapExpress(this.msgPostMapExpress, context)
+                    context.setMsg(result)
+                    result
                 }
         } catch (e: Exception) {
             throw e
