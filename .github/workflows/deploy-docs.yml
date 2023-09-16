@@ -6,11 +6,6 @@ on:
       # 确保这是你正在使用的分支名称
       - main
 
-defaults:
-  run:
-    working-directory: docs
-
-
 permissions:
   contents: write
 
@@ -21,7 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          path: docs
+          # fetch-depth: 0
           # 如果你文档需要 Git 子模块，取消注释下一行
           # submodules: true
 
