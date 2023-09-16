@@ -41,6 +41,14 @@
     - `docker compose build ordinaryroad-barrage-fly-nginx`
 - 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
 
+> 镜像加速与拉取
+> ```shell
+> # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:$APP_VERSION
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:$APP_VERSION
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:$APP_VERSION
+> ```
+
 #### 2.1.1 前端+后端
 
 ```yaml
