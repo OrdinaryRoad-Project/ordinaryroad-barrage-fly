@@ -5,7 +5,7 @@ title: 项目主页
 bgImageStyle:
   background-attachment: fixed
 heroText: Barrage Fly —— 让弹幕飞
-tagline: 一个弹幕转发平台
+tagline: 一个弹幕转发、过滤、处理平台
 actions:
   - text: 使用指南 💡
     link: ./deploy
