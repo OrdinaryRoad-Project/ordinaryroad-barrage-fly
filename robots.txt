@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: https://ordinaryroad-project.github.io/ordinaryroad-barrage-fly/sitemap.xml
