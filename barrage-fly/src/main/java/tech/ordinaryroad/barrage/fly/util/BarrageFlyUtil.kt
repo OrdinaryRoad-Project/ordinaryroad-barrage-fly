@@ -83,21 +83,15 @@ object BarrageFlyUtil {
             val expressRunner = SpringUtil.getBean(BarrageFlyExpressRunner::class.java)
             val context = BarrageFlyExpressContext()
             context[KEY_DO_SEND_DANMU_BOOLEAN] = false
-            generateRandomMsgDTOs()
-                .map {
-                    context.setMsg(it)
-                    val result = expressRunner.executePreMapExpress(this.msgPreMapExpress, context)
+            generateRandomMsgDTOs().forEach { msgDTO ->
+                context.setMsg(msgDTO)
+                var result = expressRunner.executePreMapExpress(this.msgPreMapExpress, context)
+                context.setMsg(result)
+                if (expressRunner.executeFilterExpress(this.msgFilterExpress, context)) {
+                    result = expressRunner.executePostMapExpress(this.msgPostMapExpress, context)
                     context.setMsg(result)
-                    result
                 }
-                .filter {
-                    expressRunner.executeFilterExpress(this.msgFilterExpress, context)
-                }
-                .map {
-                    val result = expressRunner.executePostMapExpress(this.msgPostMapExpress, context)
-                    context.setMsg(result)
-                    result
-                }
+            }
         } catch (e: Exception) {
             throw e
         }

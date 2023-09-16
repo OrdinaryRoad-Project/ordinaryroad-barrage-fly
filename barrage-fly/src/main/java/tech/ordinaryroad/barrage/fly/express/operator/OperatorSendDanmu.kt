@@ -19,10 +19,10 @@ package tech.ordinaryroad.barrage.fly.express.operator
 import com.ql.util.express.ArraySwap
 import com.ql.util.express.InstructionSetContext
 import com.ql.util.express.OperateData
+import com.ql.util.express.exception.QLException
 import org.springframework.stereotype.Component
 import tech.ordinaryroad.barrage.fly.constant.BarrageFlyTaskStatusEnum
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
-import tech.ordinaryroad.barrage.fly.exception.BaseBarrageFlyException
 import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
 
 /**
@@ -39,12 +39,12 @@ class OperatorSendDanmu : BaseBarrageFlyOperator() {
         val taskId = list[0].toString() as String?
         val danmu = list[1].toString() as String?
         if (taskId.isNullOrBlank() || danmu.isNullOrBlank()) {
-            throw BaseBarrageFlyException("请检查参数 taskId:${taskId} danmu:${danmu}")
+            throw QLException("请检查参数 taskId:${taskId} danmu:${danmu}")
         }
         val context = BarrageFlyTaskContext.getContext(taskId)
         if ((parent.get(KEY_DO_SEND_DANMU_BOOLEAN) ?: true) as Boolean) {
             if (context == null || context.status != BarrageFlyTaskStatusEnum.RUNNING) {
-                throw BaseBarrageFlyException("任务${taskId}未运行")
+                throw QLException("任务${taskId}未运行")
             }
             context.sendDanmu(danmu)
         }

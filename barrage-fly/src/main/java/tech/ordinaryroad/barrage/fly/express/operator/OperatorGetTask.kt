@@ -19,9 +19,10 @@ package tech.ordinaryroad.barrage.fly.express.operator
 import com.ql.util.express.ArraySwap
 import com.ql.util.express.InstructionSetContext
 import com.ql.util.express.OperateData
+import com.ql.util.express.exception.QLException
 import org.springframework.stereotype.Component
-import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
-import tech.ordinaryroad.barrage.fly.exception.BaseBarrageFlyException
+import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO
+import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO.Companion.toDTO
 import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 
@@ -38,10 +39,10 @@ class OperatorGetTask(private val taskService: BarrageFlyTaskService) : BaseBarr
     override fun executeInner(parent: InstructionSetContext, list: ArraySwap): OperateData? {
         val taskId = list[0].toString() as String?
         if (taskId.isNullOrBlank()) {
-            throw BaseBarrageFlyException("请检查参数 taskId:${taskId}")
+            throw QLException("请检查参数 taskId:${taskId}")
         }
         val findById = taskService.findById(taskId)
-        return OperateData(findById, BarrageFlyTaskDO::class.java)
+        return OperateData(findById.toDTO(true), BarrageFlyTaskDTO::class.java)
     }
 
 }

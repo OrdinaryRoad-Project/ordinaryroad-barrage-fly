@@ -37,9 +37,20 @@ data class BarrageFlyTaskDTO(
     var status: BarrageFlyTaskStatusEnum? = null,
 ) {
     companion object {
-        fun BarrageFlyTaskDO.toDTO(): BarrageFlyTaskDTO =
-            BeanUtil.copyProperties(this, BarrageFlyTaskDTO::class.java).apply {
+        fun BarrageFlyTaskDO.toDTO(ignoreExpress: Boolean = false): BarrageFlyTaskDTO {
+            return if (ignoreExpress) {
+                BeanUtil.copyProperties(
+                    this,
+                    BarrageFlyTaskDTO::class.java,
+                    "msgPreMapExpress",
+                    "msgFilterExpress",
+                    "msgPostMapExpress"
+                )
+            } else {
+                BeanUtil.copyProperties(this, BarrageFlyTaskDTO::class.java)
+            }.apply {
                 status = BarrageFlyTaskContext.getTaskStatus(uuid)
             }
+        }
     }
 }

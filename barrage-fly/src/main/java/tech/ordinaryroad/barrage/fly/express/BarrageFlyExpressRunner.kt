@@ -34,7 +34,7 @@ class BarrageFlyExpressRunner(private val operators: List<BaseBarrageFlyOperator
     val log = LoggerFactory.getLogger(BarrageFlyExpressRunner::class.java)
 
     init {
-        operators.forEach { operator -> addOperator(operator) }
+        operators.forEach { operator -> addBarrageFlyOperator(operator) }
     }
 
     /**
@@ -63,7 +63,7 @@ class BarrageFlyExpressRunner(private val operators: List<BaseBarrageFlyOperator
     }
 
     companion object {
-        fun BarrageFlyExpressRunner.addOperator(operator: BaseBarrageFlyOperator) {
+        fun BarrageFlyExpressRunner.addBarrageFlyOperator(operator: BaseBarrageFlyOperator) {
             operator.getNames().forEach {
                 addFunction(it, operator)
             }
