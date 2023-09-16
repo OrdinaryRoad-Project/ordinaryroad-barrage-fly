@@ -22,13 +22,22 @@
     </span>
     <span v-if="['RUNNING'].includes(taskStatus)">
       <v-slide-x-reverse-transition>
-        <v-btn
-          v-if="hover"
-          text
-          @click="$emit('clickDetail')"
-        >
-          {{ $t('barrageFlyTask.actions.detail') }}
-        </v-btn>
+        <span v-if="hover">
+          <v-btn
+            icon
+            :href="`/${item.id}/barrage/real-time`"
+            target="_blank"
+            @click="$emit('clickExpand')"
+          >
+            <v-icon>mdi-arrow-expand-all</v-icon>
+          </v-btn>
+          <v-btn
+            text
+            @click="$emit('clickDetail')"
+          >
+            {{ $t('barrageFlyTask.actions.detail') }}
+          </v-btn>
+        </span>
       </v-slide-x-reverse-transition>
     </span>
     <v-slide-x-reverse-transition>

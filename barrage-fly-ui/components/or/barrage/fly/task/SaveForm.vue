@@ -37,23 +37,30 @@
     <v-textarea
       v-model="model.cookie"
       :label="$t('barrageFlyTask.cookie')"
+      hint="浏览器Cookie，一般只有要发送弹幕时才需要（B站未设置Cookie无法查看用户信息）"
     />
     <v-expansion-panels
-      class="mb-2 pa-0 v-sheet--outlined"
+      class="mt-2 pa-0 v-sheet--outlined"
       flat
       hover
     >
       <v-expansion-panel>
-        <v-expansion-panel-header>
-          高级设置
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            高级设置
+          </v-toolbar-title>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-alert
+            outlined
             type="info"
             dismissible
           >
             以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
               QLExpress
+            </or-link><br>
+            <or-link href="https://ordinaryroad.tech/or_module/barrage-fly/#_4-4-一些例子">
+              一些例子
             </or-link>
           </v-alert>
           <v-textarea

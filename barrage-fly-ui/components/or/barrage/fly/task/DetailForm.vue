@@ -16,24 +16,6 @@
 
 <template>
   <v-container>
-    <v-expansion-panels
-      v-model="panel"
-      class="mb-2 pa-0 v-sheet--outlined"
-      flat
-      hover
-    >
-      <v-expansion-panel>
-        <v-expansion-panel-header class="pa-0 pe-4">
-          <v-toolbar-title class="v-card__title">
-            {{ $t('howToConnect.title') }}
-          </v-toolbar-title>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <or-how-to-connect :item="item" />
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
-
     <v-card outlined>
       <v-card-title>
         <or-barrage-fly-task-item-room-info
@@ -48,6 +30,65 @@
       </v-card-title>
       <or-barrage-fly-task-real-time-barrage :task-ids="[item.id]" />
     </v-card>
+
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      multiple
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            消息处理、过滤规则
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-textarea
+            :value="item.msgPreMapExpress"
+            :label="$t('barrageFlyTask.msgPreMapExpress')"
+            dense
+            rows="1"
+            auto-grow
+            readonly
+          />
+          <v-textarea
+            :value="item.msgFilterExpress"
+            :label="$t('barrageFlyTask.msgFilterExpress')"
+            dense
+            rows="1"
+            auto-grow
+            readonly
+          />
+          <v-textarea
+            :value="item.msgPostMapExpress"
+            :label="$t('barrageFlyTask.msgPostMapExpress')"
+            rows="1"
+            auto-grow
+            dense
+            readonly
+          />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      multiple
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            {{ $t('howToConnect.title') }}
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <or-how-to-connect :item="item" />
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
@@ -62,7 +103,6 @@ export default {
     }
   },
   data: () => ({
-    panel: 0
   }),
   mounted () {
   },
