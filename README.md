@@ -33,7 +33,9 @@
 
 ### 2.1 Docker Compose
 
-> 位于`.docker`目录中
+> Docker Compose示例位于`.docker`目录中
+>
+> arm64系统时，后端镜像请使用 `ordinaryroad-barrage-fly-arm64`
 >
 > 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
 
