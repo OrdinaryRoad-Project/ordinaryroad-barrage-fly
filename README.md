@@ -2,7 +2,7 @@
 
 一个弹幕转发平台
 
-[在线文档](https://ordinaryroad.tech/or_module/barrage-fly/)
+[在线文档](https://barragefly.ordinaryroad.tech)
 
 ## 1 项目简介
 
