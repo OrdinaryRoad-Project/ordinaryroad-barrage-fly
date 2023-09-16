@@ -2,12 +2,12 @@ name: 部署文档
 
 on:
   workflow_dispatch:
-  # push:
-    # branches: [ "main" ]
-    # paths: "docs/**"
-  # pull_request:
-    # branches: [ "main" ]
-    # paths: "docs/**"
+  push:
+    branches: [ "main" ]
+    paths: "docs/**"
+  pull_request:
+    branches: [ "main" ]
+    paths: "docs/**"
 
 permissions:
   contents: write
