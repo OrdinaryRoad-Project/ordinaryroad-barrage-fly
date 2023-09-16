@@ -17,9 +17,7 @@
 package tech.ordinaryroad.barrage.fly.express
 
 import com.ql.util.express.ExpressRunner
-import com.ql.util.express.IExpressContext
-import org.slf4j.LoggerFactory
-import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+ import org.slf4j.LoggerFactory
 
 /**
  *
@@ -31,50 +29,32 @@ object BarrageFlyExpressRunner : ExpressRunner() {
 
     val log = LoggerFactory.getLogger(BarrageFlyExpressRunner::class.java)
 
-    fun executePreMapExpress(express: String?, msgDTO: BarrageFlyMsgDTO, clientId: String = ""): Any {
-        return executePreMapExpress(express, BarrageFlyExpressContext().apply {
-            setMsg(msgDTO)
-            setClientId(clientId)
-        }) ?: msgDTO
-    }
-
     /**
      * 前置操作
      * @return 返回的参数作为filter的参数
      */
-    fun executePreMapExpress(express: String?, context: BarrageFlyExpressContext): Any? {
+    fun executePreMapExpress(express: String?, context: BarrageFlyExpressContext): Any {
         if (express.isNullOrBlank()) {
-            return context.get("msg")
+            return context.getMsg()
         }
-        return execute(express, context, null, true, log.isDebugEnabled)
+        return execute(express, context, null, true, log.isDebugEnabled) ?: context.getMsg()
     }
 
-    fun executeFilterExpress(express: String?, msg: Any, clientId: String = ""): Boolean {
-        return executeFilterExpress(express, BarrageFlyExpressContext().apply {
-            setMsg(msg)
-            setClientId(clientId)
-        }) ?: true
-    }
-
-    fun executeFilterExpress(express: String?, context: IExpressContext<String, Any>): Boolean? {
+    fun executeFilterExpress(express: String?, context: BarrageFlyExpressContext): Boolean {
         if (express.isNullOrBlank()) {
             return true
         }
-        return execute(express, context, null, true, log.isDebugEnabled) as Boolean?
+        return (execute(express, context, null, true, log.isDebugEnabled) ?: true) as Boolean
     }
 
-    fun executePostMapExpress(express: String?, msg: Any, clientId: String = ""): Any {
-        return executePostMapExpress(express, BarrageFlyExpressContext().apply {
-            setMsg(msg)
-            setClientId(clientId)
-        }) ?: msg
-    }
-
-
-    fun executePostMapExpress(express: String?, context: IExpressContext<String, Any>): Any? {
+    fun executePostMapExpress(express: String?, context: BarrageFlyExpressContext): Any {
         if (express.isNullOrBlank()) {
-            return context.get("msg")
+            return context.getMsg()
         }
-        return execute(express, context, null, true, log.isDebugEnabled)
+        return execute(express, context, null, true, log.isDebugEnabled) ?: context.getMsg()
+    }
+
+    init {
+
     }
 }

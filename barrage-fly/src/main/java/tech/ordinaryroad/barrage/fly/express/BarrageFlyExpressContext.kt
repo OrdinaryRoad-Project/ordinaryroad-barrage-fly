@@ -20,12 +20,22 @@ import com.ql.util.express.DefaultContext
 
 class BarrageFlyExpressContext : DefaultContext<String, Any>() {
 
-    fun setMsg(msg: Any) {
+    fun setMsg(msg: Any): BarrageFlyExpressContext {
         put("msg", msg)
+        return this
     }
 
-    fun setClientId(clientId: String) {
+    fun getMsg(): Any {
+        return get("msg") as Any
+    }
+
+    fun setClientId(clientId: String): BarrageFlyExpressContext {
         put("clientId", clientId)
+        return this
+    }
+
+    fun getClientId(): String {
+        return get("clientId") as String
     }
 
 }

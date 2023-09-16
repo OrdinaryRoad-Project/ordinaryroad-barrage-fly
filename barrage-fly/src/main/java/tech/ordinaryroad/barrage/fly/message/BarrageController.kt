@@ -30,6 +30,7 @@ import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import java.util.stream.Collectors
@@ -135,31 +136,39 @@ class BarrageController {
                         val context = BarrageFlyTaskContext.getContext(taskId)!!
                         val publisher = context.rSocketClientMsgPublishers[hashCode]!!
                         val roomId = context.barrageFlyTaskDO.roomId
+                        val expressContext = BarrageFlyExpressContext()
                         Flux.from(publisher)
                             .map { msg ->
-                                val msgDTO = BarrageFlyMsgDTO(roomId, msg)
-                                // 前置操作
-                                BarrageFlyExpressRunner.executePreMapExpress(
-                                    context.barrageFlyTaskDO.msgPreMapExpress,
-                                    msgDTO
-                                )
+                                expressContext.setMsg(BarrageFlyMsgDTO(roomId, msg))
+                                expressContext.getMsg()
                             }
-                            .filterWhen { justAny ->
-                                Flux.just(justAny)
-                                    .map { any ->
+                            .map {
+                                // 前置操作
+                                val result = BarrageFlyExpressRunner.executePreMapExpress(
+                                    context.barrageFlyTaskDO.msgPreMapExpress,
+                                    expressContext
+                                )
+                                expressContext.setMsg(result)
+                                result
+                            }
+                            .filterWhen { result ->
+                                Flux.just(result)
+                                    .map {
                                         // 过滤
                                         BarrageFlyExpressRunner.executeFilterExpress(
                                             context.barrageFlyTaskDO.msgFilterExpress,
-                                            any
+                                            expressContext
                                         )
                                     }
                             }
-                            .map { any: Any ->
+                            .map {
                                 // 后置操作
-                                BarrageFlyExpressRunner.executePostMapExpress(
+                                val result = BarrageFlyExpressRunner.executePostMapExpress(
                                     context.barrageFlyTaskDO.msgPostMapExpress,
-                                    any
+                                    expressContext
                                 )
+                                expressContext.setMsg(result)
+                                result
                             }
                     }.collect(Collectors.toList())
                     val just = Flux.just(OBJECT_MAPPER.createObjectNode().apply {
