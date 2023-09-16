@@ -222,6 +222,61 @@ services:
     restart: always
 ```
 
+#### 2.1.4 Example
+
+```properties
+# .env
+MYSQL_HOST=192.168.1.2
+MYSQL_PORT=3306
+MYSQL_DATABASE=or_barrage_fly
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=root
+SUB_BASE_URL=ws://ordinaryroad-barrage-fly:9898
+RSA_PUBLIC_KEY=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNqVTCHbPojzNaR5TwhFxeKcuP/Po4J8WAc5dz1pHQ8FasH/hrSWwoFGpTTo6tfTl0mnAotu4p93kSMe+K2pc2VqUJwCcFj9cD6rhaKfjdj7/Kd2rHH43mXPI+OtggzzOKOOPsaMP5/r2Dyooafa1ChYDuSmf2fDM53CSIx+KDUwIDAQAB
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin
+RSA_PRIVATE_KEY=MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAM2pVMIds+iPM1pHlPCEXF4py4/8+jgnxYBzl3PWkdDwVqwf+GtJbCgUalNOjq19OXSacCi27in3eRIx74ralzZWpQnAJwWP1wPquFop+N2Pv8p3ascfjeZc8j462CDPM4o44+xow/n+vYPKihp9rUKFgO5KZ/Z8MzncJIjH4oNTAgMBAAECgYEAs+ttoRzHJa8Rp+tzmy7Qd/hsg503ciUpHYUCfG68xmNcD90wQPvMyQuDMTpKi/A/cYkikhvnI4PCwW46N+mf2nJZEYG1DARTVj0lWaW+RqzerXG1Jg6v1WbgJwy5myZhFm9AOSb0OW3HskbRRyqxkiFX2Fr7ZKYXfrIWvooiVWECQQDnc0PPBpl5XPB+yGKepEatRwCMKdoIoD3R96Iykq9xowskafwob+gOn3mqEiH8YuDPOntcC4tqeLSzNiHYftKpAkEA43nN5SqvJZ3Gp/Vm4VY7DRAAT4cCxcxyYy3p1iuZf19y0UGdRrURQl4jx+I9RGSIy4v/hfpU05wnecvLh3KfmwJBANUz1pjUSXgEZv1C9aWRShHAP/7dZp1fjtLlvCG+AaM6P79RahiNzUP7H4XMokXth40dIBmQAOMZQct75/2YBdECQQCpwP0Y1pir/qkAME8dO+eHYPiKYJt+FosKXnoRXKoI9qbNaCTBXmBJ4czb3oaQImI/W/NM/ToOTIrdBmuVYcGfAkA6bkUO1fjjSC8N00xX1uGxJTcWwd9MQAffS+jm+C69lOyNW/azJjgXnmkbjKKB0kDcMDn6bkuYblcm4GOrVhqA
+```
+
+```yaml
+# compose.yaml
+version: "3.0"
+services:
+  ordinaryroad-barrage-fly-ui:
+    image: ordinaryroad-barrage-fly-ui
+    container_name: ordinaryroad-barrage-fly-ui
+    build:
+      context: ./ordinaryroad-barrage-fly-ui
+    environment:
+      BASE_URL: http://ordinaryroad-barrage-fly:8080
+      RSA_PUBLIC_KEY:
+      SUB_BASE_URL:
+    ports:
+      - "30000:3000"
+    hostname: ordinaryroad-barrage-fly-ui
+    restart: always
+
+  ordinaryroad-barrage-fly:
+    image: ordinaryroad-barrage-fly-arm64
+    container_name: ordinaryroad-barrage-fly
+    build:
+      context: ./ordinaryroad-barrage-fly
+    environment:
+      MYSQL_HOST:
+      MYSQL_PORT:
+      MYSQL_DATABASE:
+      MYSQL_USERNAME:
+      MYSQL_PASSWORD:
+      ADMIN_USERNAME:
+      ADMIN_PASSWORD:
+      RSA_PUBLIC_KEY:
+      RSA_PRIVATE_KEY:
+    ports:
+      - "9898:9898"
+    hostname: ordinaryroad-barrage-fly
+    restart: always
+```
+
 ## 3 如何连接
 
 大体上分别为三步
