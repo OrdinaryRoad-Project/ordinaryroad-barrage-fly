@@ -129,6 +129,7 @@
           link
           :href="feedbackUrl"
           target="_blank"
+          @click="window.open(feedbackUrl,'_blank')"
         >
           <v-list-item-content>
             <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>
