@@ -126,6 +126,7 @@
       </div>
       <v-list>
         <v-list-item
+          link
           :href="feedbackUrl"
           target="_blank"
         >
