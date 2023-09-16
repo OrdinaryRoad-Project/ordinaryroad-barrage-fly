@@ -17,6 +17,7 @@
 package tech.ordinaryroad.barrage.fly.util
 
 import cn.hutool.core.io.FileUtil
+import cn.hutool.core.io.resource.ResourceUtil
 import cn.hutool.core.util.EnumUtil
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.extra.spring.SpringUtil
@@ -31,7 +32,6 @@ import tech.ordinaryroad.live.chat.client.bilibili.util.BilibiliCodecUtil
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import tech.ordinaryroad.live.chat.client.commons.util.OrLiveChatCookieUtil
 import tech.ordinaryroad.live.chat.client.douyu.util.DouyuCodecUtil
-import java.nio.charset.StandardCharsets
 
 /**
  *
@@ -42,7 +42,7 @@ import java.nio.charset.StandardCharsets
 object BarrageFlyUtil {
 
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
-        return FileUtil.readLines("express/msg-examples.txt", StandardCharsets.UTF_8).map {
+        return FileUtil.readUtf8Lines(ResourceUtil.getResource("express/msg-examples.txt")).map {
             it ?: return@map null
             var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
             try {
