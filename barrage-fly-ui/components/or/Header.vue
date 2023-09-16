@@ -45,9 +45,8 @@
 
     <or-base-dialog
       ref="createTaskDialog"
-      loading
       persistent
-      width="auto"
+      loading
       :title="$t('barrageFlyTask.actions.create')"
       @onConfirm="createTask"
     >

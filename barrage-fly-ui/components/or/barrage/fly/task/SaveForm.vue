@@ -17,9 +17,8 @@
 <template>
   <v-form ref="form">
     <v-row>
-      <v-col cols="12" md="4">
+      <v-col v-if="preset.id" cols="12" md="4">
         <v-text-field
-          v-if="preset.id"
           v-model="model.id"
           readonly
           label="taskId"
