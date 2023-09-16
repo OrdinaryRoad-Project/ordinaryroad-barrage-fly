@@ -18,7 +18,8 @@ import {defineUserConfig} from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: "/",
+  // TODO 自己部署不需要配置
+  base: "/ordinaryroad-barrage-fly/",
 
   lang: "zh-CN",
   title: "Barrage Fly",

@@ -31,9 +31,6 @@ export default hopeTheme({
 
     // logo: "/logo.svg",
 
-    // TODO
-    hostname: "https://ordinaryroad-project.github.io/ordinaryroad-barrage-fly",
-
     repo: "OrdinaryRoad-Project/ordinaryroad-barrage-fly",
 
     docsDir: "docs/src",
