@@ -18,15 +18,14 @@ import {defineUserConfig} from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  // TODO 自己部署不需要配置
-  base: "/ordinaryroad-barrage-fly/",
+    base: process.env.BUILD_TYPE == "coding" ? "/" : '/ordinaryroad-barrage-fly/',
 
-  lang: "zh-CN",
-  title: "Barrage Fly",
-  description: "Barrage Fly —— 让弹幕飞 在线文档",
+    lang: "zh-CN",
+    title: "Barrage Fly",
+    description: "Barrage Fly —— 让弹幕飞 在线文档",
 
-  theme,
+    theme,
 
-  // Enable it with pwa
-  // shouldPrefetch: false,
+    // Enable it with pwa
+    // shouldPrefetch: false,
 });
