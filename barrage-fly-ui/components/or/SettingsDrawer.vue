@@ -33,6 +33,20 @@
       >
         <v-icon>mdi-github</v-icon>
       </v-btn>
+      <v-tooltip bottom>
+        {{ $t('document') }}
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            href="https://barragefly.ordinaryroad.tech"
+            target="_blank"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-help-circle</v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
       <v-btn
         icon
         @click.stop="toggleRightDrawerModel"
