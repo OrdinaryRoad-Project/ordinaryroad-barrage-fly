@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+  ordinaryroad-barrage-fly-docs:
+    image: ordinaryroad-barrage-fly-docs
+    container_name: ordinaryroad-barrage-fly-docs
+    build:
+      context: ./ordinaryroad-barrage-fly-docs
+    volumes:
+      - $PWD/ordinaryroad-barrage-fly-docs/ssl:/etc/nginx/ssl
+      - $PWD/ordinaryroad-barrage-fly-docs/conf.d:/etc/nginx/conf.d
+    ports:
+      # HTTP
+      - "80:80"
+      # HTTPS
+      - "443:443"
+    restart: always
