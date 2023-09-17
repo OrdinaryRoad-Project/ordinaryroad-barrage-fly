@@ -23,6 +23,18 @@ export default defineUserConfig({
     lang: "zh-CN",
     title: "Barrage Fly",
     description: "Barrage Fly —— 让弹幕飞 在线文档",
+    // https://www.vuepress.cn/config/#head
+    head: [
+        ["script", {}, `
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?7970ffd8bbeba445a62733ea09ba7744";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        `]
+    ],
 
     theme,
 
