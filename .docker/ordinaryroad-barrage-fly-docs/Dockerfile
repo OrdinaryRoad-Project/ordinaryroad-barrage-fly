@@ -10,4 +10,6 @@ WORKDIR /ordinaryroad/$APP_NAME/app
 
 COPY ./app .
 
+COPY ./conf.d /etc/nginx/conf.d
+
 EXPOSE 80
