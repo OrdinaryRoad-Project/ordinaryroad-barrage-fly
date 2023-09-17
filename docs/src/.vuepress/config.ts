@@ -29,7 +29,7 @@ export default defineUserConfig({
             var _hmt = _hmt || [];
             (function() {
               var hm = document.createElement("script");
-              hm.src = "https://hm.baidu.com/hm.js?7970ffd8bbeba445a62733ea09ba7744";
+              hm.src = "https://hm.baidu.com/hm.js?1254ec7a1da94a91a0c76d23b6dd39e5";
               var s = document.getElementsByTagName("script")[0]; 
               s.parentNode.insertBefore(hm, s);
             })();
