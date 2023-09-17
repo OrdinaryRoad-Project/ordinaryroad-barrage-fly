@@ -1,8 +1,8 @@
 # barrage-fly 让弹幕飞
 
-一个弹幕转发平台
+一个弹幕转发、过滤、处理平台
 
-[在线文档](https://ordinaryroad.tech/or_module/barrage-fly/)
+[在线文档](https://barragefly.ordinaryroad.tech)
 
 ## 1 项目简介
 
