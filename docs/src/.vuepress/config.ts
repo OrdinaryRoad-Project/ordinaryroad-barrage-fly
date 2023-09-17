@@ -18,7 +18,7 @@ import {defineUserConfig} from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-    base: process.env.BUILD_TYPE == "coding" ? "/" : '/ordinaryroad-barrage-fly/',
+    base: process.env.BUILD_TYPE == "GIT_PAGE" ? '/ordinaryroad-barrage-fly/' : "/",
 
     lang: "zh-CN",
     title: "Barrage Fly",
