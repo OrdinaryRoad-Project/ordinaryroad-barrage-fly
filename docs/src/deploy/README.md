@@ -15,9 +15,17 @@
 > 镜像加速与拉取
 > ```shell
 > # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:$APP_VERSION
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:$APP_VERSION
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:$APP_VERSION
+> # 默认拉取最新版
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+> ```
+
+> 拉到本地后需要根据compose文件重命名镜像
+> ```shell
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly ordinaryroad-barrage-fly
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64 ordinaryroad-barrage-fly-arm64
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
 > ```
 
 ### 2.1.1 前端+后端
