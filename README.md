@@ -1,16 +1,17 @@
 # barrage-fly 让弹幕飞
 
-一个弹幕转发、过滤、处理平台
+[![license](https://img.shields.io/github/license/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/blob/main/LICENSE) [![release](https://img.shields.io/github/v/release/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/releases) [![docker_images-coding](https://img.shields.io/badge/docker_images-coding-green)](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages) [![在线文档](https://img.shields.io/badge/document-在线文档-blue)](https://barragefly.ordinaryroad.tech)
 
-[在线文档](https://barragefly.ordinaryroad.tech)
+一个弹幕转发、过滤、处理平台
 
 ## 1 项目简介
 
 ### 1.1 功能
 
-1. 监听不同平台直播间的弹幕
-2. 使用统一的协议将弹幕转发出去
-3. 内置简易实时弹幕显示
+1. 监听不同平台不同直播间的弹幕，支持B站、斗鱼
+2. 使用统一的协议将弹幕转发出去，DANMU、GIFT
+3. 支持弹幕流的过滤与转换，前置处理、消息过滤、后置处理、弹幕发送
+4. 内置简易实时弹幕显示、实时任务状态统计
 
 | <img src="docs/src/.vuepress/public/assets/image/task.png" width="400"/>              | <img src="docs/src/.vuepress/public/assets/image/task-detail-1.png" width="400"/> | <img src="docs/src/.vuepress/public/assets/image/task-detail-2.png" width="400"/> |
 |---------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
@@ -31,23 +32,8 @@
 
 项目前后端分离，可以使用Docker Compose进行部署，或者分别打包后部署
 
-### 2.1 Docker Compose
-
-> Docker Compose示例位于`.docker`目录中
-
-- arm64系统时，后端镜像请使用 `ordinaryroad-barrage-fly-arm64`
-- 使用mysql、nginx时需要先build
-    - `docker compose build ordinaryroad-barrage-fly-mysql`
-    - `docker compose build ordinaryroad-barrage-fly-nginx`
-- 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
-
-> 镜像加速与拉取
-> ```shell
-> # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:$APP_VERSION
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:$APP_VERSION
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:$APP_VERSION
-> ```
+## 3 在线文档
+[https://barragefly.ordinaryroad.tech](https://barragefly.ordinaryroad.tech)
 
 ## 其他
 

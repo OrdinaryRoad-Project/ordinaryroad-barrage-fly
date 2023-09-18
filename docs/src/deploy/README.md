@@ -12,7 +12,8 @@
     - `docker compose build ordinaryroad-barrage-fly-nginx`
 - 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
 
-> 镜像加速与拉取
+> 镜像加速与拉取：[仓库链接](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages)
+>
 > ```shell
 > # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
 > # 默认拉取最新版
@@ -265,3 +266,9 @@ services:
     hostname: ordinaryroad-barrage-fly
     restart: always
 ```
+
+## 2.2 本地打包运行
+
+1. clone项目到本地
+2. 后端打包 `./gradlew clean bootJar`
+3. 前端打包 `npm run build`
