@@ -66,7 +66,7 @@
             以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
               QLExpress
             </or-link><br>
-            <or-link href="https://barragefly.ordinaryroad.tech/#_4-4-一些例子">
+            <or-link href="https://barragefly.ordinaryroad.tech/guide/msgflow.html#_4-4-一些例子">
               一些例子
             </or-link>
           </v-alert>
