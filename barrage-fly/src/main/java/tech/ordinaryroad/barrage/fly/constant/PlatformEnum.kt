@@ -18,6 +18,7 @@ package tech.ordinaryroad.barrage.fly.constant
 import tech.ordinaryroad.live.chat.client.bilibili.msg.base.IBilibiliMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
+import tech.ordinaryroad.live.chat.client.huya.msg.base.IHuyaMsg
 
 /**
  * @author mjz
@@ -25,7 +26,9 @@ import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
  */
 enum class PlatformEnum {
     BILIBILI,
-    DOUYU, ;
+    DOUYU,
+    HUYA,
+    ;
 
     companion object {
         fun getByMsg(msg: IMsg?): PlatformEnum? {
@@ -36,6 +39,10 @@ enum class PlatformEnum {
 
                 is IDouyuMsg -> {
                     DOUYU
+                }
+
+                is IHuyaMsg -> {
+                    HUYA
                 }
 
                 else -> {

@@ -18,6 +18,7 @@ package tech.ordinaryroad.barrage.fly.constant
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IDanmuMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IGiftMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.ISuperChatMsg
 
 /**
  * @author mjz
@@ -25,11 +26,17 @@ import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
  */
 enum class MsgTypeEnum {
     DANMU,
-    GIFT, ;
+    GIFT,
+    SUPER_CHAT,
+    ;
 
     companion object {
         fun getByMsg(msg: IMsg?): MsgTypeEnum? {
             return when (msg) {
+                is ISuperChatMsg -> {
+                    SUPER_CHAT
+                }
+
                 is IDanmuMsg -> {
                     DANMU
                 }

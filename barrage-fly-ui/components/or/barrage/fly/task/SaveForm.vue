@@ -113,7 +113,8 @@ export default {
   data: () => ({
     platformOptions: [
       { text: 'B站', value: 'BILIBILI' },
-      { text: '斗鱼', value: 'DOUYU' }
+      { text: '斗鱼', value: 'DOUYU' },
+      { text: '虎牙', value: 'HUYA' }
     ],
     model: {}
   }),
