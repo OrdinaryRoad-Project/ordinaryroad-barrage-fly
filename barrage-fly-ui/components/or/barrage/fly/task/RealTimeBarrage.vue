@@ -18,7 +18,7 @@
   <v-container ref="main" class="main" :style="{height}">
     <div ref="list">
       <v-list dense>
-        <v-list-item v-for="(msg) in msgs" :key="msg">
+        <v-list-item v-for="(msg,index) in msgs" :key="index">
           <v-list-item-title v-if="'DANMU'===msg.type">
             <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
           </v-list-item-title>
