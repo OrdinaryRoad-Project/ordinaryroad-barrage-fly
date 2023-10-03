@@ -18,9 +18,7 @@
   <span class="d-flex justify-center align-center">
     <img
       style="height: 48px; width: 48px"
-      :style="{
-        padding: item.platform==='BILIBILI'?'10px':null
-      }"
+      :style="{padding: iconPadding(item)}"
       :alt="`${item.platform}`"
       :src="`/logo/${item.platform}.svg`"
     >
@@ -43,6 +41,21 @@ export default {
   },
   data: () => ({}),
   computed: {
+    iconPadding () {
+      return (item) => {
+        let padding = null
+        switch (item.platform) {
+          case 'BILIBILI':
+            padding = '10px'
+            break
+          case 'HUYA':
+            padding = '10px'
+            break
+          default:
+        }
+        return padding
+      }
+    },
     roomUrl () {
       if (this.item.platform === 'BILIBILI') {
         return `https://live.bilibili.com/${this.item.roomId}`
@@ -53,8 +66,7 @@ export default {
       }
     }
   },
-  mounted () {
-  },
+  mounted () {},
   created () {
   },
   methods: {}

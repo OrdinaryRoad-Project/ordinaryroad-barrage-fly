@@ -28,6 +28,7 @@ import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.listener.BilibiliMsgPublisher
 import tech.ordinaryroad.barrage.fly.listener.DouyuMsgPublisher
+import tech.ordinaryroad.barrage.fly.listener.HuyaMsgPublisher
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
@@ -38,6 +39,9 @@ import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums
 import tech.ordinaryroad.live.chat.client.douyu.client.DouyuLiveChatClient
 import tech.ordinaryroad.live.chat.client.douyu.config.DouyuLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.douyu.listener.IDouyuMsgListener
+import tech.ordinaryroad.live.chat.client.huya.client.HuyaLiveChatClient
+import tech.ordinaryroad.live.chat.client.huya.config.HuyaLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.huya.listener.IHuyaMsgListener
 import tech.ordinaryroad.live.chat.client.servers.netty.client.config.BaseNettyClientConfig
 import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport
@@ -138,6 +142,10 @@ class BarrageFlyTaskContext(
             PlatformEnum.DOUYU -> {
                 OBJECT_MAPPER.readValue(clientConfigJson, DouyuLiveChatClientConfig::class.java) as Config
             }
+
+            PlatformEnum.HUYA -> {
+                OBJECT_MAPPER.readValue(clientConfigJson, HuyaLiveChatClientConfig::class.java) as Config
+            }
         }
     }
 
@@ -150,6 +158,10 @@ class BarrageFlyTaskContext(
             PlatformEnum.DOUYU -> {
                 DouyuMsgPublisher() as MsgListener
             }
+
+            PlatformEnum.HUYA -> {
+                HuyaMsgPublisher() as MsgListener
+            }
         }
     }
 
@@ -159,6 +171,7 @@ class BarrageFlyTaskContext(
         return when (platform) {
             PlatformEnum.BILIBILI -> BilibiliLiveChatClient(createClientConfig(platform, clientConfigJson))
             PlatformEnum.DOUYU -> DouyuLiveChatClient(createClientConfig(platform, clientConfigJson))
+            PlatformEnum.HUYA -> HuyaLiveChatClient(createClientConfig(platform, clientConfigJson))
         } as Client
     }
 
@@ -183,8 +196,9 @@ class BarrageFlyTaskContext(
                 (this.client as DouyuLiveChatClient).addMsgListener(msgListener)
             }
 
-            else -> {
-                return
+            PlatformEnum.HUYA -> {
+                msgListener = createMsgListener<HuyaMsgPublisher>(platform)
+                (this.client as HuyaLiveChatClient).addMsgListener(msgListener)
             }
         }
         this.rSocketClientMsgPublishers[hashCode] = msgListener
@@ -206,8 +220,8 @@ class BarrageFlyTaskContext(
                 (this.client as DouyuLiveChatClient).removeMsgListener(publisher as IDouyuMsgListener)
             }
 
-            else -> {
-                return
+            PlatformEnum.HUYA -> {
+                (this.client as HuyaLiveChatClient).removeMsgListener(publisher as IHuyaMsgListener)
             }
         }
     }

@@ -25,7 +25,7 @@ plugins {
 }
 
 group = "tech.ordinaryroad"
-version = "1.0.1"
+version = "1.0.2"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    val liveChatClientVersion = "0.0.10"
+    val liveChatClientVersion = "0.0.11"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
     val qLExpressVersion = "3.3.2"
@@ -62,6 +62,7 @@ dependencies {
     implementation("org.springframework.integration:spring-integration-rsocket")
     implementation("tech.ordinaryroad:live-chat-client-bilibili:$liveChatClientVersion")
     implementation("tech.ordinaryroad:live-chat-client-douyu:$liveChatClientVersion")
+    implementation("tech.ordinaryroad:live-chat-client-huya:$liveChatClientVersion")
     implementation("tech.ordinaryroad:ordinaryroad-commons-core:$ordinaryroadVersion") {
         exclude("org.springframework")
         exclude("org.springframework.cloud")

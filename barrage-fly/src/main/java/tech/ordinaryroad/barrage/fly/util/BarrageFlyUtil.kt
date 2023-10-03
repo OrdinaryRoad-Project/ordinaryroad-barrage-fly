@@ -54,6 +54,10 @@ object BarrageFlyUtil {
                 val msg = when (platformEnum) {
                     PlatformEnum.BILIBILI -> BilibiliCodecUtil.parse(OperationEnum.SEND_SMS_REPLY, msgString).get()
                     PlatformEnum.DOUYU -> DouyuCodecUtil.parseDouyuSttString(msgString, DouyuCodecUtil.MSG_TYPE_RECEIVE)
+                    PlatformEnum.HUYA -> {
+                        // ignore
+                        null
+                    }
                 }!!
                 barrageFlyMsgDTO = BarrageFlyMsgDTO(roomId, msg)
             } catch (e: Exception) {

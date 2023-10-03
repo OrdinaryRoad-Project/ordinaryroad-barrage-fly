@@ -54,7 +54,7 @@
           <v-select
             v-model="searchParams.platform"
             clearable
-            :items="[{label:'B站',value:'BILIBILI'},{label:'斗鱼',value:'DOUYU'}]"
+            :items="[{label:'B站',value:'BILIBILI'},{label:'斗鱼',value:'DOUYU'},{label:'虎牙',value:'HUYA'}]"
             dense
             outlined
             item-text="label"
