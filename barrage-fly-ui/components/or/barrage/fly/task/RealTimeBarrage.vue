@@ -18,12 +18,12 @@
   <v-container ref="main" class="main" :style="{height}">
     <div ref="list">
       <v-list dense>
-        <v-list-item v-for="(msg,index) in msgs" :key="index">
+        <v-list-item v-for="(msg) in msgs" :key="msg">
           <v-list-item-title v-if="'DANMU'===msg.type">
-            {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
+            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
           </v-list-item-title>
           <v-list-item-title v-else-if="msg.type==='GIFT'">
-            {{ msg.msg.username }}({{ msg.msg.uid }}) {{ msg.msg.data?.action ?? '赠送' }} {{
+            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }}) {{ msg.msg.data?.action ?? '赠送' }} {{
               msg.msg.giftName
             }}({{ msg.msg.giftId }})x{{ msg.msg.giftCount }}({{ msg.msg.giftPrice }})
           </v-list-item-title>
@@ -56,6 +56,13 @@ export default {
     socket: null,
     msgs: []
   }),
+  head () {
+    return {
+      meta: [
+        { name: 'referrer', content: 'no-referrer' }
+      ]
+    }
+  },
   mounted () {
     this.$once('hook:beforeDestroy', () => {
       this.subscription && this.subscription.cancel()

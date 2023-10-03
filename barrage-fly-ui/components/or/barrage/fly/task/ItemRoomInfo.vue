@@ -61,6 +61,8 @@ export default {
         return `https://live.bilibili.com/${this.item.roomId}`
       } else if (this.item.platform === 'DOUYU') {
         return `https://www.douyu.com/${this.item.roomId}`
+      } else if (this.item.platform === 'HUYA') {
+        return `https://www.huya.com/${this.item.roomId}`
       } else {
         return null
       }
