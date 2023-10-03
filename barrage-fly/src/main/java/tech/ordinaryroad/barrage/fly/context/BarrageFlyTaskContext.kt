@@ -54,6 +54,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @date 2023/9/10
  */
 
+@Suppress("UNCHECKED_CAST")
 class BarrageFlyTaskContext(
     /**
      * taskId不可改变，其他改变需要重启任务

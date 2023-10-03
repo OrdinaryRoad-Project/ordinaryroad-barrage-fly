@@ -41,6 +41,7 @@ import java.util.stream.Collectors
  * @author mjz
  * @date 2023/9/10
  */
+@Suppress("UNCHECKED_CAST")
 @Controller
 class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
