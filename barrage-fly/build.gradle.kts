@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    val liveChatClientVersion = "0.0.11-beta"
+    val liveChatClientVersion = "0.0.11-SNAPSHOT"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
     val qLExpressVersion = "3.3.2"
