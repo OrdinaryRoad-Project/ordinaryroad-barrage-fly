@@ -21,7 +21,7 @@ export default defineUserConfig({
     base: process.env.BUILD_TYPE == "GIT_PAGE" ? '/ordinaryroad-barrage-fly/' : "/",
 
     lang: "zh-CN",
-    title: "Barrage Fly",
+    title: "Barrage Fly v" + require("../../package.json").version,
     description: "Barrage Fly —— 让弹幕飞 在线文档",
     // https://www.vuepress.cn/config/#head
     head: [
