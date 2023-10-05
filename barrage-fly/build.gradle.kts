@@ -25,7 +25,7 @@ plugins {
 }
 
 group = "tech.ordinaryroad"
-version = "1.0.2-beta"
+version = "1.0.3"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -47,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    val liveChatClientVersion = "0.0.11-SNAPSHOT"
+    val liveChatClientVersion = "0.0.12"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
     val qLExpressVersion = "3.3.2"
