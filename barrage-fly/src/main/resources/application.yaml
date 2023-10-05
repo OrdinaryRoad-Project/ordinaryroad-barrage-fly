@@ -20,6 +20,7 @@ spring:
 sa-token:
   timeout: 60480 # 7天：3600*24*7
   token-name: token
+  is-print: false
 tech:
   ordinaryroad:
     barrage:
