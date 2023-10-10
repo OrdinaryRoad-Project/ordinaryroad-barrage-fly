@@ -20,28 +20,34 @@ import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum;
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum;
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg;
 
+import java.util.Optional;
+
 /**
  * @author mjz
  * @date 2023/9/15
  */
 public class BarrageFlyMsgDTO {
-    private PlatformEnum platform;
+    private String platform;
     private String roomId;
-    private MsgTypeEnum type;
+    private String type;
     private IMsg msg;
 
     public BarrageFlyMsgDTO(String roomId, IMsg msg) {
         this.roomId = roomId;
         this.msg = msg;
-        this.platform = PlatformEnum.Companion.getByMsg(msg);
-        this.type = MsgTypeEnum.Companion.getByMsg(msg);
+        Optional.ofNullable(PlatformEnum.Companion.getByMsg(msg)).ifPresent(platformEnum -> {
+            this.platform = platformEnum.name();
+        });
+        Optional.ofNullable(MsgTypeEnum.Companion.getByMsg(msg)).ifPresent(typeEnum -> {
+            this.type = typeEnum.name();
+        });
     }
 
-    public PlatformEnum getPlatform() {
+    public String getPlatform() {
         return platform;
     }
 
-    public void setPlatform(PlatformEnum platform) {
+    public void setPlatform(String platform) {
         this.platform = platform;
     }
 
@@ -53,11 +59,11 @@ public class BarrageFlyMsgDTO {
         this.roomId = roomId;
     }
 
-    public MsgTypeEnum getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(MsgTypeEnum type) {
+    public void setType(String type) {
         this.type = type;
     }
 
