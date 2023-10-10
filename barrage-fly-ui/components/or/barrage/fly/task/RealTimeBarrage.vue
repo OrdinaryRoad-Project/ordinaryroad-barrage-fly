@@ -19,17 +19,32 @@
     <div ref="list">
       <v-list dense>
         <v-list-item v-for="(msg,index) in msgs" :key="index">
-          <v-list-item-title v-if="'DANMU'===msg.type">
-            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" />
-            <span v-if="msg.msg.badgeLevel!==0">
+          <v-list-item-title v-if="'DANMU'===msg.type" class="d-flex align-center">
+            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" class="me-2" />
+            <span v-if="msg.msg.badgeLevel && msg.msg.badgeLevel!==0" class="secondary--text me-1">
               [{{ msg.msg.badgeLevel }}{{ msg.msg.badgeName }}]
             </span>
-            {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
+            <or-link :href="userSpaceUrl(msg)" hide-icon>
+              {{ msg.msg.username }}
+            </or-link>
+            ：{{ msg.msg.content }}
           </v-list-item-title>
-          <v-list-item-title v-else-if="msg.type==='GIFT'">
-            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }}) {{ msg.msg.data?.action ?? '赠送' }} {{
-              msg.msg.giftName
-            }}({{ msg.msg.giftId }})x{{ msg.msg.giftCount }}({{ msg.msg.giftPrice }})
+          <v-list-item-title v-else-if="msg.type==='GIFT'" class="d-flex align-center">
+            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" class="me-2" />
+            <span v-if="msg.msg.badgeLevel && msg.msg.badgeLevel!==0" class="secondary--text me-1">
+              [{{ msg.msg.badgeLevel }}{{ msg.msg.badgeName }}]
+            </span>
+            <or-link :href="userSpaceUrl(msg)" hide-icon>
+              {{ msg.msg.username }}
+            </or-link>
+            <span class="mx-1">{{ msg.msg.data?.action ?? '赠送' }}</span>
+            <span class="red--text">{{ msg.msg.giftName }}</span>
+            <img
+              width="40"
+              :src="msg.msg.giftImg"
+              :alt="msg.msg.giftName"
+            >
+            <span v-if="msg.msg.giftCount>1">x{{ msg.msg.giftCount }}</span>
           </v-list-item-title>
           <v-list-item-title v-else>
             {{ msg.msg }}
@@ -65,6 +80,21 @@ export default {
       meta: [
         { name: 'referrer', content: 'no-referrer' }
       ]
+    }
+  },
+  computed: {
+    userSpaceUrl () {
+      return (msg) => {
+        if (msg.platform === 'BILIBILI') {
+          return `https://space.bilibili.com/${msg.msg.uid}`
+        } else if (msg.platform === 'DOUYU') {
+          return `https://yuba.douyu.com/wbapi/web/jumpusercenter?id=${msg.msg.uid}&name=${msg.msg.username}`
+        } else if (msg.platform === 'HUYA') {
+          return `https://www.huya.com/video/u/${msg.msg.uid}`
+        } else {
+          return null
+        }
+      }
     }
   },
   mounted () {
