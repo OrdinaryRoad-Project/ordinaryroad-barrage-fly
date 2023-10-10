@@ -105,3 +105,8 @@ map.put("task",getTask("taskId"));
 
 return map;
 ```
+
+### 4.4.6 只接收弹幕和礼物消息
+```
+return NewList("DANMU", "GIFT").contains(msg.type);
+```
