@@ -20,7 +20,11 @@
       <v-list dense>
         <v-list-item v-for="(msg,index) in msgs" :key="index">
           <v-list-item-title v-if="'DANMU'===msg.type">
-            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
+            <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" />
+            <span v-if="msg.msg.badgeLevel!==0">
+              [{{ msg.msg.badgeLevel }}{{ msg.msg.badgeName }}]
+            </span>
+            {{ msg.msg.username }}({{ msg.msg.uid }})：{{ msg.msg.content }}
           </v-list-item-title>
           <v-list-item-title v-else-if="msg.type==='GIFT'">
             <or-avatar size="36" :avatar="msg.msg.userAvatar" :username="msg.msg.username" /> {{ msg.msg.username }}({{ msg.msg.uid }}) {{ msg.msg.data?.action ?? '赠送' }} {{
