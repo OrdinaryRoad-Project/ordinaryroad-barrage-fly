@@ -20,8 +20,6 @@ import cn.hutool.core.io.FileUtil
 import cn.hutool.core.io.resource.ResourceUtil
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.extra.spring.SpringUtil
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
@@ -32,6 +30,7 @@ import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu.Companio
 import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
 import tech.ordinaryroad.live.chat.client.bilibili.msg.SendGiftMsg
 import tech.ordinaryroad.live.chat.client.bilibili.msg.SuperChatMessageMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import tech.ordinaryroad.live.chat.client.commons.util.OrLiveChatCookieUtil
 import tech.ordinaryroad.live.chat.client.douyu.msg.ChatmsgMsg
 import tech.ordinaryroad.live.chat.client.douyu.msg.DgbMsg
@@ -47,9 +46,6 @@ import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
 object BarrageFlyUtil {
 
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
-        val objectMapper = ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
         val list = ArrayList<BarrageFlyMsgDTO>()
         val resource = ResourceUtil.getResource("express/")
         val file = resource.file
@@ -58,7 +54,7 @@ object BarrageFlyUtil {
                 it ?: return@map null
                 var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
                 try {
-                    val jsonNode = objectMapper.readTree(it)
+                    val jsonNode = OBJECT_MAPPER.readTree(it)
                     val roomId = jsonNode.get("roomId").asText()
                     val msgString = jsonNode.get("msg").toString()
                     val platformEnum = PlatformEnum.getByString(jsonNode.get("platform").asText()) ?: return@map null
@@ -66,17 +62,17 @@ object BarrageFlyUtil {
                         PlatformEnum.BILIBILI -> {
                             val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
                             when (msgTypeEnum) {
-                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     DanmuMsgMsg::class.java
                                 )
 
-                                MsgTypeEnum.GIFT -> objectMapper.readValue(
+                                MsgTypeEnum.GIFT -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     SendGiftMsg::class.java
                                 )
 
-                                MsgTypeEnum.SUPER_CHAT -> objectMapper.readValue(
+                                MsgTypeEnum.SUPER_CHAT -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     SuperChatMessageMsg::class.java
                                 )
@@ -86,12 +82,12 @@ object BarrageFlyUtil {
                         PlatformEnum.DOUYU -> {
                             val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
                             when (msgTypeEnum) {
-                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     ChatmsgMsg::class.java
                                 )
 
-                                MsgTypeEnum.GIFT -> objectMapper.readValue(
+                                MsgTypeEnum.GIFT -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     DgbMsg::class.java
                                 )
@@ -105,13 +101,13 @@ object BarrageFlyUtil {
                         PlatformEnum.HUYA -> {
                             val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
                             when (msgTypeEnum) {
-                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
                                     msgString,
                                     MessageNoticeMsg::class.java
                                 )
 
                                 MsgTypeEnum.GIFT -> {
-                                    objectMapper.readValue(
+                                    OBJECT_MAPPER.readValue(
                                         msgString,
                                         SendItemSubBroadcastPacketMsg::class.java
                                     )

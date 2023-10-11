@@ -17,9 +17,7 @@
 package tech.ordinaryroad.barrage.fly.message
 
 import cn.hutool.http.HttpStatus
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -52,7 +50,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
     private val log = LoggerFactory.getLogger(BarrageController::class.java)
 
     @OptIn(DelicateCoroutinesApi::class)
-    @ConnectMapping("default")
+    @ConnectMapping("")
     fun connect(setupPayload: JsonNode?, requester: RSocketRequester) {
         if (log.isDebugEnabled) {
             log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
@@ -78,7 +76,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
         }
     }
 
-    @MessageMapping("default")
+    @MessageMapping("")
     fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         if (log.isDebugEnabled) {
             log.debug("on channel {} {}", requester.hashCode(), requester)
@@ -194,12 +192,9 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
     @MessageMapping("example")
     fun exampleChannel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
-        val objectMapper = ObjectMapper().apply {
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        }
         return datas
             .map {
-                objectMapper.readValue(it.get("task").toString(), BarrageFlyTaskDO::class.java)
+                OBJECT_MAPPER.readValue(it.get("task").toString(), BarrageFlyTaskDO::class.java)
             }
             .switchMap { barrageFlyTaskDO ->
                 val expressContext = BarrageFlyExpressContext()
