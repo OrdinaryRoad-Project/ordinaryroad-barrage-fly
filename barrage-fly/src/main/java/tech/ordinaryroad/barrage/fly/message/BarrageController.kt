@@ -17,7 +17,9 @@
 package tech.ordinaryroad.barrage.fly.message
 
 import cn.hutool.http.HttpStatus
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,9 +31,11 @@ import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
+import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
+import tech.ordinaryroad.barrage.fly.listener.ExampleMsgPublisher
 import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import java.util.stream.Collectors
 
@@ -48,14 +52,10 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
     private val log = LoggerFactory.getLogger(BarrageController::class.java)
 
     @OptIn(DelicateCoroutinesApi::class)
-    @ConnectMapping("")
-    fun connect(
-//        setupPayload: ConnectionSetupPayload,
-        requester: RSocketRequester
-    ) {
+    @ConnectMapping("default")
+    fun connect(setupPayload: JsonNode?, requester: RSocketRequester) {
         if (log.isDebugEnabled) {
-//            log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
-            log.debug("on connect {}", requester.hashCode())
+            log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
         }
         GlobalScope.launch {
             requester.rsocketClient().source()
@@ -78,7 +78,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
         }
     }
 
-    @MessageMapping("")
+    @MessageMapping("default")
     fun channel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         if (log.isDebugEnabled) {
             log.debug("on channel {} {}", requester.hashCode(), requester)
@@ -182,6 +182,60 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                         just.mergeWith(Flux.merge(toList))
                     }
                 }
+            }
+    }
+
+    @ConnectMapping("example")
+    fun exampleConnect(setupPayload: JsonNode?, requester: RSocketRequester) {
+        if (log.isDebugEnabled) {
+            log.debug("example on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
+        }
+    }
+
+    @MessageMapping("example")
+    fun exampleChannel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
+        val objectMapper = ObjectMapper().apply {
+            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        }
+        return datas
+            .map {
+                objectMapper.readValue(it.get("task").toString(), BarrageFlyTaskDO::class.java)
+            }
+            .switchMap { barrageFlyTaskDO ->
+                val expressContext = BarrageFlyExpressContext()
+                Flux.from(ExampleMsgPublisher())
+                    .map { msg ->
+                        expressContext.setMsg(msg)
+                        expressContext.getMsg()
+                    }
+                    .map {
+                        // 前置操作
+                        val result = expressRunner.executePreMapExpress(
+                            barrageFlyTaskDO.msgPreMapExpress,
+                            expressContext
+                        )
+                        expressContext.setMsg(result)
+                        result
+                    }
+                    .filterWhen { result ->
+                        Flux.just(result)
+                            .map {
+                                // 过滤
+                                expressRunner.executeFilterExpress(
+                                    barrageFlyTaskDO.msgFilterExpress,
+                                    expressContext
+                                )
+                            }
+                    }
+                    .map {
+                        // 后置操作
+                        val result = expressRunner.executePostMapExpress(
+                            barrageFlyTaskDO.msgPostMapExpress,
+                            expressContext
+                        )
+                        expressContext.setMsg(result)
+                        result
+                    }
             }
     }
 }

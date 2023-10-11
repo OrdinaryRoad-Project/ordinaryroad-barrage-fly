@@ -15,6 +15,7 @@
  */
 package tech.ordinaryroad.barrage.fly.constant
 
+import cn.hutool.core.util.StrUtil
 import tech.ordinaryroad.live.chat.client.bilibili.msg.base.IBilibiliMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
@@ -49,6 +50,20 @@ enum class PlatformEnum {
                     null
                 }
             }
+        }
+
+        fun getByString(string: String?): PlatformEnum? {
+            if (StrUtil.isEmpty(string)) {
+                return null
+            }
+
+            for (value in values()) {
+                if (value.name == string) {
+                    return value
+                }
+            }
+
+            return null
         }
     }
 }

@@ -18,20 +18,25 @@ package tech.ordinaryroad.barrage.fly.util
 
 import cn.hutool.core.io.FileUtil
 import cn.hutool.core.io.resource.ResourceUtil
-import cn.hutool.core.util.EnumUtil
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.extra.spring.SpringUtil
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu.Companion.KEY_DO_SEND_DANMU_BOOLEAN
-import tech.ordinaryroad.live.chat.client.bilibili.constant.OperationEnum
-import tech.ordinaryroad.live.chat.client.bilibili.util.BilibiliCodecUtil
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
+import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
+import tech.ordinaryroad.live.chat.client.bilibili.msg.SendGiftMsg
+import tech.ordinaryroad.live.chat.client.bilibili.msg.SuperChatMessageMsg
 import tech.ordinaryroad.live.chat.client.commons.util.OrLiveChatCookieUtil
-import tech.ordinaryroad.live.chat.client.douyu.util.DouyuCodecUtil
+import tech.ordinaryroad.live.chat.client.douyu.msg.ChatmsgMsg
+import tech.ordinaryroad.live.chat.client.douyu.msg.DgbMsg
+import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
+import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
 
 /**
  *
@@ -42,29 +47,92 @@ import tech.ordinaryroad.live.chat.client.douyu.util.DouyuCodecUtil
 object BarrageFlyUtil {
 
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
-        return FileUtil.readUtf8Lines(ResourceUtil.getResource("express/msg-examples.txt")).map {
-            it ?: return@map null
-            var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
-            try {
-                val jsonNode = OBJECT_MAPPER.readTree(it)
-                val platform = jsonNode.get("platform").asText()
-                val roomId = jsonNode.get("roomId").asText()
-                val msgString = jsonNode.get("msg").asText()
-                val platformEnum = EnumUtil.fromString(PlatformEnum::class.java, platform) ?: return@map null
-                val msg = when (platformEnum) {
-                    PlatformEnum.BILIBILI -> BilibiliCodecUtil.parse(OperationEnum.SEND_SMS_REPLY, msgString).get()
-                    PlatformEnum.DOUYU -> DouyuCodecUtil.parseDouyuSttString(msgString, DouyuCodecUtil.MSG_TYPE_RECEIVE)
-                    PlatformEnum.HUYA -> {
-                        // ignore
-                        null
-                    }
-                }!!
-                barrageFlyMsgDTO = BarrageFlyMsgDTO(roomId, msg)
-            } catch (e: Exception) {
-                // ignore
+        val objectMapper = ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+        val list = ArrayList<BarrageFlyMsgDTO>()
+        val resource = ResourceUtil.getResource("express/")
+        val file = resource.file
+        for (fileName in FileUtil.listFileNames(file)) {
+            FileUtil.readUtf8Lines(file + fileName).map {
+                it ?: return@map null
+                var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
+                try {
+                    val jsonNode = objectMapper.readTree(it)
+                    val roomId = jsonNode.get("roomId").asText()
+                    val msgString = jsonNode.get("msg").toString()
+                    val platformEnum = PlatformEnum.getByString(jsonNode.get("platform").asText()) ?: return@map null
+                    val msg = when (platformEnum) {
+                        PlatformEnum.BILIBILI -> {
+                            val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
+                            when (msgTypeEnum) {
+                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                    msgString,
+                                    DanmuMsgMsg::class.java
+                                )
+
+                                MsgTypeEnum.GIFT -> objectMapper.readValue(
+                                    msgString,
+                                    SendGiftMsg::class.java
+                                )
+
+                                MsgTypeEnum.SUPER_CHAT -> objectMapper.readValue(
+                                    msgString,
+                                    SuperChatMessageMsg::class.java
+                                )
+                            }
+                        }
+
+                        PlatformEnum.DOUYU -> {
+                            val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
+                            when (msgTypeEnum) {
+                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                    msgString,
+                                    ChatmsgMsg::class.java
+                                )
+
+                                MsgTypeEnum.GIFT -> objectMapper.readValue(
+                                    msgString,
+                                    DgbMsg::class.java
+                                )
+
+                                MsgTypeEnum.SUPER_CHAT -> {
+                                    return@map null
+                                }
+                            }
+                        }
+
+                        PlatformEnum.HUYA -> {
+                            val msgTypeEnum = MsgTypeEnum.getByString(jsonNode.get("type").asText()) ?: return@map null
+                            when (msgTypeEnum) {
+                                MsgTypeEnum.DANMU -> objectMapper.readValue(
+                                    msgString,
+                                    MessageNoticeMsg::class.java
+                                )
+
+                                MsgTypeEnum.GIFT -> {
+                                    objectMapper.readValue(
+                                        msgString,
+                                        SendItemSubBroadcastPacketMsg::class.java
+                                    )
+                                }
+
+                                MsgTypeEnum.SUPER_CHAT -> {
+                                    return@map null
+                                }
+                            }
+                        }
+                    }!!
+                    barrageFlyMsgDTO = BarrageFlyMsgDTO(roomId, msg)
+                } catch (e: Exception) {
+                    // ignore
+                }
+                if (RandomUtil.randomBoolean()) barrageFlyMsgDTO else null
+            }.filterNotNull().let {
+                list.addAll(it)
             }
-            if (RandomUtil.randomBoolean()) barrageFlyMsgDTO else null
-        }.filterNotNull()
+        }
+        return list
     }
 
     fun BarrageFlyTaskDO.validate(): Boolean {
@@ -100,6 +168,13 @@ object BarrageFlyUtil {
             throw e
         }
         return true
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        for (msg in generateRandomMsgDTOs()) {
+            println(msg)
+        }
     }
 
 }

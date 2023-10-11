@@ -15,6 +15,7 @@
  */
 package tech.ordinaryroad.barrage.fly.constant
 
+import cn.hutool.core.util.StrUtil
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IDanmuMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IGiftMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
@@ -49,6 +50,20 @@ enum class MsgTypeEnum {
                     null
                 }
             }
+        }
+
+        fun getByString(string: String?): MsgTypeEnum? {
+            if (StrUtil.isEmpty(string)) {
+                return null
+            }
+
+            for (value in values()) {
+                if (value.name == string) {
+                    return value
+                }
+            }
+
+            return null
         }
     }
 }

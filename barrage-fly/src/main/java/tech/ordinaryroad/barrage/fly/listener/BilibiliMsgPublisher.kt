@@ -59,11 +59,11 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun request(n: Long) {
-        // ignored
+        // ignore
     }
 
     override fun cancel() {
-        // ignored
+        this.subscriber = null
     }
 
 }
