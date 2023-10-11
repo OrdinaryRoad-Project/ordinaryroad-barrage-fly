@@ -29,8 +29,4 @@ import java.io.Serializable;
  * @date 2023/9/9
  */
 public abstract class BaseBarrageFlyDO extends BaseDO implements Serializable {
-
-//    @Serial
-    private static final long serialVersionUID = -413776244714018551L;
-
 }

@@ -18,6 +18,7 @@ package tech.ordinaryroad.barrage.fly.message
 
 import cn.hutool.http.HttpStatus
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ObjectNode
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -194,7 +195,11 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
     fun exampleChannel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         return datas
             .map {
-                OBJECT_MAPPER.readValue(it.get("task").toString(), BarrageFlyTaskDO::class.java)
+                val taskNode = it.get("task") as ObjectNode
+                taskNode.remove("id")?.let {
+                    taskNode.put("uuid", it.asText())
+                    }
+                OBJECT_MAPPER.readValue(taskNode.toString(), BarrageFlyTaskDO::class.java)
             }
             .switchMap { barrageFlyTaskDO ->
                 val expressContext = BarrageFlyExpressContext()
