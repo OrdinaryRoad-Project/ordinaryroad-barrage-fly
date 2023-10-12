@@ -17,6 +17,7 @@
 package tech.ordinaryroad.barrage.fly.util
 
 import cn.hutool.core.io.FileUtil
+import cn.hutool.core.io.resource.ClassPathResource
 import cn.hutool.core.io.resource.ResourceUtil
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.extra.spring.SpringUtil
@@ -47,10 +48,9 @@ object BarrageFlyUtil {
 
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
         val list = ArrayList<BarrageFlyMsgDTO>()
-        val resource = ResourceUtil.getResource("express/")
-        val file = resource.file
-        for (fileName in FileUtil.listFileNames(file)) {
-            FileUtil.readUtf8Lines(file + fileName).map {
+        val resource = ResourceUtil.getResourceObj("express") as ClassPathResource
+        for (file in resource.file.listFiles()) {
+            FileUtil.readUtf8Lines(file).map {
                 it ?: return@map null
                 var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
                 try {
