@@ -27,6 +27,14 @@
 <script>
 
 export default {
+  head () {
+    return {
+      titleTemplate: `%s - ${this.$t('appName')}`,
+      htmlAttrs: {
+        lang: this.$i18n.locale === 'zh-Hans' ? 'zh-CN' : this.$i18n.locale
+      }
+    }
+  },
   mounted () {
     // dom初始化完成再初始化主题
     this.$nextTick(() => {

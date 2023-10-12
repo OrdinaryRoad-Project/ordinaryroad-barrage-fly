@@ -67,6 +67,7 @@ export default {
   },
   head () {
     return {
+      titleTemplate: `%s - ${this.$t('appName')}`,
       htmlAttrs: {
         lang: this.$i18n.locale === 'zh-Hans' ? 'zh-CN' : this.$i18n.locale
       }

@@ -4,8 +4,8 @@ import zhHans from 'vuetify/lib/locale/zh-Hans'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - barrage-fly-ui',
-    title: 'barrage-fly-ui',
+    titleTemplate: '%s - Barrage Fly',
+    title: 'Barrage Fly',
     htmlAttrs: {
       lang: 'zh-CN'
     },

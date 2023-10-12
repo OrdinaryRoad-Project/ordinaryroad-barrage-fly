@@ -45,7 +45,11 @@ export default {
   head () {
     const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
-      title
+      title,
+      titleTemplate: `%s - ${this.$t('appName')}`,
+      htmlAttrs: {
+        lang: this.$i18n.locale === 'zh-Hans' ? 'zh-CN' : this.$i18n.locale
+      }
     }
   },
   mounted () {
