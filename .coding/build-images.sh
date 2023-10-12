@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-export APP_VERSION=1.0.4
+export APP_VERSION=1.0.5
 
 # 1 前端
 cd ../barrage-fly
