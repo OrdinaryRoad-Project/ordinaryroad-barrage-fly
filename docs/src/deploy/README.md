@@ -78,6 +78,7 @@ services:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
     ports:
+      - "8080:8080"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly
     restart: always
@@ -140,6 +141,7 @@ services:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
     ports:
+      - "8080:8080"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly
     restart: always
@@ -207,6 +209,7 @@ services:
       context: ./ordinaryroad-barrage-fly-nginx
     ports:
       - "81:81"
+      - "8081:8081"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly-nginx
     restart: always
@@ -262,6 +265,7 @@ services:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
     ports:
+      - "8080:8080"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly
     restart: always
