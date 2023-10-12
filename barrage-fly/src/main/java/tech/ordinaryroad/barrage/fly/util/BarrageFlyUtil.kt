@@ -17,7 +17,7 @@
 package tech.ordinaryroad.barrage.fly.util
 
 import cn.hutool.core.io.FileUtil
-import cn.hutool.core.io.resource.ClassPathResource
+import cn.hutool.core.io.IoUtil
 import cn.hutool.core.io.resource.ResourceUtil
 import cn.hutool.core.util.RandomUtil
 import cn.hutool.extra.spring.SpringUtil
@@ -37,6 +37,7 @@ import tech.ordinaryroad.live.chat.client.douyu.msg.ChatmsgMsg
 import tech.ordinaryroad.live.chat.client.douyu.msg.DgbMsg
 import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
 import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
+import java.nio.charset.StandardCharsets
 
 /**
  *
@@ -48,11 +49,8 @@ object BarrageFlyUtil {
 
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
         val list = ArrayList<BarrageFlyMsgDTO>()
-        val resource = ResourceUtil.getResourceObj("express") as ClassPathResource
-        for (file in resource.file!!.listFiles()!!) {
-            val resourceFilePath = "express/${file.name}"
-            FileUtil.readUtf8Lines(ResourceUtil.getResource(resourceFilePath)).map {
-                it ?: return@map null
+        IoUtil.lineIter(ResourceUtil.getStream("express"), StandardCharsets.UTF_8).forEach {
+            FileUtil.readUtf8Lines(ResourceUtil.getResource("express/${it}")).map {
                 var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
                 try {
                     val jsonNode = OBJECT_MAPPER.readTree(it)
