@@ -16,6 +16,7 @@
 
 package tech.ordinaryroad.barrage.fly.handler
 
+import cn.hutool.system.SystemUtil
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -69,12 +70,31 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
                 }
             }
 
+        // heap内存
+        val heapMemoryStatuses = OBJECT_MAPPER.createObjectNode().apply {
+            val memoryMXBean = SystemUtil.getMemoryMXBean()
+            val heapMemoryUsage = memoryMXBean.heapMemoryUsage
+            put("committed", heapMemoryUsage.committed)
+            put("used", heapMemoryUsage.used)
+            put("max", heapMemoryUsage.max)
+        }
+
+        // 线程
+        val threadStatuses = OBJECT_MAPPER.createObjectNode().apply {
+            val threadMXBean = SystemUtil.getThreadMXBean()
+            put("live", threadMXBean.threadCount)
+            put("daemon", threadMXBean.daemonThreadCount)
+            put("peak", threadMXBean.peakThreadCount)
+        }
+
         return ServerResponse.ok().bodyValue(
             OBJECT_MAPPER.createObjectNode().apply {
                 put("tasksCount", ids.size)
                 put("clientsCount", clientsCount)
                 putPOJO("taskStatuses", taskStatuses)
                 putPOJO("taskClients", taskClients)
+                putPOJO("heapMemoryStatuses", heapMemoryStatuses)
+                putPOJO("threadStatuses", threadStatuses)
             }
         )
     }

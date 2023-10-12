@@ -15,18 +15,30 @@
  */
 package tech.ordinaryroad.barrage.fly.config
 
+import cn.dev33.satoken.basic.SaBasicUtil
 import cn.dev33.satoken.reactor.filter.SaReactorFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
+import org.springframework.web.reactive.function.server.ServerResponse
 
 /**
  * [Sa-Token 权限认证] 全局配置类
  */
 @Configuration
 class SaTokenConfigure {
+
     /**
      * 注册 [Sa-Token全局过滤器]
      */
     @Bean
-    fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
+    fun saReactorFilter(): SaReactorFilter = SaReactorFilter().apply {
+        addInclude("/admin/**")
+            .setAuth {
+                SaBasicUtil.check()
+            }
+        setError {
+            return@setError ServerResponse.status(HttpStatus.UNAUTHORIZED)
+        }
+    }
 }
