@@ -16,7 +16,7 @@
 <template>
   <v-card :loading="loading" flat outlined>
     <v-card-title>
-      {{ $t('myStats.app.thread') }}<v-spacer />MAX：<span class="primary--text">{{ maxThread??'-' }}</span>
+      {{ $t('myStats.app.thread') }}<v-spacer />PEAK：<span class="primary--text">{{ peakThread??'-' }}</span>
     </v-card-title>
     <div v-if="!loading">
       <div
@@ -49,7 +49,7 @@ export default {
     }
   },
   data: () => ({
-    maxThread: null,
+    peakThread: null,
     chart: undefined,
     options: {
       tooltip: {
@@ -101,7 +101,7 @@ export default {
         const item = this.threadStatuses[key]
 
         if (key === 'peak') {
-          this.maxThread = item
+          this.peakThread = item
           continue
         }
 
