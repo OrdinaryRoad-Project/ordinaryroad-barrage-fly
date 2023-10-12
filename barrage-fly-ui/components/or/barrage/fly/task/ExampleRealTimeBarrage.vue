@@ -43,33 +43,35 @@ export default {
     })
   },
   created () {
-    this.webSocketClient = new WebSocketClient({
-      url: this.$config.SUB_BASE_URL,
-      setupPayloadMetadataRoute: this.route
-    })
-      .onConnected(() => {
-        this.$refs.msgList.pushMsg({ data: { message: '连接建立成功' } })
+    if (process.client) {
+      this.webSocketClient = new WebSocketClient({
+        url: this.$config.SUB_BASE_URL,
+        setupPayloadMetadataRoute: this.route
       })
-      .onClosed(() => {
-        this.$refs.msgList.pushMsg({ data: { message: '连接已关闭' } })
-      })
-      .onSystemMsg((msgs) => {
-        msgs.forEach((msg) => {
-          this.$refs.msgList.pushMsg(msg)
+        .onConnected(() => {
+          this.$refs.msgList.pushMsg({ data: { message: '连接建立成功' } })
         })
-      })
-      .onMsg((msgs) => {
-        msgs.forEach((msg) => {
-          this.$refs.msgList.pushMsg(msg)
+        .onClosed(() => {
+          this.$refs.msgList.pushMsg({ data: { message: '连接已关闭' } })
         })
-      })
+        .onSystemMsg((msgs) => {
+          msgs.forEach((msg) => {
+            this.$refs.msgList.pushMsg(msg)
+          })
+        })
+        .onMsg((msgs) => {
+          msgs.forEach((msg) => {
+            this.$refs.msgList.pushMsg(msg)
+          })
+        })
 
-    this.webSocketClient.connect()
-      .then((webSocketClient) => {
-        webSocketClient.requestChannel({
-          task: this.task
-        }, { route: this.route })
-      })
+      this.webSocketClient.connect()
+        .then((webSocketClient) => {
+          webSocketClient.requestChannel({
+            task: this.task
+          }, { route: this.route })
+        })
+    }
   }
 }
 </script>
