@@ -13,11 +13,10 @@
   - See the License for the specific language governing permissions and
   - limitations under the License.
   -->
-
 <template>
   <v-card :loading="loading" flat outlined>
     <v-card-title>
-      {{ $t('myStats.task.clients') }}
+      {{ $t('myStats.app.thread') }}<v-spacer />MAX：<span class="primary--text">{{ maxThread??'-' }}</span>
     </v-card-title>
     <div v-if="!loading">
       <div
@@ -37,12 +36,11 @@
 </template>
 
 <script>
-
 export default {
-  name: 'OrBarrageFlyStatsTaskClientsLine',
+  name: 'OrBarrageFlyStatsAppHeapMemoryLine',
   props: {
-    taskClients: {
-      type: Array,
+    threadStatuses: {
+      type: Object,
       required: true
     },
     loading: {
@@ -51,6 +49,7 @@ export default {
     }
   },
   data: () => ({
+    maxThread: null,
     chart: undefined,
     options: {
       tooltip: {
@@ -79,7 +78,7 @@ export default {
   computed: {
   },
   watch: {
-    taskClients () {
+    threadStatuses () {
       this.updateSeries()
     }
   },
@@ -89,23 +88,28 @@ export default {
   },
   methods: {
     updateSeries () {
-      if (!this.taskClients) {
+      if (!this.threadStatuses) {
         return
       }
 
       const seriesMap = {}
       this.options.series = []
       const now = new Date()
-      for (let i = 0; i < this.taskClients.length; i++) {
-        const item = this.taskClients[i]
+      const keys = Object.keys(this.threadStatuses)
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i]
+        const item = this.threadStatuses[key]
+
+        if (key === 'peak') {
+          this.maxThread = item
+          continue
+        }
+
         const dataToAdd = {
           name: now.toString(),
-          value: [
-            now.getTime(),
-            item.clientCount
-          ]
+          value: [now.getTime(), item]
         }
-        const seriesMapKey = `/${item.task.platform}/${item.task.roomId}/${item.task.id}`
+        const seriesMapKey = key
         let seriesMapElement = this.seriesMap[seriesMapKey]
         if (seriesMapElement) {
           if (seriesMapElement.data.length > 100) {
@@ -119,6 +123,7 @@ export default {
             smooth: true,
             showSymbol: false,
             data: [dataToAdd],
+            areaStyle: {},
             emphasis: {
               focus: 'series'
             }

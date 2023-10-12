@@ -13,11 +13,10 @@
   - See the License for the specific language governing permissions and
   - limitations under the License.
   -->
-
 <template>
   <v-card :loading="loading" flat outlined>
     <v-card-title>
-      {{ $t('myStats.task.clients') }}
+      {{ $t('myStats.app.heapMemory') }}<v-spacer />MAX：<span class="primary--text">{{ maxMemory?options.tooltip.valueFormatter(maxMemory):'-' }}</span>
     </v-card-title>
     <div v-if="!loading">
       <div
@@ -37,12 +36,25 @@
 </template>
 
 <script>
-
+const formatter = (value) => {
+  value = value / 1024
+  if (value < 1024) {
+    return parseFloat(value.toFixed(2)) + 'KB'
+  } else {
+    value = value / 1024
+    if (value < 1024) {
+      return parseFloat(value.toFixed(2)) + 'MB'
+    } else {
+      value = value / 1024
+      return parseFloat(value.toFixed(2)) + 'GB'
+    }
+  }
+}
 export default {
-  name: 'OrBarrageFlyStatsTaskClientsLine',
+  name: 'OrBarrageFlyStatsAppHeapMemoryLine',
   props: {
-    taskClients: {
-      type: Array,
+    heapMemoryStatuses: {
+      type: Object,
       required: true
     },
     loading: {
@@ -51,13 +63,15 @@ export default {
     }
   },
   data: () => ({
+    maxMemory: null,
     chart: undefined,
     options: {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           animation: false
-        }
+        },
+        valueFormatter: formatter
       },
       xAxis: {
         type: 'time',
@@ -70,7 +84,8 @@ export default {
         boundaryGap: [0, '100%'],
         splitLine: {
           show: false
-        }
+        },
+        axisLabel: { formatter }
       },
       series: []
     },
@@ -79,7 +94,7 @@ export default {
   computed: {
   },
   watch: {
-    taskClients () {
+    heapMemoryStatuses () {
       this.updateSeries()
     }
   },
@@ -89,23 +104,28 @@ export default {
   },
   methods: {
     updateSeries () {
-      if (!this.taskClients) {
+      if (!this.heapMemoryStatuses) {
         return
       }
 
       const seriesMap = {}
       this.options.series = []
       const now = new Date()
-      for (let i = 0; i < this.taskClients.length; i++) {
-        const item = this.taskClients[i]
+      const keys = Object.keys(this.heapMemoryStatuses)
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i]
+        const item = this.heapMemoryStatuses[key]
+
+        if (key === 'max') {
+          this.maxMemory = item
+          continue
+        }
+
         const dataToAdd = {
           name: now.toString(),
-          value: [
-            now.getTime(),
-            item.clientCount
-          ]
+          value: [now.getTime(), item]
         }
-        const seriesMapKey = `/${item.task.platform}/${item.task.roomId}/${item.task.id}`
+        const seriesMapKey = key
         let seriesMapElement = this.seriesMap[seriesMapKey]
         if (seriesMapElement) {
           if (seriesMapElement.data.length > 100) {
@@ -119,6 +139,7 @@ export default {
             smooth: true,
             showSymbol: false,
             data: [dataToAdd],
+            areaStyle: {},
             emphasis: {
               focus: 'series'
             }

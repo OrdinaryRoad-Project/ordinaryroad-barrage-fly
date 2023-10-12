@@ -2,17 +2,17 @@
   "appName": "Barrage Fly",
   "barrageFlyTask": {
     "actions": {
+      "copyTaskId": "Copy task ID",
       "create": "New Task",
       "delete": "Delete Task",
       "deleteHint": "Are you sure to delete {0} ?",
       "detail": "Detail",
       "edit": "Edit Task",
+      "fullScreenRealTimeBarrage": "Full screen real-time barrage",
       "start": "Start",
       "stop": "Stop",
       "stopHint": "Are you sure to terminate {0} ?",
-      "taskNotExistHint": "The task is not exist",
-      "copyTaskId": "Copy task ID",
-      "fullScreenRealTimeBarrage": "Full screen real-time barrage"
+      "taskNotExistHint": "The task is not exist"
     },
     "cookie": "Cookie",
     "detail": {
@@ -46,6 +46,11 @@
     "title": "How To Connect ?"
   },
   "myStats": {
+    "app": {
+      "heapMemory": "Heap Memory Statuses",
+      "thread": "Thread Statuses",
+      "title": "Application Stat"
+    },
     "clientsCount": "Connected Clients Count",
     "task": {
       "clients": "Task Clients",

@@ -76,6 +76,55 @@
     <v-row>
       <v-col>
         <v-card outlined>
+          <v-card-title>
+            {{ $t('myStats.app.title') }}
+            <v-spacer />
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  target="_blank"
+                  :href="`${$config.BASE_URL}/admin/wallboard`"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-img
+                    src="icon-spring-boot-admin.svg"
+                    width="20"
+                    class="ma-1"
+                  />
+                </v-btn>
+              </template>
+              Spring Boot Admin
+            </v-tooltip>
+          </v-card-title>
+          <v-row class="ma-1">
+            <v-col
+              cols="12"
+              sm="12"
+              md="12"
+              lg="6"
+              xl="5"
+            >
+              <or-barrage-fly-stats-app-heap-memory-line :loading="loading" :heap-memory-statuses="heapMemoryStatuses" />
+            </v-col>
+            <v-col
+              cols="12"
+              sm="12"
+              md="12"
+              lg="6"
+              xl="5"
+            >
+              <or-barrage-fly-stats-app-thread-line :loading="loading" :thread-statuses="threadStatuses" />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-card outlined>
           <v-card-title>{{ $t('myStats.task.title') }}</v-card-title>
           <v-row class="ma-1">
             <v-col
@@ -112,6 +161,8 @@ export default {
     }
   },
   data: () => ({
+    threadStatuses: {},
+    heapMemoryStatuses: {},
     taskStatuses: {},
     taskClients: [],
     loading: true,
@@ -164,6 +215,8 @@ export default {
           this.clientsCountOptions.data = data.clientsCount
           this.taskStatuses = data.taskStatuses
           this.taskClients = data.taskClients
+          this.heapMemoryStatuses = data.heapMemoryStatuses
+          this.threadStatuses = data.threadStatuses
         })
         .catch(() => {
           this.loading = false

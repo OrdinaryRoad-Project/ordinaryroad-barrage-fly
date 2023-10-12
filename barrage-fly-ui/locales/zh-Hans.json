@@ -2,17 +2,17 @@
   "appName": "Barrage Fly",
   "barrageFlyTask": {
     "actions": {
+      "copyTaskId": "复制任务ID",
       "create": "新建任务",
       "delete": "删除任务",
       "deleteHint": "确定删除任务 {0} ？",
       "detail": "详情",
       "edit": "编辑任务",
+      "fullScreenRealTimeBarrage": "全屏展示实时弹幕",
       "start": "开始",
       "stop": "停止",
       "stopHint": "确定终止任务 {0} ？",
-      "taskNotExistHint": "任务不存在",
-      "copyTaskId": "复制任务ID",
-      "fullScreenRealTimeBarrage": "全屏展示实时弹幕"
+      "taskNotExistHint": "任务不存在"
     },
     "cookie": "Cookie",
     "detail": {
@@ -46,6 +46,11 @@
     "title": "如何连接？"
   },
   "myStats": {
+    "app": {
+      "heapMemory": "堆内存统计",
+      "thread": "线程统计",
+      "title": "应用状态"
+    },
     "clientsCount": "已连接的客户端数",
     "task": {
       "clients": "客户端连接数统计",
