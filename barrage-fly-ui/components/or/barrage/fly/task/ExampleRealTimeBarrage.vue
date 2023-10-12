@@ -48,10 +48,10 @@ export default {
       setupPayloadMetadataRoute: this.route
     })
       .onConnected(() => {
-        this.$refs.msgList.pushMsg({ data: { msg: '连接建立成功' } })
+        this.$refs.msgList.pushMsg({ data: { message: '连接建立成功' } })
       })
       .onClosed(() => {
-        this.$refs.msgList.pushMsg({ data: { msg: '连接已关闭' } })
+        this.$refs.msgList.pushMsg({ data: { message: '连接已关闭' } })
       })
       .onSystemMsg((msgs) => {
         msgs.forEach((msg) => {

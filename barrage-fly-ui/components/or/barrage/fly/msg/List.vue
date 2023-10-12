@@ -20,7 +20,7 @@
       <v-fade-transition group class="d-flex overflow-x-auto">
         <or-barrage-fly-msg-super-chat
           v-for="(msg) in superChatMsgs"
-          :key="`${msg._date}`"
+          :key="`${msg._id}`"
           :msg="msg"
           class="ma-1 flex-shrink-0"
           @clickClose="superChatMsgs=superChatMsgs.filter((item)=>item!==msg)"
@@ -36,7 +36,7 @@
       <div ref="list" v-scroll:#main="onScroll">
         <v-list dense>
           <v-slide-x-transition group>
-            <v-list-item v-for="(msg) in msgs" :key="`${msg._date}`">
+            <v-list-item v-for="(msg) in msgs" :key="`${msg._id}`">
               <v-list-item-title v-if="'DANMU'===msg.type">
                 <or-barrage-fly-msg-danmu :msg="msg" />
               </v-list-item-title>
@@ -44,7 +44,7 @@
                 <or-barrage-fly-msg-gift :msg="msg" />
               </v-list-item-title>
               <v-list-item-title v-else>
-                {{ msg }}
+                {{ msg.message ?? msg }}
               </v-list-item-title>
             </v-list-item>
           </v-slide-x-transition>
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     pushMsg (msg) {
-      const msgDto = { ...msg.data, _date: new Date().getTime() }
+      const msgDto = { ...msg.data, _id: this.$or.util.uuid() }
       if (msgDto.type === 'SUPER_CHAT') {
         this.superChatMsgs.push({ ...msgDto, _expirationDate: this.$dayjs().add(msgDto.msg.duration, 's') })
       } else {

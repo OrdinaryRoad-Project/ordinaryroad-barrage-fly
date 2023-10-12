@@ -37,8 +37,8 @@ const EVENT_NAME = {
   CONNECTED: 'CONNECTED',
   CLOSED: 'CLOSED',
   ERROR: 'ERROR',
-  MSG: 'msg',
-  MSG_SYSTEM: 'msg_system',
+  MSG: 'MSG',
+  MSG_SYSTEM: 'MSG_SYSTEM',
   STATUS: 'STATUS'
 }
 
@@ -86,9 +86,6 @@ class WebSocketClient {
                 const kind = msg.kind
                 this._emitMsg(EVENT_NAME.STATUS, kind)
                 switch (kind) {
-                  case 'CONNECTED':
-                    this._emitMsg(EVENT_NAME.CONNECTED)
-                    break
                   case 'CLOSED':
                     this._emitMsg(EVENT_NAME.CLOSED)
                     break
@@ -107,6 +104,7 @@ class WebSocketClient {
                 this._emitMsg(EVENT_NAME.ERROR, e)
               }
             })
+          this._emitMsg(EVENT_NAME.CONNECTED)
           resolve(this)
         }, (e) => {
           console.error('onError', e, e.source)
