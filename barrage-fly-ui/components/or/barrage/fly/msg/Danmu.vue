@@ -13,31 +13,27 @@
   - See the License for the specific language governing permissions and
   - limitations under the License.
   -->
-
 <template>
-  <or-barrage-fly-task-real-time-barrage
-    :task-ids="[task.id]"
-    height="100vh"
-  />
+  <div class="d-flex align-center">
+    <or-barrage-fly-msg-user-avatar :msg="msg" size="36" class="me-2" />
+    <span v-if="msg.msg.badgeLevel && msg.msg.badgeLevel!==0" class="secondary--text me-1">
+      [{{ msg.msg.badgeLevel }}{{ msg.msg.badgeName }}]
+    </span>
+    <or-barrage-fly-msg-username :msg="msg" />
+    ：{{ msg.msg.content }}
+  </div>
 </template>
 <script>
 export default {
+  name: 'OrBarrageFlyMsgDanmu',
   props: {
-    task: {
+    msg: {
       type: Object,
       required: true
-    }
-  },
-  head () {
-    return {
-      meta: [
-        { name: 'referrer', content: 'no-referrer' }
-      ]
     }
   }
 }
 </script>
-
-<style>
+<style scoped>
 
 </style>

@@ -15,29 +15,36 @@
   -->
 
 <template>
-  <or-barrage-fly-task-real-time-barrage
-    :task-ids="[task.id]"
-    height="100vh"
-  />
+  <v-avatar
+    style="border: 1px solid;"
+    :size="size"
+    color="grey"
+    :class="avatarClass"
+  >
+    <img :src="msg.msg.userAvatar" :alt="msg.msg.username">
+  </v-avatar>
 </template>
+
 <script>
 export default {
+  name: 'OrBarrageFlyMsgUserAvatar',
   props: {
-    task: {
+    avatarClass: {
+      type: String,
+      default: null
+    },
+    size: {
+      type: [Number, String],
+      default: 48
+    },
+    msg: {
       type: Object,
       required: true
-    }
-  },
-  head () {
-    return {
-      meta: [
-        { name: 'referrer', content: 'no-referrer' }
-      ]
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -44,7 +44,7 @@ export const EVENT_NAME = {
 export class WebSocketClient {
   constructor (
     url,
-    setupPayloadMetadataRoute = 'default',
+    setupPayloadMetadataRoute = '',
     setupPayloadData = {}
   ) {
     this.rsocketClient = new RSocketClient({
@@ -100,7 +100,7 @@ export class WebSocketClient {
     })
   }
 
-  requestChannel (data, route = 'default') {
+  requestChannel (data, route = '') {
     // channel是多对0/1/多
     // 使用Flowable不断向Channel请求消息
     this.socket.requestChannel(
@@ -167,7 +167,7 @@ export class WebSocketClient {
     return this
   }
 
-  payload (data, route = 'default') {
+  payload (data, route = '') {
     return this._encodePayload({
       data,
       metadata: [
@@ -176,7 +176,7 @@ export class WebSocketClient {
     })
   }
 
-  cmdPayload (data, route = 'default', cmd) {
+  cmdPayload (data, route = '', cmd) {
     return this._encodePayload({
       data: { ...data, cmd },
       metadata: [

@@ -2,6 +2,11 @@
   "name": "ordinaryroad-barrage-fly-ui",
   "version": "1.0.5",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -33,7 +38,8 @@
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
     "vuetify": "^2.7.1",
-    "vuetify2-expand": "^1.1.2"
+    "vuetify2-expand": "^1.1.2",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

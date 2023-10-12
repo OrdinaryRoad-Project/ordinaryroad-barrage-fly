@@ -13,31 +13,33 @@
   - See the License for the specific language governing permissions and
   - limitations under the License.
   -->
-
 <template>
-  <or-barrage-fly-task-real-time-barrage
-    :task-ids="[task.id]"
-    height="100vh"
-  />
+  <v-hover>
+    <template #default="{hover}">
+      <v-chip
+        outlined
+        color="primary"
+        :close="hover"
+        @click:close="$emit('clickClose')"
+      >
+        <or-barrage-fly-msg-user-avatar :msg="msg" class="me-1" avatar-class="v-icon--left" />
+        <or-barrage-fly-msg-username :msg="msg" />
+        ：{{ msg.msg.content }}
+      </v-chip>
+    </template>
+  </v-hover>
 </template>
 <script>
 export default {
+  name: 'OrBarrageFlyMsgSuperChat',
   props: {
-    task: {
+    msg: {
       type: Object,
       required: true
-    }
-  },
-  head () {
-    return {
-      meta: [
-        { name: 'referrer', content: 'no-referrer' }
-      ]
     }
   }
 }
 </script>
-
-<style>
+<style scoped>
 
 </style>

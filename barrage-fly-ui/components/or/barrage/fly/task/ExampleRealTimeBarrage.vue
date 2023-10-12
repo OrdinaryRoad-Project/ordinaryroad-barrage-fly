@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { CMD, WebSocketClient } from '@/plugins/rsocket/WebSocketClient'
+import { WebSocketClient } from '@/plugins/rsocket/WebSocketClient'
 
 export default {
-  name: 'OrBarrageFlyTaskRealTimeBarrage',
+  name: 'OrBarrageFlyTaskExampleRealTimeBarrage',
   props: {
-    taskIds: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     height: {
@@ -34,17 +34,15 @@ export default {
     }
   },
   data: () => ({
-    route: '',
+    route: 'example',
     webSocketClient: null
   }),
-  computed: {},
   mounted () {
     this.$once('hook:beforeDestroy', () => {
       this.webSocketClient && this.webSocketClient.destroy()
     })
   },
   created () {
-    // https://githubfast.com/rsocket/rsocket-js/issues/123#issuecomment-988515000
     this.webSocketClient = new WebSocketClient(this.$config.SUB_BASE_URL, this.route)
       .onOpen(() => {
         this.$refs.msgList.pushMsg({ data: { msg: '连接建立成功' } })
@@ -66,14 +64,13 @@ export default {
     this.webSocketClient.connect()
       .then((webSocketClient) => {
         webSocketClient.requestChannel({
-          taskIds: this.taskIds,
-          cmd: CMD.SUBSCRIBE
+          task: this.task
         }, this.route)
       })
-  },
-  methods: { }
+  }
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>

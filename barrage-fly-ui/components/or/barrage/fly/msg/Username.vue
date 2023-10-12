@@ -14,30 +14,40 @@
   - limitations under the License.
   -->
 
-<template>
-  <or-barrage-fly-task-real-time-barrage
-    :task-ids="[task.id]"
-    height="100vh"
-  />
-</template>
 <script>
 export default {
+  name: 'OrBarrageFlyMsgUsername',
   props: {
-    task: {
+    msg: {
       type: Object,
       required: true
     }
   },
-  head () {
-    return {
-      meta: [
-        { name: 'referrer', content: 'no-referrer' }
-      ]
+  computed: {
+    userSpaceUrl () {
+      return (msg) => {
+        if (msg.platform === 'BILIBILI') {
+          return `https://space.bilibili.com/${msg.msg.uid}`
+        } else if (msg.platform === 'DOUYU') {
+          return `https://yuba.douyu.com/wbapi/web/jumpusercenter?id=${msg.msg.uid}&name=${msg.msg.username}`
+        } else if (msg.platform === 'HUYA') {
+          return `https://www.huya.com/video/u/${msg.msg.uid}`
+        } else {
+          return null
+        }
+      }
     }
   }
+
 }
 </script>
 
-<style>
+<template>
+  <or-link :href="userSpaceUrl(msg)" hide-icon>
+    {{ msg.msg.username }}
+  </or-link>
+</template>
+
+<style scoped>
 
 </style>

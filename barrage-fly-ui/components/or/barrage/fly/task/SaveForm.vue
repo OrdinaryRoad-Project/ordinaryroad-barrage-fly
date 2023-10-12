@@ -88,9 +88,26 @@
             hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
             :label="$t('barrageFlyTask.msgPostMapExpress')"
           />
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              text
+              color="primary"
+              @click="onClickTest"
+            >
+              测试一下
+            </v-btn>
+          </v-card-actions>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+    <or-base-dialog
+      ref="testDialog"
+      title="测试一下"
+      @onConfirm="$refs.testDialog.close()"
+    >
+      <or-barrage-fly-task-example-real-time-barrage :task="model" />
+    </or-base-dialog>
   </v-form>
 </template>
 
@@ -137,6 +154,9 @@ export default {
   mounted () {
   },
   methods: {
+    onClickTest () {
+      this.$refs.testDialog.show()
+    },
     validate () {
       return new Promise((resolve, reject) => {
         if (!this.$refs.form.validate()) {
