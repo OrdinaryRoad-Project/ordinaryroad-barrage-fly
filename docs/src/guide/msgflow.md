@@ -53,13 +53,23 @@ msg: `Object`，前置处理的返回值
 
 ## 4.4 一些例子
 
-### 4.4.1 只接收框架定义的消息
+### 4.4.1 消息过滤
+
+#### 只接收框架定义的消息
 
 ```
 return msg.type != null
 ```
 
-### 4.4.2 封装msg，增加随机数
+#### 只接收弹幕和礼物消息
+
+```
+return NewList("DANMU", "GIFT").contains(msg.type);
+```
+
+### 4.4.2 消息扩展
+
+#### 封装msg，增加随机数
 
 ```
 import cn.hutool.core.util.RandomUtil;
@@ -70,7 +80,18 @@ map.put("randomNumber",RandomUtil.randomNumbers(6));
 return map;
 ```
 
-### 4.4.3 通过Http请求获取某个任务的信息，并扩充到msg中
+#### 通过内置方法获取某个任务的信息，并扩充到msg中
+
+```
+import cn.hutool.core.bean.BeanUtil;
+
+map = BeanUtil.beanToMap(msg, false, false);
+map.put("task",getTask("taskId"));
+
+return map;
+```
+
+#### 通过Http请求获取某个任务的信息，并扩充到msg中
 
 ```
 import cn.hutool.http.HttpUtil;
@@ -82,7 +103,9 @@ map.put("task",task);
 return map;
 ```
 
-### 4.4.4 收到消息后发送弹幕
+### 4.4.3 触发其他动作
+
+#### 收到消息后发送弹幕
 
 ```
 import cn.hutool.core.util.RandomUtil;
@@ -93,20 +116,4 @@ then
    发送弹幕("u2","666666"+RandomUtil.randomNumbers(1));
 
 return msg
-```
-
-### 4.4.5 获取任务详情
-
-```
-import cn.hutool.core.bean.BeanUtil;
-
-map = BeanUtil.beanToMap(msg, false, false);
-map.put("task",getTask("taskId"));
-
-return map;
-```
-
-### 4.4.6 只接收弹幕和礼物消息
-```
-return NewList("DANMU", "GIFT").contains(msg.type);
 ```
