@@ -55,6 +55,7 @@ services:
       context: ./ordinaryroad-barrage-fly-nginx
     ports:
       - "81:81"
+      - "8081:8081"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly-nginx
     restart: always

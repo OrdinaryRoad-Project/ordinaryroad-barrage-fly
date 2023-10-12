@@ -42,6 +42,7 @@ services:
       RSA_PUBLIC_KEY:
       RSA_PRIVATE_KEY:
     ports:
+      - "8080:8080"
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly
     restart: always
