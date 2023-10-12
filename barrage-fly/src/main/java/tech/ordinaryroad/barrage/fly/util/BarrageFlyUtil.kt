@@ -49,8 +49,9 @@ object BarrageFlyUtil {
     fun generateRandomMsgDTOs(): List<BarrageFlyMsgDTO> {
         val list = ArrayList<BarrageFlyMsgDTO>()
         val resource = ResourceUtil.getResourceObj("express") as ClassPathResource
-        for (file in resource.file.listFiles()) {
-            FileUtil.readUtf8Lines(file).map {
+        for (file in resource.file!!.listFiles()!!) {
+            val resourceFilePath = "express/${file.name}"
+            FileUtil.readUtf8Lines(ResourceUtil.getResource(resourceFilePath)).map {
                 it ?: return@map null
                 var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
                 try {
