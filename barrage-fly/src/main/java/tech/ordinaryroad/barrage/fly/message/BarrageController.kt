@@ -28,6 +28,7 @@ import org.springframework.messaging.rsocket.RSocketRequester
 import org.springframework.messaging.rsocket.annotation.ConnectMapping
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
@@ -52,7 +53,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
     @OptIn(DelicateCoroutinesApi::class)
     @ConnectMapping("")
-    fun connect(setupPayload: JsonNode?, requester: RSocketRequester) {
+    fun connect(setupPayload: Mono<JsonNode>, requester: RSocketRequester) {
         if (log.isDebugEnabled) {
             log.debug("on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
         }
@@ -185,7 +186,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
     }
 
     @ConnectMapping("example")
-    fun exampleConnect(setupPayload: JsonNode?, requester: RSocketRequester) {
+    fun exampleConnect(setupPayload: Mono<JsonNode>, requester: RSocketRequester) {
         if (log.isDebugEnabled) {
             log.debug("example on connect {}, setupPayload {}", requester.hashCode(), setupPayload)
         }

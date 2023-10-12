@@ -23,6 +23,18 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 import argparse
 import asyncio
 import json
@@ -47,8 +59,7 @@ subscribe_payload_json = {
     "data": {
         "taskIds": [],
         "cmd": "SUBSCRIBE"
-    },
-    "metadata": {}
+    }
 }
 
 
@@ -109,8 +120,7 @@ async def main(server_host, server_port):
             # 2 发送订阅Task的请求
             # Payload：Client通过Channel向Server发送的消息，False表示不需要关闭Channel
             yield Payload(
-                data=json_encoder.encode(subscribe_payload_json["data"]).encode(),
-                metadata=json_encoder.encode(subscribe_payload_json["metadata"]).encode()
+                data=json_encoder.encode(subscribe_payload_json["data"]).encode()
             ), False
             # 发送了一条订阅消息后直接暂停发送即可
             await Event().wait()
@@ -160,7 +170,7 @@ if __name__ == '__main__':
     pip3 install rsocket
     pip3 install aiohttp
     
-    python websocket.py $PORT
+    python websocket.py -t taskId1 -t taskId2 [-p PORT]
     """
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser()
