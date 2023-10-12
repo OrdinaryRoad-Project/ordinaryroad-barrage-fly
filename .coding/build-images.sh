@@ -17,7 +17,7 @@
 #
 export APP_VERSION=1.0.5
 
-# 1 前端
+# 1 后端
 cd ../barrage-fly
 ./gradlew clean bootJar
 cd ../.docker/ordinaryroad-barrage-fly
@@ -26,7 +26,7 @@ docker tag ordinaryroad-barrage-fly:${APP_VERSION} ordinaryroad-barrage-fly
 docker build . -f Dockerfile-arm64 -t ordinaryroad-barrage-fly-arm64:${APP_VERSION}
 docker tag ordinaryroad-barrage-fly-arm64:${APP_VERSION} ordinaryroad-barrage-fly-arm64
 
-# 2 后端
+# 2 前端
 cd ../../barrage-fly-ui
 npm run copy
 cd ../.docker/ordinaryroad-barrage-fly-ui/app
