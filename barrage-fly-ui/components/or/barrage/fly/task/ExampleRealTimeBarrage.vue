@@ -43,11 +43,14 @@ export default {
     })
   },
   created () {
-    this.webSocketClient = new WebSocketClient(this.$config.SUB_BASE_URL, this.route)
-      .onOpen(() => {
+    this.webSocketClient = new WebSocketClient({
+      url: this.$config.SUB_BASE_URL,
+      setupPayloadMetadataRoute: this.route
+    })
+      .onConnected(() => {
         this.$refs.msgList.pushMsg({ data: { msg: '连接建立成功' } })
       })
-      .onClose(() => {
+      .onClosed(() => {
         this.$refs.msgList.pushMsg({ data: { msg: '连接已关闭' } })
       })
       .onSystemMsg((msgs) => {
@@ -65,7 +68,7 @@ export default {
       .then((webSocketClient) => {
         webSocketClient.requestChannel({
           task: this.task
-        }, this.route)
+        }, { route: this.route })
       })
   }
 }

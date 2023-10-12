@@ -6,10 +6,10 @@
 2. Client请求Channel，并发送要订阅/取消订阅的任务ID（直播间弹幕转发任务）
 3. 监听Server通过Channel回复的消息（转发过来的直播间弹幕）
 
-> 浏览器环境用WebSocket，其他环境可以用TCP
-
 在 `connector-examples` 目录下提供了一些不同语言的例子可供参考
 
 - python
     - [x] websocket
-- vue参考`barrage-fly-ui/components/or/barrage/fly/task/RealTimeBarrage.vue`
+- javascript
+    - [x] websocket
+    - vue参考`barrage-fly-ui/components/or/barrage/fly/task/RealTimeBarrage.vue`

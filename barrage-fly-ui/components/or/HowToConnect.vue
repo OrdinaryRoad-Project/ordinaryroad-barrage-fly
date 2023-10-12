@@ -23,7 +23,7 @@
     协议进行通信<or-link href="https://barragefly.ordinaryroad.tech/guide/connect.html">
       文档跳转
     </or-link><br>
-    消息格式为：{data:{}, metadata:{}}，data, metadata均使用JSON格式<br>
+    消息格式为：{data, metadata}，data使用JSON格式，metadata使用MESSAGE_RSOCKET_COMPOSITE_METADATA格式<br>
     连接地址： ws://{HOST}:{PORT:9898}<br>
     连接成功后，连接Channel，发送订阅SUBSCRIBE/取消订阅SUBSCRIBE请求，格式如下
     <json-viewer
@@ -31,11 +31,11 @@
       :expand-depth="5"
       :theme="`jv-${$vuetify.theme.dark ? 'dark' : 'light'}`"
       :value="{
-        data:{
+        data: {
           taskIds: [item.id],
           cmd: 'SUBSCRIBE'
         },
-        metadata:{}
+        metadata: undefined
       }"
       copyable
     >

@@ -93,7 +93,7 @@ export default {
         }
         this.msgs.push(msgDto)
         this.$nextTick(() => {
-          if (this.reachBottom) {
+          if (this.reachBottom && this.$refs.main) {
             this.$refs.main.scrollTop = this.$refs.list.scrollHeight
           }
         })

@@ -34,7 +34,6 @@ export default {
     }
   },
   data: () => ({
-    route: '',
     webSocketClient: null
   }),
   computed: {},
@@ -45,11 +44,13 @@ export default {
   },
   created () {
     // https://githubfast.com/rsocket/rsocket-js/issues/123#issuecomment-988515000
-    this.webSocketClient = new WebSocketClient(this.$config.SUB_BASE_URL, this.route)
-      .onOpen(() => {
+    this.webSocketClient = new WebSocketClient({
+      url: this.$config.SUB_BASE_URL
+    })
+      .onConnected(() => {
         this.$refs.msgList.pushMsg({ data: { msg: '连接建立成功' } })
       })
-      .onClose(() => {
+      .onClosed(() => {
         this.$refs.msgList.pushMsg({ data: { msg: '连接已关闭' } })
       })
       .onSystemMsg((msgs) => {
@@ -66,9 +67,8 @@ export default {
     this.webSocketClient.connect()
       .then((webSocketClient) => {
         webSocketClient.requestChannel({
-          taskIds: this.taskIds,
-          cmd: CMD.SUBSCRIBE
-        }, this.route)
+          taskIds: this.taskIds
+        }, { cmd: CMD.SUBSCRIBE })
       })
   },
   methods: { }

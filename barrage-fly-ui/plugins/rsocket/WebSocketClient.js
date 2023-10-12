@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import * as events from 'events'
-import {
+const events = require('events')
+const {
   APPLICATION_JSON,
   BufferEncoders,
   decodeCompositeMetadata,
@@ -24,29 +24,31 @@ import {
   MESSAGE_RSOCKET_COMPOSITE_METADATA,
   MESSAGE_RSOCKET_ROUTING,
   RSocketClient
-} from 'rsocket-core'
-import RSocketWebSocketClient from 'rsocket-websocket-client'
-import { Flowable } from 'rsocket-flowable'
+} = require('rsocket-core')
+const RSocketWebSocketClient = require('rsocket-websocket-client').default
+const { Flowable } = require('rsocket-flowable')
 
-export const CMD = {
+const CMD = {
   SUBSCRIBE: 'SUBSCRIBE',
   UNSUBSCRIBE: 'UNSUBSCRIBE'
 }
 
-export const EVENT_NAME = {
-  OPEN: 'open',
-  CLOSE: 'close',
-  ERROR: 'error',
+const EVENT_NAME = {
+  CONNECTED: 'CONNECTED',
+  CLOSED: 'CLOSED',
+  ERROR: 'ERROR',
   MSG: 'msg',
-  MSG_SYSTEM: 'msg_system'
+  MSG_SYSTEM: 'msg_system',
+  STATUS: 'STATUS'
 }
 
-export class WebSocketClient {
-  constructor (
+class WebSocketClient {
+  constructor ({
     url,
     setupPayloadMetadataRoute = '',
-    setupPayloadData = {}
-  ) {
+    setupPayloadData = {},
+    wsCreator = null
+  }) {
     this.rsocketClient = new RSocketClient({
       setup: {
         keepAlive: 30 * 1000,
@@ -58,7 +60,8 @@ export class WebSocketClient {
       transport: new RSocketWebSocketClient(
         {
           debug: true,
-          url
+          url,
+          wsCreator
         },
         BufferEncoders
       )
@@ -77,30 +80,43 @@ export class WebSocketClient {
               onSubscribe: (sub) => {
                 sub.request(0x7FFFFFFF)
               },
-              onNext: (status) => {
-                // CONNECTED CLOSED
-                console.log('onNext', status)
-                if (status === 'CONNECTED') {
-                  this._emitMsg(EVENT_NAME.OPEN)
-                }
-                if (status === 'CLOSED') {
-                  this._emitMsg(EVENT_NAME.CLOSE)
+              onNext: (msg) => {
+                // CONNECTED CLOSED ERROR
+                console.log('onNext', msg)
+                const kind = msg.kind
+                this._emitMsg(EVENT_NAME.STATUS, kind)
+                switch (kind) {
+                  case 'CONNECTED':
+                    this._emitMsg(EVENT_NAME.CONNECTED)
+                    break
+                  case 'CLOSED':
+                    this._emitMsg(EVENT_NAME.CLOSED)
+                    break
+                  case 'ERROR':
+                    this._emitMsg(EVENT_NAME.ERROR, msg)
+                    break
+                  default:
+                    // ignore
                 }
               },
               onComplete: () => {
                 console.log('onComplete')
               },
               onError: (e) => {
-                this._emitMsg(EVENT_NAME.ERROR, e)
                 console.error('onError', e, e.source)
+                this._emitMsg(EVENT_NAME.ERROR, e)
               }
             })
           resolve(this)
+        }, (e) => {
+          console.error('onError', e, e.source)
+          reject(e)
+          this._emitMsg(EVENT_NAME.ERROR, e)
         })
     })
   }
 
-  requestChannel (data, route = '') {
+  _requestChannel (payload) {
     // channel是多对0/1/多
     // 使用Flowable不断向Channel请求消息
     this.socket.requestChannel(
@@ -131,7 +147,7 @@ export class WebSocketClient {
       })
         .map((n) => {
           // 2 发送订阅Task的请求
-          return this.payload(data, route)
+          return payload
         })
     )
     // 3 订阅channel
@@ -145,12 +161,12 @@ export class WebSocketClient {
         onNext: (payload) => {
           const msg = this._decodePayload(payload)
           if (msg.data.status) {
-            this._emitMsg(EVENT_NAME.MSG_SYSTEM, msg)
             if (msg.data.status === 200) {
               console.log('channel ok')
             } else {
               console.error('channel failed', msg)
             }
+            this._emitMsg(EVENT_NAME.MSG_SYSTEM, msg)
           } else {
             this._emitMsg(EVENT_NAME.MSG, msg)
           }
@@ -167,21 +183,25 @@ export class WebSocketClient {
     return this
   }
 
+  requestChannel (data, { route, cmd } = { route: '', cmd: null }) {
+    return this._requestChannel(cmd ? this.cmdPayload(data, cmd, route) : this.payload(data, route))
+  }
+
   payload (data, route = '') {
     return this._encodePayload({
       data,
       metadata: [
-        [MESSAGE_RSOCKET_ROUTING, encodeRoute(route)]
+        [MESSAGE_RSOCKET_ROUTING, encodeRoute(route ?? '')]
       ]
     })
   }
 
-  cmdPayload (data, route = '', cmd) {
+  cmdPayload (data, cmd = null, route = '') {
     return this._encodePayload({
       data: { ...data, cmd },
       metadata: [
         ['cmd', Buffer.from(cmd ?? '')],
-        [MESSAGE_RSOCKET_ROUTING, encodeRoute(route)]
+        [MESSAGE_RSOCKET_ROUTING, encodeRoute(route ?? '')]
       ]
     })
   }
@@ -191,13 +211,17 @@ export class WebSocketClient {
     return this
   }
 
-  onOpen (listener) {
-    this.eventEmitter.on(EVENT_NAME.OPEN, listener)
+  onStatus (listener) {
+    this.eventEmitter.on(EVENT_NAME.STATUS, listener)
+  }
+
+  onConnected (listener) {
+    this.eventEmitter.on(EVENT_NAME.CONNECTED, listener)
     return this
   }
 
-  onClose (listener) {
-    this.eventEmitter.on(EVENT_NAME.CLOSE, listener)
+  onClosed (listener) {
+    this.eventEmitter.on(EVENT_NAME.CLOSED, listener)
     return this
   }
 
@@ -238,4 +262,10 @@ export class WebSocketClient {
   _emitMsg (eventName, ...args) {
     this.eventEmitter.emit(eventName, args)
   }
+}
+
+module.exports = {
+  CMD,
+  EVENT_NAME,
+  WebSocketClient
 }
