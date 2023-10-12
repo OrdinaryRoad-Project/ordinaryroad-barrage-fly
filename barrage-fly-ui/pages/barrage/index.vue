@@ -16,24 +16,32 @@
 
 <template>
   <or-barrage-fly-task-real-time-barrage
-    :task-ids="[task.id]"
+    :task-ids="taskIds"
     height="100vh"
   />
 </template>
 <script>
 export default {
-  props: {
-    task: {
-      type: Object,
-      required: true
+  layout ({ route }) {
+    return 'empty'
+  },
+  props: {},
+  asyncData ({ route }) {
+    return {
+      taskIds: route.query.taskIds?.split(',') ?? []
     }
   },
+  data: () => ({
+    taskIds: []
+  }),
   head () {
     return {
       meta: [
         { name: 'referrer', content: 'no-referrer' }
       ]
     }
+  },
+  created () {
   }
 }
 </script>

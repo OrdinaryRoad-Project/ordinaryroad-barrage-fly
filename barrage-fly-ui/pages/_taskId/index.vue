@@ -15,32 +15,28 @@
   -->
 
 <template>
-  <nuxt-child :task="task" />
+  <div>
+    <or-barrage-fly-task-detail-form :item="task" />
+  </div>
 </template>
-
 <script>
 export default {
-  validate ({ params, query, store }) {
-    return params.taskId && params.taskId.trim().length > 0
+  props: {
+    task: {
+      type: Object,
+      required: true
+    }
   },
-  asyncData ({ route, $apis, error, app }) {
-    const taskId = route.params.taskId || ''
-    return $apis.task.findById(taskId)
-      .then((data) => {
-        return { task: data }
-      })
-      .catch(() => {
-        error({ statusCode: 404, message: app.i18n.$t('barrageFlyTask.actions.taskNotExistHint') })
-      })
-  },
-  data: () => ({
-    task: null
-  }),
-  created () {
+  head () {
+    return {
+      meta: [
+        { name: 'referrer', content: 'no-referrer' }
+      ]
+    }
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

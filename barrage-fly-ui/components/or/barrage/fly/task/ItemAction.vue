@@ -25,7 +25,7 @@
         <span v-if="hover">
           <v-btn
             icon
-            :href="`/${item.id}/barrage/real-time`"
+            :href="`/barrage?taskIds=${item.id}`"
             target="_blank"
             @click="$emit('clickExpand')"
           >
