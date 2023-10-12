@@ -10,7 +10,9 @@
       "start": "Start",
       "stop": "Stop",
       "stopHint": "Are you sure to terminate {0} ?",
-      "taskNotExistHint": "The task is not exist"
+      "taskNotExistHint": "The task is not exist",
+      "copyTaskId": "Copy task ID",
+      "fullScreenRealTimeBarrage": "Full screen real-time barrage"
     },
     "cookie": "Cookie",
     "detail": {

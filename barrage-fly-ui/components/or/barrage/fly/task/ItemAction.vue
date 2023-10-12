@@ -23,14 +23,34 @@
     <span v-if="['RUNNING'].includes(taskStatus)">
       <v-slide-x-reverse-transition>
         <span v-if="hover">
-          <v-btn
-            icon
-            :href="`/barrage?taskIds=${item.id}`"
-            target="_blank"
-            @click="$emit('clickExpand')"
-          >
-            <v-icon>mdi-arrow-expand-all</v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            {{ $t('barrageFlyTask.actions.copyTaskId') }}
+            <template #activator="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+                @click="copyTaskId"
+              >
+                <v-icon>mdi-identifier</v-icon>
+              </v-btn>
+            </template>
+          </v-tooltip>
+          <v-tooltip bottom>
+            {{ $t('barrageFlyTask.actions.fullScreenRealTimeBarrage') }}
+            <template #activator="{ on, attrs }">
+              <v-btn
+                icon
+                :href="`/barrage?taskIds=${item.id}`"
+                target="_blank"
+                v-bind="attrs"
+                v-on="on"
+                @click="$emit('clickExpand')"
+              >
+                <v-icon>mdi-arrow-expand-all</v-icon>
+              </v-btn>
+            </template>
+          </v-tooltip>
           <v-btn
             text
             @click="$emit('clickDetail')"
@@ -107,6 +127,8 @@
 </template>
 
 <script>
+const ClipboardJS = require('clipboard')
+
 export default {
   name: 'OrBarrageFlyTaskItemAction',
   props: {
@@ -145,6 +167,9 @@ export default {
   created () {
   },
   methods: {
+    copyTaskId () {
+      ClipboardJS.copy(this.item.id)
+    },
     startTaskStatusInterval () {
       this.taskStatusInterval = setInterval(() => {
         this.getStatus()

@@ -24,9 +24,34 @@
         />
         {{ $t('barrageFlyTask.detail.realTimeBarrage') }}
         <v-spacer />
-        <v-btn icon :href="`/barrage?taskIds=${item.id}`" target="_blank" @click="$emit('clickExpand')">
-          <v-icon>mdi-arrow-expand-all</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          {{ $t('barrageFlyTask.actions.copyTaskId') }}
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click="copyTaskId"
+            >
+              <v-icon>mdi-identifier</v-icon>
+            </v-btn>
+          </template>
+        </v-tooltip>
+        <v-tooltip bottom>
+          {{ $t('barrageFlyTask.actions.fullScreenRealTimeBarrage') }}
+          <template #activator="{ on, attrs }">
+            <v-btn
+              icon
+              :href="`/barrage?taskIds=${item.id}`"
+              target="_blank"
+              v-bind="attrs"
+              v-on="on"
+              @click="$emit('clickExpand')"
+            >
+              <v-icon>mdi-arrow-expand-all</v-icon>
+            </v-btn>
+          </template>
+        </v-tooltip>
       </v-card-title>
       <or-barrage-fly-task-real-time-barrage :task-ids="[item.id]" />
     </v-card>

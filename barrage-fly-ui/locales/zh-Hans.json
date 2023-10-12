@@ -10,7 +10,9 @@
       "start": "开始",
       "stop": "停止",
       "stopHint": "确定终止任务 {0} ？",
-      "taskNotExistHint": "任务不存在"
+      "taskNotExistHint": "任务不存在",
+      "copyTaskId": "复制任务ID",
+      "fullScreenRealTimeBarrage": "全屏展示实时弹幕"
     },
     "cookie": "Cookie",
     "detail": {
