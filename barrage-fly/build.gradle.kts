@@ -46,12 +46,17 @@ repositories {
     mavenCentral()
 }
 
+extra["springBootAdminVersion"] = "2.7.4"
+
 dependencies {
     val liveChatClientVersion = "0.0.14"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.35.0.RC"
     val qLExpressVersion = "3.3.2"
 
+    implementation("de.codecentric:spring-boot-admin-starter-client")
+    implementation("de.codecentric:spring-boot-admin-starter-server")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-rsocket")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -83,6 +88,12 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("de.codecentric:spring-boot-admin-dependencies:${property("springBootAdminVersion")}")
+    }
 }
 
 tasks.withType<KotlinCompile> {

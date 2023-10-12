@@ -17,6 +17,10 @@ spring:
     server:
       port: 9898
       transport: websocket
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
 sa-token:
   timeout: 60480 # 7天：3600*24*7
   token-name: token
@@ -31,3 +35,8 @@ tech:
             password: ${ADMIN_PASSWORD:admin}
             rsa-private-key: ${RSA_PRIVATE_KEY:}
             rsa-public-key: ${RSA_PUBLIC_KEY:}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -16,6 +16,7 @@
 
 package tech.ordinaryroad.barrage.fly
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
@@ -25,6 +26,7 @@ import tech.ordinaryroad.commons.core.service.RedisService
 import tk.mybatis.spring.annotation.MapperScan
 import javax.annotation.PreDestroy
 
+@EnableAdminServer
 @SpringBootApplication(
     exclude = [PasswordEncoderConfig::class, RedisTemplateConfiguration::class, RedisService::class],
 )
