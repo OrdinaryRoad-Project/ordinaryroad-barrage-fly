@@ -16,9 +16,11 @@
 const {WebSocketClient, CMD} = require('../../barrage-fly-ui/plugins/rsocket/WebSocketClient')
 const WebSocket = require('ws')
 
+// TODO 修改连接地址
 const url = "ws://localhost:9898"
 // TODO 修改任务ID
 const taskIds = ["1701164893396299776", "1711738902803615744"]
+
 const payloadData = {
     taskIds,
     cmd: CMD.SUBSCRIBE
