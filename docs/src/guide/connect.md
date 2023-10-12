@@ -8,8 +8,8 @@
 
 在 `connector-examples` 目录下提供了一些不同语言的例子可供参考
 
-- python
+- python（[rsocket-py](https://rsocket.io/guides/rsocket-py)）
     - [x] websocket
-- javascript
+- javascript（[rsocket-js](https://rsocket.io/guides/rsocket-js)）
     - [x] websocket
-    - vue参考`barrage-fly-ui/components/or/barrage/fly/task/RealTimeBarrage.vue`
+    - [x] vue（参考`barrage-fly-ui/components/or/barrage/fly/task/RealTimeBarrage.vue`）
