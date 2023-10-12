@@ -49,7 +49,7 @@
     "app": {
       "heapMemory": "Heap Memory Statuses",
       "thread": "Thread Statuses",
-      "title": "Application Stat"
+      "title": "Application Stats"
     },
     "clientsCount": "Connected Clients Count",
     "task": {
