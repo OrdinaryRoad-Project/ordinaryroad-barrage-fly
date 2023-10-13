@@ -195,11 +195,11 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
     @MessageMapping("example")
     fun exampleChannel(datas: Flux<JsonNode>, requester: RSocketRequester): Flux<Any> {
         return datas
-            .map {
-                val taskNode = it.get("task") as ObjectNode
+            .map { payload ->
+                val taskNode = payload.get("task") as ObjectNode
                 taskNode.remove("id")?.let {
                     taskNode.put("uuid", it.asText())
-                    }
+                }
                 OBJECT_MAPPER.readValue(taskNode.toString(), BarrageFlyTaskDO::class.java)
             }
             .switchMap { barrageFlyTaskDO ->

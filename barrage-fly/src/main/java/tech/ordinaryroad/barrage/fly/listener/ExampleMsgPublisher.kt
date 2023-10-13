@@ -33,21 +33,19 @@ import java.util.concurrent.TimeUnit
  */
 class ExampleMsgPublisher : Publisher<BarrageFlyMsgDTO>, Subscription {
 
-    private var scheduleAtFixedRate: ScheduledFuture<*>
+    private var scheduleAtFixedRate: ScheduledFuture<*>? = null
 
     private var subscriber: Subscriber<in BarrageFlyMsgDTO>? = null
-
-    init {
-        scheduleAtFixedRate = SCHEDULED_EXECUTOR.scheduleAtFixedRate({
-            BarrageFlyUtil.generateRandomMsgDTOs().forEach {
-                this.subscriber?.onNext(it)
-            }
-        }, 0, 2, TimeUnit.SECONDS)
-    }
 
     override fun subscribe(subscriber: Subscriber<in BarrageFlyMsgDTO>) {
         subscriber.onSubscribe(this)
         this.subscriber = subscriber
+
+        scheduleAtFixedRate = SCHEDULED_EXECUTOR.scheduleAtFixedRate({
+            BarrageFlyUtil.generateRandomMsgDTOs(8) {
+                this.subscriber?.onNext(it)
+            }
+        }, 0, 2, TimeUnit.SECONDS)
     }
 
     override fun request(n: Long) {
@@ -56,13 +54,14 @@ class ExampleMsgPublisher : Publisher<BarrageFlyMsgDTO>, Subscription {
 
     override fun cancel() {
         this.subscriber = null
-        scheduleAtFixedRate.cancel(true)
+
+        scheduleAtFixedRate?.cancel(true)
     }
 
     companion object {
         private val SCHEDULED_EXECUTOR = ThreadUtil.createScheduledExecutor(2).apply {
             setThreadFactory {
-                Thread(it, "MsgPublisher示例线程")
+                Thread(it, "样例消息Publisher")
             }
         }
     }
