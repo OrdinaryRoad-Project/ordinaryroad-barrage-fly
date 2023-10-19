@@ -23,6 +23,7 @@
     <span class="mx-1">{{ msg.msg.data?.action ?? '赠送' }}</span>
     <span class="red--text">{{ msg.msg.giftName }}</span>
     <img
+      v-if="msg.msg.giftImg&&msg.msg.giftImg!==''"
       width="30"
       :src="msg.msg.giftImg"
       :alt="msg.msg.giftName"
