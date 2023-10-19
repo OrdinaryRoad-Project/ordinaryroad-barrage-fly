@@ -37,8 +37,11 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
         val taskContexts = BarrageFlyTaskContext.taskContexts
 
         // 已连接的客户端总数
-        var clientsCount = 0
-        taskContexts.forEach { (_, v) -> clientsCount += v.rSocketClientMsgPublishers.size }
+        val clientHashIdSet = HashSet<Int>()
+        taskContexts.forEach { (_, taskContext) ->
+            taskContext.rSocketClientMsgPublishers.map { (k, _) -> clientHashIdSet.add(k) }
+        }
+        val clientsCount = clientHashIdSet.size
 
         // 已创建不同状态的任务个数
         val taskStatuses = taskContexts.map {
