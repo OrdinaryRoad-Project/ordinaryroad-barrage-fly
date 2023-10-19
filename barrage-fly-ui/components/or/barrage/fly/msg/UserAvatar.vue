@@ -21,7 +21,7 @@
     color="grey"
     :class="avatarClass"
   >
-    <img :src="msg.msg.userAvatar" :alt="msg.msg.username">
+    <img :src="userAvatar(msg)" :alt="msg.msg.username">
   </v-avatar>
 </template>
 
@@ -40,6 +40,25 @@ export default {
     msg: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    userAvatar () {
+      return (msg) => {
+        const msgUserAvatar = msg.msg.userAvatar
+        if (!msgUserAvatar || msgUserAvatar === '') {
+          switch (msg.platform) {
+            case 'HUYA':
+              // https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg
+              // https://huyaimg.msstatic.com/avatar/1012/11/31cf42985b9ed730e7033d9f74d81b_180_135.jpg
+              return 'https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg'
+            default:
+              return null
+          }
+        }
+
+        return msgUserAvatar
+      }
     }
   }
 }
