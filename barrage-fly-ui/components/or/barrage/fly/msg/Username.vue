@@ -26,12 +26,17 @@ export default {
   computed: {
     userSpaceUrl () {
       return (msg) => {
+        const uid = msg.msg.uid
+        if (!uid || uid <= 0) {
+          return null
+        }
+
         if (msg.platform === 'BILIBILI') {
-          return `https://space.bilibili.com/${msg.msg.uid}`
+          return `https://space.bilibili.com/${uid}`
         } else if (msg.platform === 'DOUYU') {
-          return `https://yuba.douyu.com/wbapi/web/jumpusercenter?id=${msg.msg.uid}&name=${msg.msg.username}`
+          return `https://yuba.douyu.com/wbapi/web/jumpusercenter?id=${uid}&name=${msg.msg.username}`
         } else if (msg.platform === 'HUYA') {
-          return `https://www.huya.com/video/u/${msg.msg.uid}`
+          return `https://www.huya.com/video/u/${uid}`
         } else {
           return null
         }
