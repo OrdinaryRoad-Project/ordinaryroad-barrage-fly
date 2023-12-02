@@ -36,9 +36,6 @@ import {
   OrNotFound,
   OrSearch
 } from 'ordinaryroad-vuetify/src/components'
-import echarts from './echarts/index'
-
-Vue.prototype.$echarts = echarts
 
 export default function (context, inject) {
   const { app } = context

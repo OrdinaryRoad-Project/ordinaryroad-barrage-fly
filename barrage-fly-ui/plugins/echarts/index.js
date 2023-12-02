@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import Vue from 'vue'
 import * as echarts from 'echarts'
 
-export default echarts
+Vue.prototype.$echarts = echarts
+
+export default function (context, inject) {
+  inject('echarts', Vue.prototype.$echarts)
+}
