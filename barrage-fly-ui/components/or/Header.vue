@@ -25,6 +25,20 @@
     <!-- 用户信息 -->
     <or-user-info-menu @clickCreate="$refs.createTaskDialog.show()" />
 
+    <v-tooltip bottom>
+      <template #activator="{ on, attrs }">
+        <v-btn
+          icon
+          v-bind="attrs"
+          v-on="on"
+          @click.stop="toggleFullscreen"
+        >
+          <v-icon>mdi-fullscreen</v-icon>
+        </v-btn>
+      </template>
+      <span>Fullscreen</span>
+    </v-tooltip>
+
     <!-- 国际化 -->
     <or-i18n-menu v-if="!$vuetify.breakpoint.smAndDown" />
 
@@ -81,6 +95,13 @@ export default {
     }
   },
   methods: {
+    toggleFullscreen () {
+      if (document.fullscreenElement) {
+        this.$fullscreen.exitFullscreen()
+      } else {
+        this.$fullscreen.requestFullscreen(document.documentElement)
+      }
+    },
     onItemUpdate (item) {
       this.editedItem = item
     },

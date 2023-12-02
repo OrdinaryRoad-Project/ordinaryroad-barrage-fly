@@ -46,6 +46,11 @@ export default {
       src: '~/plugins/echarts/index.js',
       mode: 'client'
     },
+    // fullscreen
+    {
+      src: '~/plugins/fullscreen/index.js',
+      mode: 'client'
+    },
     // 国际化插件
     '~/plugins/i18n/index.js',
     // 自定义常量 工具类等

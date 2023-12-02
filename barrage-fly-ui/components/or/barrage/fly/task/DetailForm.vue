@@ -42,11 +42,9 @@
           <template #activator="{ on, attrs }">
             <v-btn
               icon
-              :href="`/barrage?taskIds=${item.id}`"
-              target="_blank"
               v-bind="attrs"
               v-on="on"
-              @click="$emit('clickExpand')"
+              @click="onClickExpand"
             >
               <v-icon>mdi-arrow-expand-all</v-icon>
             </v-btn>
@@ -118,6 +116,7 @@
 </template>
 
 <script>
+const ClipboardJS = require('clipboard')
 
 export default {
   name: 'OrBarrageFlyTaskDetailForm',
@@ -134,6 +133,15 @@ export default {
   created () {
   },
   methods: {
+    onClickExpand () {
+      this.$router.push(`/barrage?taskIds=${this.item.id}`, () => {
+        this.$fullscreen.requestFullscreen(document.documentElement)
+      })
+      this.$emit('clickExpand')
+    },
+    copyTaskId () {
+      ClipboardJS.copy(this.item.id)
+    }
   }
 }
 </script>
