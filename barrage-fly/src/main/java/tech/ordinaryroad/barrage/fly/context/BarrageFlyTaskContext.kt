@@ -224,6 +224,10 @@ class BarrageFlyTaskContext(
             PlatformEnum.HUYA -> {
                 (this.client as HuyaLiveChatClient).removeMsgListener(publisher as IHuyaMsgListener)
             }
+
+            else -> {
+                // ignored
+            }
         }
     }
 
