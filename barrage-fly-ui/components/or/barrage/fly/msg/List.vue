@@ -49,6 +49,19 @@
             </v-list-item>
           </v-slide-x-transition>
         </v-list>
+        <v-fab-transition>
+          <v-btn
+            v-if="showFab"
+            fab
+            x-small
+            color="primary"
+            absolute
+            style="bottom: 10px; right: 25px"
+            @click="$vuetify.goTo($refs.list.scrollHeight, { container:$refs.main })"
+          >
+            <v-icon>mdi-arrow-down</v-icon>
+          </v-btn>
+        </v-fab-transition>
       </div>
     </v-container>
   </div>
@@ -67,6 +80,7 @@ export default {
     reachBottom: true,
     msgs: [],
     superChatMsgs: [],
+    showFab: false,
     /**
      * 每10s检查醒目留言是否需要清除
      */
@@ -88,6 +102,11 @@ export default {
       if (msgDto.type === 'SUPER_CHAT') {
         this.superChatMsgs.push({ ...msgDto, _expirationDate: this.$dayjs().add(msgDto.msg.duration, 's') })
       } else {
+        if (!this.reachBottom) {
+          // 有新消息
+          this.showFab = true
+          return
+        }
         if (this.msgs.length >= 100) {
           this.msgs.shift()
         }
@@ -102,6 +121,9 @@ export default {
     onScroll (e) {
       const { scrollTop, clientHeight, scrollHeight } = e.target
       this.reachBottom = scrollTop + clientHeight >= scrollHeight
+      if (this.reachBottom) {
+        this.showFab = false
+      }
     }
   }
 }
