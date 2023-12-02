@@ -30,7 +30,7 @@
 
 ## 2 项目部署
 
-项目前后端分离，可以使用Docker Compose进行部署，或者分别打包后部署
+项目前后端分离，可以使用Docker Compose进行部署，或者clone项目到本地后分别打包后部署
 
 ## 3 在线文档
 [https://barragefly.ordinaryroad.tech](https://barragefly.ordinaryroad.tech)
