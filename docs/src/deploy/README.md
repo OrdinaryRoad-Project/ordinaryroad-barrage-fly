@@ -1,6 +1,6 @@
 # 2 项目部署
 
-项目前后端分离，可以使用Docker Compose进行部署，或者分别打包后部署
+项目前后端分离，可以使用Docker Compose进行部署，或者clone项目到本地后分别打包后部署
 
 ## 2.1 Docker Compose
 
@@ -16,17 +16,17 @@
 >
 > ```shell
 > # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-> # 默认拉取最新版
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+> # 拉取最新版1.0.6
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.0.6
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.0.6
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.0.6
 > ```
 
 > 拉到本地后需要根据compose文件重命名镜像
 > ```shell
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly ordinaryroad-barrage-fly
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64 ordinaryroad-barrage-fly-arm64
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.0.6 ordinaryroad-barrage-fly
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.0.6 ordinaryroad-barrage-fly-arm64
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.0.6 ordinaryroad-barrage-fly-ui
 > ```
 
 ### 2.1.1 前端+后端
@@ -49,8 +49,6 @@ services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    build:
-      context: ./ordinaryroad-barrage-fly-ui
     volumes:
       - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
     environment:
@@ -65,8 +63,6 @@ services:
   ordinaryroad-barrage-fly:
     image: ordinaryroad-barrage-fly
     container_name: ordinaryroad-barrage-fly
-    build:
-      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_HOST:
       MYSQL_PORT:
@@ -115,8 +111,6 @@ services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    build:
-      context: ./ordinaryroad-barrage-fly-ui
     volumes:
       - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
     environment:
@@ -131,8 +125,6 @@ services:
   ordinaryroad-barrage-fly:
     image: ordinaryroad-barrage-fly
     container_name: ordinaryroad-barrage-fly
-    build:
-      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -176,8 +168,6 @@ services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    build:
-      context: ./ordinaryroad-barrage-fly-ui
     volumes:
       - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
     environment:
@@ -190,8 +180,6 @@ services:
   ordinaryroad-barrage-fly:
     image: ordinaryroad-barrage-fly
     container_name: ordinaryroad-barrage-fly
-    build:
-      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -219,12 +207,16 @@ services:
 
 ```properties
 # .env
+# TODO 根据实际部署情况修改
 MYSQL_HOST=192.168.1.2
 MYSQL_PORT=3306
 MYSQL_DATABASE=or_barrage_fly
 MYSQL_USERNAME=root
 MYSQL_PASSWORD=root
-SUB_BASE_URL=ws://ordinaryroad-barrage-fly:9898
+# TODO 根据实际部署情况修改
+# 例如：增加一条host记录`127.0.0.1 ordinaryroad-barrage-fly`
+# SUB_BASE_URL=ws://ordinaryroad-barrage-fly:9898
+SUB_BASE_URL=ws://localhost:9898
 RSA_PUBLIC_KEY=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNqVTCHbPojzNaR5TwhFxeKcuP/Po4J8WAc5dz1pHQ8FasH/hrSWwoFGpTTo6tfTl0mnAotu4p93kSMe+K2pc2VqUJwCcFj9cD6rhaKfjdj7/Kd2rHH43mXPI+OtggzzOKOOPsaMP5/r2Dyooafa1ChYDuSmf2fDM53CSIx+KDUwIDAQAB
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin
@@ -238,8 +230,6 @@ services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    build:
-      context: ./ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
       RSA_PUBLIC_KEY:
@@ -252,8 +242,6 @@ services:
   ordinaryroad-barrage-fly:
     image: ordinaryroad-barrage-fly-arm64
     container_name: ordinaryroad-barrage-fly
-    build:
-      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_HOST:
       MYSQL_PORT:
