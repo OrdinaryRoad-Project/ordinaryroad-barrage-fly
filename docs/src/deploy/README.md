@@ -10,7 +10,7 @@
 - 使用mysql、nginx时需要先build
     - `docker compose build ordinaryroad-barrage-fly-mysql`
     - `docker compose build ordinaryroad-barrage-fly-nginx`
-- 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要-----BEGIN PUBLIC KEY-----）
+- 在线生成RSA密钥对：https://www.bejson.com/enc/rsa/ （不需要第一行的`-----BEGIN XXXXX KEY-----`和最后一行的`-----END XXXXX KEY-----`）
 
 > 镜像加速与拉取：[仓库链接](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages)
 >
