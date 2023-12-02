@@ -15,14 +15,16 @@
   -->
 
 <template>
-  <v-avatar
-    style="border: 1px solid;"
-    :size="size"
-    color="grey"
-    :class="avatarClass"
-  >
-    <img :src="userAvatar(msg)" :alt="msg.msg.username">
-  </v-avatar>
+  <div v-if="msgUserAvatar">
+    <v-avatar
+      style="border: 1px solid;"
+      :size="size"
+      color="grey"
+      :class="avatarClass"
+    >
+      <img :src="msgUserAvatar" :alt="msg.msg.username">
+    </v-avatar>
+  </div>
 </template>
 
 <script>
@@ -42,22 +44,17 @@ export default {
       required: true
     }
   },
-  computed: {
-    userAvatar () {
-      return (msg) => {
-        const msgUserAvatar = msg.msg.userAvatar
-        if (!msgUserAvatar || msgUserAvatar === '') {
-          switch (msg.platform) {
-            case 'HUYA':
-              // https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg
-              // https://huyaimg.msstatic.com/avatar/1012/11/31cf42985b9ed730e7033d9f74d81b_180_135.jpg
-              return 'https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg'
-            default:
-              return null
-          }
-        }
-
-        return msgUserAvatar
+  data: () => ({
+    msgUserAvatar: null
+  }),
+  created () {
+    this.msgUserAvatar = this.msg.msg.userAvatar
+    if (!this.msgUserAvatar || this.msgUserAvatar === '') {
+      switch (this.msg.platform) {
+        case 'HUYA':
+          // https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg
+          // https://huyaimg.msstatic.com/avatar/1012/11/31cf42985b9ed730e7033d9f74d81b_180_135.jpg
+          this.msgUserAvatar = 'https://huyaimg.msstatic.com/avatar/1023/6d/28ce3bb6c316cd22c06a83053dd367_180_135.jpg'
       }
     }
   }
