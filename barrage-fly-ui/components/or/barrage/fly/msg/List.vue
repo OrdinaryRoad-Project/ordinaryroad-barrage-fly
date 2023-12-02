@@ -57,7 +57,7 @@
             color="primary"
             absolute
             style="bottom: 10px; right: 25px"
-            @click="$vuetify.goTo($refs.list.scrollHeight, { container:$refs.main })"
+            @click="onClickFab"
           >
             <v-icon>mdi-arrow-down</v-icon>
           </v-btn>
@@ -97,6 +97,13 @@ export default {
     })
   },
   methods: {
+    onClickFab () {
+      this.$vuetify.goTo(this.$refs.list.scrollHeight, { container: this.$refs.main })
+        .then(() => {
+          this.reachBottom = true
+          this.showFab = false
+        })
+    },
     pushMsg (msg) {
       const msgDto = { ...msg.data, _id: this.$or.util.uuid() }
       if (msgDto.type === 'SUPER_CHAT') {
