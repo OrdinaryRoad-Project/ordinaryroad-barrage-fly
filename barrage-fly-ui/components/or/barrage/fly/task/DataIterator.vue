@@ -25,6 +25,7 @@
       :hide-default-footer="hideDefaultFooter"
       :item-keys="itemKeys"
       @getItems="onGetItems"
+      @insertItem="onInsertItem"
     >
       <template #searchFormBody>
         <!--        <v-col-->
@@ -82,10 +83,6 @@
         </v-col>
       </template>
 
-      <template #actionsTop>
-        <span />
-      </template>
-
       <template #default="{ props }">
         <slot name="default" :props="props" />
       </template>
@@ -106,6 +103,19 @@
         <slot name="footer.page-text" :props="props" />
       </template>
     </or-base-data-iterator>
+    <or-base-dialog
+      ref="createTaskDialog"
+      persistent
+      loading
+      :title="$t('barrageFlyTask.actions.create')"
+      @onConfirm="createTask"
+    >
+      <or-barrage-fly-task-save-form
+        ref="taskSaveForm"
+        @update="onItemUpdate"
+        @submit="$refs.createTaskDialog.confirm()"
+      />
+    </or-base-dialog>
   </v-container>
 </template>
 
@@ -155,6 +165,7 @@ export default {
     }
   },
   data: () => ({
+    editedItem: null,
     searchParams: {
       platform: null,
       roomId: null
@@ -197,11 +208,31 @@ export default {
     // this.$refs.dataIterator.getItems()
   },
   methods: {
+    onItemUpdate (item) {
+      this.editedItem = item
+    },
+    createTask () {
+      this.$refs.taskSaveForm.validate()
+        .then(() => {
+          this.$apis.task.create(this.editedItem)
+            .then((data) => {
+              this.$refs.createTaskDialog.close()
+              this.$refs.dataIterator.getItems()
+            })
+            .catch(() => {
+              this.$refs.createTaskDialog.cancelLoading()
+            })
+        })
+        .catch(() => {
+          this.$refs.createTaskDialog.cancelLoading()
+        })
+    },
     onResetSearch () {
     },
     onInsertItem () {
       this.selectedIndex = -1
       this.selectedItem = null
+      this.$refs.createTaskDialog.show()
     },
     onEditItem ({
       item,
