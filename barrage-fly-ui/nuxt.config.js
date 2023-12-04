@@ -17,7 +17,9 @@ export default {
       { name: 'referrer', content: 'no-referrer' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://npm.elemecdn.com/@mdi/font@latest/css/materialdesignicons.min.css' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/@fontsource/roboto@latest/400.css' }
     ]
   },
 
@@ -104,6 +106,16 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
+    defaultAssets: {
+      font: false,
+      icons: false
+    },
+    font: {
+      family: 'Roboto'
+    },
+    icons: {
+      iconfont: 'mdi'
+    },
     theme: {
       options: {
         // https://vuetifyjs.com/zh-Hans/features/theme/#section-81ea5b9a4e495c5e6027
