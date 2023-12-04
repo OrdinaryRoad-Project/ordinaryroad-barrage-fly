@@ -25,7 +25,7 @@ plugins {
 }
 
 group = "tech.ordinaryroad"
-version = "1.0.6"
+version = "1.0.7"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
