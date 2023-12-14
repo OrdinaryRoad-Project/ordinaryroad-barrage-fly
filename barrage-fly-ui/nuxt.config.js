@@ -19,7 +19,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://npm.elemecdn.com/@mdi/font@latest/css/materialdesignicons.min.css' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://unpkg.com/@fontsource/roboto@latest/400.css' }
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fastly.jsdelivr.net/npm/@fontsource/roboto@latest/400.css' }
     ]
   },
 
