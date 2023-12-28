@@ -16,10 +16,7 @@
 package tech.ordinaryroad.barrage.fly.constant
 
 import cn.hutool.core.util.StrUtil
-import tech.ordinaryroad.live.chat.client.commons.base.msg.IDanmuMsg
-import tech.ordinaryroad.live.chat.client.commons.base.msg.IGiftMsg
-import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
-import tech.ordinaryroad.live.chat.client.commons.base.msg.ISuperChatMsg
+import tech.ordinaryroad.live.chat.client.commons.base.msg.*
 
 /**
  * @author mjz
@@ -29,6 +26,7 @@ enum class MsgTypeEnum {
     DANMU,
     GIFT,
     SUPER_CHAT,
+    ENTER_ROOM,
     ;
 
     companion object {
@@ -44,6 +42,10 @@ enum class MsgTypeEnum {
 
                 is IGiftMsg -> {
                     GIFT
+                }
+
+                is IEnterRoomMsg -> {
+                    ENTER_ROOM
                 }
 
                 else -> {

@@ -21,9 +21,7 @@ import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import tech.ordinaryroad.live.chat.client.bilibili.constant.BilibiliCmdEnum
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
-import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SendGiftMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SendSmsReplyMsg
+import tech.ordinaryroad.live.chat.client.bilibili.msg.*
 import tech.ordinaryroad.live.chat.client.bilibili.netty.handler.BilibiliBinaryFrameHandler
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 
@@ -36,9 +34,11 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     private var subscriber: Subscriber<in IMsg>? = null
 
     override fun onMsg(binaryFrameHandler: BilibiliBinaryFrameHandler, msg: IMsg) {
-        // B站防止重复添加消息，因为B站的弹幕消息和礼物消息只是字段属性不同，都是属于SendSmsReplyMsg
+        // B站防止重复添加消息，因为B站的弹幕、礼物、醒目留言、入房消息只是字段属性不同，都是属于SendSmsReplyMsg
         if (msg is SendSmsReplyMsg) {
-            if (msg.cmdEnum == BilibiliCmdEnum.DANMU_MSG || msg.cmdEnum == BilibiliCmdEnum.SEND_GIFT) {
+            if (msg.cmdEnum == BilibiliCmdEnum.DANMU_MSG || msg.cmdEnum == BilibiliCmdEnum.SEND_GIFT
+                || msg.cmdEnum == BilibiliCmdEnum.SUPER_CHAT_MESSAGE || msg.cmdEnum == BilibiliCmdEnum.INTERACT_WORD
+            ) {
                 return
             }
         }
@@ -50,6 +50,14 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onGiftMsg(t: BilibiliBinaryFrameHandler, msg: SendGiftMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onSuperChatMsg(t: BilibiliBinaryFrameHandler, msg: SuperChatMessageMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onEnterRoomMsg(t: BilibiliBinaryFrameHandler, msg: InteractWordMsg) {
         this.subscriber?.onNext(msg)
     }
 

@@ -91,6 +91,8 @@ object BarrageFlyUtil {
                                         msgString,
                                         SuperChatMessageMsg::class.java
                                     )
+
+                                    else -> null
                                 }
                             }
 
@@ -109,6 +111,8 @@ object BarrageFlyUtil {
                                     MsgTypeEnum.SUPER_CHAT -> {
                                         null
                                     }
+
+                                    else -> null
                                 }
                             }
 
@@ -129,9 +133,11 @@ object BarrageFlyUtil {
                                     MsgTypeEnum.SUPER_CHAT -> {
                                         null
                                     }
+
+                                    else -> null
                                 }
                             }
-                        }!!
+                        }
                         if (msg != null) {
                             barrageFlyMsgDTO = BarrageFlyMsgDTO(roomId, msg)
                         }

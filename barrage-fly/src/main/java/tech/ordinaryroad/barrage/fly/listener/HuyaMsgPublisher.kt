@@ -26,6 +26,7 @@ import tech.ordinaryroad.live.chat.client.huya.listener.IHuyaMsgListener
 import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
 import tech.ordinaryroad.live.chat.client.huya.msg.PushMessage
 import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
+import tech.ordinaryroad.live.chat.client.huya.msg.VipEnterBannerMsg
 import tech.ordinaryroad.live.chat.client.huya.msg.dto.MsgItem
 import tech.ordinaryroad.live.chat.client.huya.netty.handler.HuyaBinaryFrameHandler
 
@@ -38,10 +39,11 @@ class HuyaMsgPublisher : IHuyaMsgListener, Publisher<IMsg>, Subscription {
     private var subscriber: Subscriber<in IMsg>? = null
 
     override fun onMsg(binaryFrameHandler: HuyaBinaryFrameHandler, msg: IMsg) {
-        // 防止重复添加消息，因为弹幕消息和礼物消息只是字段属性不同，都是属于PushMessage、MsgItem
+        // 防止重复添加消息，因为弹幕、礼物和入房消息只是字段属性不同，都是属于PushMessage、MsgItem
         if (msg is PushMessage || msg is MsgItem) {
             val cmdMsg = msg as ICmdMsg<*>
-            if (cmdMsg.cmdEnum == HuyaCmdEnum.MessageNotice || cmdMsg.cmdEnum == HuyaCmdEnum.SendItemSubBroadcastPacket) {
+            if (cmdMsg.cmdEnum == HuyaCmdEnum.MessageNotice || cmdMsg.cmdEnum == HuyaCmdEnum.SendItemSubBroadcastPacket
+                || cmdMsg.cmdEnum == HuyaCmdEnum.VipEnterBanner) {
                 return
             }
         }
@@ -53,6 +55,10 @@ class HuyaMsgPublisher : IHuyaMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun onGiftMsg(t: HuyaBinaryFrameHandler, msg: SendItemSubBroadcastPacketMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onEnterRoomMsg(t: HuyaBinaryFrameHandler, msg: VipEnterBannerMsg) {
         this.subscriber?.onNext(msg)
     }
 

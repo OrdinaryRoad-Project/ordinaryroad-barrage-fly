@@ -37,14 +37,12 @@
         <v-list dense>
           <v-slide-x-transition group>
             <v-list-item v-for="(msg) in msgs" :key="`${msg._id}`">
-              <v-list-item-title v-if="'DANMU'===msg.type">
-                <or-barrage-fly-msg-danmu :msg="msg" />
-              </v-list-item-title>
-              <v-list-item-title v-else-if="'GIFT'===msg.type" class="d-flex align-center">
-                <or-barrage-fly-msg-gift :msg="msg" />
-              </v-list-item-title>
-              <v-list-item-title v-else>
-                {{ msg.message ?? msg }}
+              <v-list-item-title class="d-flex align-center">
+                <or-barrage-fly-msg-danmu v-if="'DANMU'===msg.type" :msg="msg" />
+                <or-barrage-fly-msg-gift v-else-if="'GIFT'===msg.type" :msg="msg" />
+                <or-barrage-fly-msg-enter-room v-else-if="'ENTER_ROOM'===msg.type" :msg="msg" />
+                <span v-else-if="msg.message">{{ msg.message }}</span>
+                <span v-else>{{ msg }}</span>
               </v-list-item-title>
             </v-list-item>
           </v-slide-x-transition>
