@@ -124,11 +124,17 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
             }
             .switchMap {
                 val cmd = it.get("cmd").asText()
-                if (cmd == "SUBSCRIBE" && BarrageFlyTaskContext.getContexts(subscribedTaskIds.toList()).isEmpty()) {
+                val noContextTaskIds = arrayListOf<String>()
+                subscribedTaskIds.forEach { taskId ->
+                    if (BarrageFlyTaskContext.getContext(taskId) == null) {
+                        noContextTaskIds.add(taskId)
+                    }
+                }
+                if (cmd == "SUBSCRIBE" && noContextTaskIds.isNotEmpty()) {
                     Flux.just(
                         OBJECT_MAPPER.createObjectNode().apply {
                             put("status", HttpStatus.HTTP_BAD_REQUEST)
-                            put("message", "the task $subscribedTaskIds don't have contexts yet")
+                            put("message", "the task $noContextTaskIds don't have contexts yet")
                         }
                     )
                 } else {
