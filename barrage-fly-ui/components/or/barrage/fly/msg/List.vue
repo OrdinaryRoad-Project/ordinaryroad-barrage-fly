@@ -110,9 +110,10 @@ export default {
         if (!this.reachBottom) {
           // 有新消息
           this.showFab = true
+          this.msgs.push(msgDto)
           return
         }
-        if (this.msgs.length >= 100) {
+        while (this.msgs.length > 100) {
           this.msgs.shift()
         }
         this.msgs.push(msgDto)
