@@ -60,6 +60,7 @@ class BarrageFlyTaskRoutingConfiguration {
                 GET("/status", handler::getTaskStatus)
                 GET("/page/{offset}/{limit}/", handler::pageTask)
                 GET("/statuses", handler::statuses)
+                GET("/platform/options", handler::platformOptions)
             }
         }
     }
