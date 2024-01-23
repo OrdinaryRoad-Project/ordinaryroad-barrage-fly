@@ -51,3 +51,7 @@ CREATE TABLE `barrage_fly_task`
   ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+# since v1.0.8
+ALTER TABLE `barrage_fly_task`
+    ADD `remark` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '备注' AFTER `room_id`;
