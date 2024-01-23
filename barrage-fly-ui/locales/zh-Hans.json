@@ -23,6 +23,7 @@
     "msgPreMapExpress": "消息前置处理规则引擎脚本",
     "platform": "平台",
     "roomId": "房间号",
+    "remark": "备注",
     "statuses": "状态",
     "startWhenFinished": "完成后开始"
   },

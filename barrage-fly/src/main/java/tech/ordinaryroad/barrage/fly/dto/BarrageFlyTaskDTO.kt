@@ -30,6 +30,7 @@ data class BarrageFlyTaskDTO(
     var uuid: String = "",
     var platform: String = "",
     var roomId: String = "",
+    var remark: String? = null,
     var cookie: String? = null,
     var msgPreMapExpress: String? = null,
     var msgFilterExpress: String? = null,

@@ -84,6 +84,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
             uuid = id
             platform = task.platform
             roomId = task.roomId
+            remark = task.remark
             cookie = task.cookie
             msgPreMapExpress = task.msgPreMapExpress
             msgFilterExpress = task.msgFilterExpress
@@ -134,6 +135,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
         val sortDesc = request.exchange().request.queryParams["sortDesc"] ?: emptyList()
         val platform = request.queryParamOrNull("platform")
         val roomId = request.queryParamOrNull("roomId")
+        val remark = request.queryParamOrNull("remark")
 
         val baseQueryRequest = BaseQueryRequest()
             .apply {
@@ -151,6 +153,9 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
                 }
                 if (!roomId.isNullOrBlank()) {
                     this.roomId = roomId
+                }
+                if (!remark.isNullOrBlank()){
+                    this.remark = remark
                 }
             }, baseQueryRequest
         ) as Page<BarrageFlyTaskDO>

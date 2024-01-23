@@ -80,6 +80,22 @@
             @keydown.enter="$refs.dataIterator.searchItems()"
           />
         </v-col>
+        <v-col
+          cols="6"
+          lg="3"
+          md="4"
+        >
+          <v-text-field
+            v-model.trim="searchParams.remark"
+            dense
+            outlined
+            clearable
+            hide-details="auto"
+            maxlength="200"
+            :label="$t('barrageFlyTask.remark')"
+            @keydown.enter="$refs.dataIterator.searchItems()"
+          />
+        </v-col>
       </template>
 
       <template #default="{ props }">
@@ -167,7 +183,8 @@ export default {
     editedItem: null,
     searchParams: {
       platform: null,
-      roomId: null
+      roomId: null,
+      remark: null
     },
     selectedIndex: -1,
     selectedItem: null,

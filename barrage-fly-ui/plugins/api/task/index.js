@@ -23,19 +23,19 @@ export default {
     $axios = $axios || axios
   },
   apis: {
-    create: ({ platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
-      const data = { platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    create: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
       return $axios({ url: `/task?start=${start}`, method: 'post', data })
     },
     delete: (id) => {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
-    update: ({ id, platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
-      const data = { platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    update: ({ id, platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
       return $axios({ url: `/task?id=${id}&start=${start}`, method: 'put', data })
     },
-    validate: ({ platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
-      const data = { platform, roomId, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    validate: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
       return $axios({ url: '/task/validate', method: 'put', data })
     },
     validateExpress: ({ msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
@@ -57,7 +57,7 @@ export default {
     getStatus: (id = '') => {
       return $axios({ url: `/task/status/?id=${id}`, method: 'get' })
     },
-    page: (offset, limit, sortBy = [], sortDesc = [], searchParams = { platform: '', roomId: '' }) => {
+    page: (offset, limit, sortBy = [], sortDesc = [], searchParams = { platform: '', roomId: '', remark: '' }) => {
       return $axios({
         url: `/task/page/${offset}/${limit}/?${urlEncode(searchParams)}&${urlEncode(sortBy, 'sortBy')}${urlEncode(sortDesc, 'sortDesc')}`,
         method: 'get'

@@ -47,6 +47,12 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
     private String roomId;
 
     /**
+     * 备注
+     * @since v1.0.8
+     */
+    private String remark;
+
+    /**
      * Cookie
      */
     private String cookie;
@@ -85,6 +91,14 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     public void setRoomId(String roomId) {
         this.roomId = roomId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getCookie() {

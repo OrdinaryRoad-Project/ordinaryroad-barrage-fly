@@ -23,6 +23,7 @@
     "msgPreMapExpress": "Message pre-processing rule engine script",
     "platform": "Platform",
     "roomId": "Room Id",
+    "remark": "Remark",
     "status": "Status",
     "startWhenFinished": "Start When Finished"
   },

@@ -41,6 +41,13 @@
           @keydown.enter="$emit('submit')"
         />
       </v-col>
+      <v-col cols="12" md="12">
+        <v-text-field
+          v-model="model.remark"
+          :rules="[$or.rules.max200Chars]"
+          :label="$t('barrageFlyTask.remark')"
+        />
+      </v-col>
     </v-row>
     <v-textarea
       v-model="model.cookie"
@@ -127,6 +134,7 @@ export default {
       default: () => ({
         platform: 'BILIBILI',
         roomId: null,
+        remark: null,
         cookie: null,
         msgPreMapExpress: null,
         msgFilterExpress: null,

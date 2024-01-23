@@ -44,6 +44,10 @@ public class BarrageFlyTaskService extends BaseService<BarrageFlyTaskDAO, Barrag
             sqls.andLike(BarrageFlyTaskDO::getRoomId, "%" + barrageFlyTaskDO.getRoomId() + "%");
         }
 
+        if (StrUtil.isNotBlank(barrageFlyTaskDO.getRemark())) {
+            sqls.andLike(BarrageFlyTaskDO::getRemark, "%" + barrageFlyTaskDO.getRemark() + "%");
+        }
+
         Example.Builder exampleBuilder = Example.builder(BarrageFlyTaskDO.class)
                 .where(sqls);
         return super.findAll(baseQueryRequest, sqls, exampleBuilder);
