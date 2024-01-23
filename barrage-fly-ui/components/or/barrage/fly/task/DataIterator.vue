@@ -55,11 +55,10 @@
           <v-select
             v-model="searchParams.platform"
             clearable
-            :items="[{label:'B站',value:'BILIBILI'},{label:'斗鱼',value:'DOUYU'},{label:'虎牙',value:'HUYA'}]"
+            :items="platformOptions.data"
+            :loading="platformOptions.loading"
             dense
             outlined
-            item-text="label"
-            item-value="value"
             hide-details="auto"
             :label="$t('barrageFlyTask.platform')"
             @change="$refs.dataIterator.searchItems()"
@@ -175,6 +174,10 @@ export default {
     taskStatusOptions: {
       loading: true,
       items: []
+    },
+    platformOptions: {
+      loading: true,
+      data: []
     }
   }),
   computed: {
@@ -202,6 +205,14 @@ export default {
       })
       .catch(() => {
         this.taskStatusOptions.loading = false
+      })
+    this.$apis.task.platformOptions()
+      .then((data) => {
+        this.platformOptions.loading = false
+        this.platformOptions.data = data
+      })
+      .catch(() => {
+        this.platformOptions.loading = false
       })
   },
   mounted () {

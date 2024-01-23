@@ -71,6 +71,9 @@ export default {
     },
     statuses () {
       return $axios({ url: '/task/statuses', method: 'get' })
+    },
+    platformOptions () {
+      return $axios({ url: '/task/platform/options', method: 'get' })
     }
   }
 }

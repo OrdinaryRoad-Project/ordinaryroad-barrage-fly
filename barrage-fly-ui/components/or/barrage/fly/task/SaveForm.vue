@@ -28,7 +28,8 @@
         <v-select
           v-model="model.platform"
           :label="$t('barrageFlyTask.platform')"
-          :items="platformOptions"
+          :items="platformOptions.data"
+          :loading="platformOptions.loading"
           :rules="[$or.rules.required]"
         />
       </v-col>
@@ -128,11 +129,10 @@ export default {
     }
   },
   data: () => ({
-    platformOptions: [
-      { text: 'B站', value: 'BILIBILI' },
-      { text: '斗鱼', value: 'DOUYU' },
-      { text: '虎牙', value: 'HUYA' }
-    ],
+    platformOptions: {
+      loading: true,
+      data: []
+    },
     model: {}
   }),
   watch: {
@@ -150,6 +150,16 @@ export default {
       deep: true,
       immediate: true
     }
+  },
+  created () {
+    this.$apis.task.platformOptions()
+      .then((data) => {
+        this.platformOptions.loading = false
+        this.platformOptions.data = data
+      })
+      .catch(() => {
+        this.platformOptions.loading = false
+      })
   },
   mounted () {
   },
