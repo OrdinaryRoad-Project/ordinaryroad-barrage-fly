@@ -42,14 +42,14 @@ repositories {
     maven { url = uri("https://maven.aliyun.com/repository/central") }
     maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
     maven { url = uri("https://ordinaryroad-maven.pkg.coding.net/repository/ordinaryroad/maven-pro/") }
+    mavenCentral() // 如果提示未找到依赖，尝试把这行放到第一行
     mavenLocal()
-    mavenCentral()
 }
 
 extra["springBootAdminVersion"] = "2.7.4"
 
 dependencies {
-    val liveChatClientVersion = "0.0.16"
+    val liveChatClientVersion = "0.1.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
     val qLExpressVersion = "3.3.2"
@@ -68,6 +68,8 @@ dependencies {
     implementation("tech.ordinaryroad:live-chat-client-bilibili:$liveChatClientVersion")
     implementation("tech.ordinaryroad:live-chat-client-douyu:$liveChatClientVersion")
     implementation("tech.ordinaryroad:live-chat-client-huya:$liveChatClientVersion")
+    implementation("tech.ordinaryroad:live-chat-client-douyin:$liveChatClientVersion")
+    implementation("tech.ordinaryroad:live-chat-client-kuaishou:$liveChatClientVersion")
     implementation("tech.ordinaryroad:ordinaryroad-commons-core:$ordinaryroadVersion") {
         exclude("org.springframework")
         exclude("org.springframework.cloud")
@@ -82,6 +84,7 @@ dependencies {
     }
     implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
     implementation("com.alibaba:QLExpress:$qLExpressVersion")
+    implementation("com.hubspot.jackson:jackson-datatype-protobuf:0.9.14")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
