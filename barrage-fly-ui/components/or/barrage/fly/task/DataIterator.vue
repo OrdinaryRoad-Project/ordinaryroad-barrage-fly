@@ -225,7 +225,7 @@ export default {
     createTask () {
       this.$refs.taskSaveForm.validate()
         .then(() => {
-          this.$apis.task.create(this.editedItem)
+          this.$apis.task.create(this.editedItem, this.editedItem.startWhenFinished)
             .then((data) => {
               this.$refs.createTaskDialog.close()
               this.$refs.dataIterator.getItems()

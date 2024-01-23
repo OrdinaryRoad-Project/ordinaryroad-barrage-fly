@@ -253,7 +253,7 @@ export default {
     edit () {
       this.$refs.taskSaveForm.validate()
         .then(() => {
-          this.$apis.task.update(this.editedItem)
+          this.$apis.task.update(this.editedItem, this.editedItem.startWhenFinished)
             .then((data) => {
               this.$emit('taskUpdated', data)
               this.model = data

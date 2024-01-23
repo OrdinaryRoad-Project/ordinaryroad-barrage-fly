@@ -102,6 +102,12 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+    <v-col cols="12" md="4">
+      <v-checkbox
+        v-model="model.startWhenFinished"
+        :label="$t('barrageFlyTask.startWhenFinished')"
+      />
+    </v-col>
     <or-base-dialog
       ref="testDialog"
       title="测试一下"

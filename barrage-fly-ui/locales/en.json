@@ -23,7 +23,8 @@
     "msgPreMapExpress": "Message pre-processing rule engine script",
     "platform": "Platform",
     "roomId": "Room Id",
-    "status": "Status"
+    "status": "Status",
+    "startWhenFinished": "Start When Finished"
   },
   "barrageFlyUser": {
     "actions": {
