@@ -51,6 +51,12 @@ export default {
           case 'HUYA':
             padding = '10px'
             break
+          case 'DOUYIN':
+            padding = '10px'
+            break
+          case 'KUAISHOU':
+            padding = '10px'
+            break
           default:
         }
         return padding
@@ -63,6 +69,10 @@ export default {
         return `https://www.douyu.com/${this.item.roomId}`
       } else if (this.item.platform === 'HUYA') {
         return `https://www.huya.com/${this.item.roomId}`
+      } else if (this.item.platform === 'DOUYIN') {
+        return `https://live.douyin.com/${this.item.roomId}`
+      } else if (this.item.platform === 'KUAISHOU') {
+        return `https://live.kuaishou.com/u/${this.item.roomId}`
       } else {
         return null
       }

@@ -27,7 +27,12 @@ export default {
     userSpaceUrl () {
       return (msg) => {
         const uid = msg.msg.uid
-        if (!uid || uid <= 0) {
+        if (msg.platform !== 'DOUYIN' && (!uid || uid <= 0)) {
+          return null
+        }
+
+        const secuid = msg.msg.msg?.user?.secuid
+        if (msg.platform === 'DOUYIN' && (!secuid || secuid === '')) {
           return null
         }
 
@@ -37,6 +42,10 @@ export default {
           return `https://yuba.douyu.com/wbapi/web/jumpusercenter?id=${uid}&name=${msg.msg.username}`
         } else if (msg.platform === 'HUYA') {
           return `https://www.huya.com/video/u/${uid}`
+        } else if (msg.platform === 'DOUYIN') {
+          return `https://www.douyin.com/user/${secuid}`
+        } else if (msg.platform === 'KUAISHOU') {
+          return `https://live.kuaishou.com/profile/${uid}`
         } else {
           return null
         }

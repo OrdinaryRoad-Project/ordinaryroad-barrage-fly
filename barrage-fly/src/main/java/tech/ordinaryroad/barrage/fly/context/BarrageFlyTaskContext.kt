@@ -26,9 +26,7 @@ import org.springframework.messaging.rsocket.RSocketRequester
 import tech.ordinaryroad.barrage.fly.constant.BarrageFlyTaskStatusEnum
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
-import tech.ordinaryroad.barrage.fly.listener.BilibiliMsgPublisher
-import tech.ordinaryroad.barrage.fly.listener.DouyuMsgPublisher
-import tech.ordinaryroad.barrage.fly.listener.HuyaMsgPublisher
+import tech.ordinaryroad.barrage.fly.listener.*
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
@@ -36,12 +34,18 @@ import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.commons.client.BaseLiveChatClient
 import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums
+import tech.ordinaryroad.live.chat.client.douyin.client.DouyinLiveChatClient
+import tech.ordinaryroad.live.chat.client.douyin.config.DouyinLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.douyin.listener.IDouyinMsgListener
 import tech.ordinaryroad.live.chat.client.douyu.client.DouyuLiveChatClient
 import tech.ordinaryroad.live.chat.client.douyu.config.DouyuLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.douyu.listener.IDouyuMsgListener
 import tech.ordinaryroad.live.chat.client.huya.client.HuyaLiveChatClient
 import tech.ordinaryroad.live.chat.client.huya.config.HuyaLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.huya.listener.IHuyaMsgListener
+import tech.ordinaryroad.live.chat.client.kuaishou.client.KuaishouLiveChatClient
+import tech.ordinaryroad.live.chat.client.kuaishou.config.KuaishouLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.kuaishou.listener.IKuaishouMsgListener
 import tech.ordinaryroad.live.chat.client.servers.netty.client.config.BaseNettyClientConfig
 import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport
@@ -147,6 +151,14 @@ class BarrageFlyTaskContext(
             PlatformEnum.HUYA -> {
                 OBJECT_MAPPER.readValue(clientConfigJson, HuyaLiveChatClientConfig::class.java) as Config
             }
+
+            PlatformEnum.DOUYIN -> {
+                OBJECT_MAPPER.readValue(clientConfigJson, DouyinLiveChatClientConfig::class.java) as Config
+            }
+
+            PlatformEnum.KUAISHOU -> {
+                OBJECT_MAPPER.readValue(clientConfigJson, KuaishouLiveChatClientConfig::class.java) as Config
+            }
         }
     }
 
@@ -163,6 +175,14 @@ class BarrageFlyTaskContext(
             PlatformEnum.HUYA -> {
                 HuyaMsgPublisher() as MsgListener
             }
+
+            PlatformEnum.DOUYIN -> {
+               DouyinMsgPublisher() as MsgListener
+            }
+
+            PlatformEnum.KUAISHOU -> {
+               KuaishouMsgPublisher() as MsgListener
+            }
         }
     }
 
@@ -173,6 +193,8 @@ class BarrageFlyTaskContext(
             PlatformEnum.BILIBILI -> BilibiliLiveChatClient(createClientConfig(platform, clientConfigJson))
             PlatformEnum.DOUYU -> DouyuLiveChatClient(createClientConfig(platform, clientConfigJson))
             PlatformEnum.HUYA -> HuyaLiveChatClient(createClientConfig(platform, clientConfigJson))
+            PlatformEnum.DOUYIN -> DouyinLiveChatClient(createClientConfig(platform, clientConfigJson))
+            PlatformEnum.KUAISHOU -> KuaishouLiveChatClient(createClientConfig(platform, clientConfigJson))
         } as Client
     }
 
@@ -201,6 +223,16 @@ class BarrageFlyTaskContext(
                 msgListener = createMsgListener<HuyaMsgPublisher>(platform)
                 (this.client as HuyaLiveChatClient).addMsgListener(msgListener)
             }
+
+            PlatformEnum.DOUYIN -> {
+                msgListener = createMsgListener<DouyinMsgPublisher>(platform)
+                (this.client as DouyinLiveChatClient).addMsgListener(msgListener)
+            }
+
+            PlatformEnum.KUAISHOU -> {
+                msgListener = createMsgListener<KuaishouMsgPublisher>(platform)
+                (this.client as KuaishouLiveChatClient).addMsgListener(msgListener)
+            }
         }
         this.rSocketClientMsgPublishers[hashCode] = msgListener
     }
@@ -223,6 +255,14 @@ class BarrageFlyTaskContext(
 
             PlatformEnum.HUYA -> {
                 (this.client as HuyaLiveChatClient).removeMsgListener(publisher as IHuyaMsgListener)
+            }
+
+            PlatformEnum.DOUYIN -> {
+                (this.client as DouyinLiveChatClient).removeMsgListener(publisher as IDouyinMsgListener)
+            }
+
+            PlatformEnum.KUAISHOU -> {
+                (this.client as KuaishouLiveChatClient).removeMsgListener(publisher as IKuaishouMsgListener)
             }
 
             else -> {

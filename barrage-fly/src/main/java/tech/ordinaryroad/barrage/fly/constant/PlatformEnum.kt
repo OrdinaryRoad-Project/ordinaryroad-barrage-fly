@@ -18,17 +18,21 @@ package tech.ordinaryroad.barrage.fly.constant
 import cn.hutool.core.util.StrUtil
 import tech.ordinaryroad.live.chat.client.bilibili.msg.base.IBilibiliMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
+import tech.ordinaryroad.live.chat.client.douyin.msg.base.IDouyinMsg
 import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
 import tech.ordinaryroad.live.chat.client.huya.msg.base.IHuyaMsg
+import tech.ordinaryroad.live.chat.client.kuaishou.msg.base.IKuaishouMsg
 
 /**
  * @author mjz
  * @date 2023/9/9
  */
-enum class PlatformEnum {
-    BILIBILI,
-    DOUYU,
-    HUYA,
+enum class PlatformEnum(val text: String) {
+    BILIBILI("B站"),
+    DOUYU("斗鱼"),
+    HUYA("虎牙"),
+    DOUYIN("抖音"),
+    KUAISHOU("快手"),
     ;
 
     companion object {
@@ -44,6 +48,14 @@ enum class PlatformEnum {
 
                 is IHuyaMsg -> {
                     HUYA
+                }
+
+                is IDouyinMsg -> {
+                    DOUYIN
+                }
+
+                is IKuaishouMsg -> {
+                    KUAISHOU
                 }
 
                 else -> {
