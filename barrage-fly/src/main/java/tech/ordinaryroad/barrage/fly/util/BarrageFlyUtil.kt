@@ -137,6 +137,8 @@ object BarrageFlyUtil {
                                     else -> null
                                 }
                             }
+
+                            else -> null
                         }
                         if (msg != null) {
                             barrageFlyMsgDTO = BarrageFlyMsgDTO(roomId, msg)
