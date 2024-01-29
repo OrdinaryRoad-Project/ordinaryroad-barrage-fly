@@ -15,33 +15,47 @@
   -->
 
 <template>
-  <v-hover>
-    <template #default="{hover}">
-      <v-card hover>
-        <v-card-title>
-          <or-barrage-fly-task-item-room-info :item="item" />
-          <v-spacer />
-          <or-barrage-fly-task-item-action
-            :hover="hover"
-            :item="item"
-            @clickDetail="detail"
-            @taskDeleted="$emit('taskDeleted',item)"
-            @taskUpdated="onTaskUpdated"
-          />
-        </v-card-title>
-        <or-base-dialog
-          ref="detailDialog"
-          :title="$t('barrageFlyTask.actions.detail')"
-          @onConfirm="$refs.detailDialog.close()"
-        >
-          <or-barrage-fly-task-detail-form
-            :item="item"
-            @clickExpand="$refs.detailDialog.close()"
-          />
-        </or-base-dialog>
-      </v-card>
-    </template>
-  </v-hover>
+  <div>
+    <v-hover>
+      <template #default="{hover}">
+        <v-card hover>
+          <v-card-title>
+            <v-tooltip
+              :value="hover"
+              :disabled="!item.remark"
+              right
+              nudge-top="40"
+            >
+              <template #activator>
+                <or-barrage-fly-task-item-room-info :item="item" />
+              </template>
+              <template #default>
+                {{ item.remark }}
+              </template>
+            </v-tooltip>
+            <v-spacer />
+            <or-barrage-fly-task-item-action
+              :hover="hover"
+              :item="item"
+              @clickDetail="detail"
+              @taskDeleted="$emit('taskDeleted',item)"
+              @taskUpdated="onTaskUpdated"
+            />
+          </v-card-title>
+        </v-card>
+      </template>
+    </v-hover>
+    <or-base-dialog
+      ref="detailDialog"
+      :title="$t('barrageFlyTask.actions.detail')"
+      @onConfirm="$refs.detailDialog.close()"
+    >
+      <or-barrage-fly-task-detail-form
+        :item="item"
+        @clickExpand="$refs.detailDialog.close()"
+      />
+    </or-base-dialog>
+  </div>
 </template>
 
 <script>
