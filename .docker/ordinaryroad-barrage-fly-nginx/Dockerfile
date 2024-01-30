@@ -4,4 +4,4 @@ MAINTAINER mjz(or-mjz@qq.com)
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 81 9898
+EXPOSE 8080 81 9898
