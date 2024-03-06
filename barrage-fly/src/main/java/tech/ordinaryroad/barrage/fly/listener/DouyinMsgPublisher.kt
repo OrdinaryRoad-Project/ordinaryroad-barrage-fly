@@ -26,6 +26,7 @@ import tech.ordinaryroad.live.chat.client.douyin.listener.IDouyinMsgListener
 import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinDanmuMsg
 import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinEnterRoomMsg
 import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinGiftMsg
+import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinLikeMsg
 import tech.ordinaryroad.live.chat.client.douyin.netty.handler.DouyinBinaryFrameHandler
 import tech.ordinaryroad.live.chat.client.douyin.protobuf.douyin_cmd_msg
 
@@ -42,7 +43,7 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
         if (msg is douyin_cmd_msg) {
             val cmdMsg = msg as ICmdMsg<*>
             if (cmdMsg.cmdEnum == DouyinCmdEnum.WebcastChatMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastGiftMessage
-                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage
+                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastLikeMessage
             ) {
                 return
             }
@@ -59,6 +60,10 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun onEnterRoomMsg(t: DouyinBinaryFrameHandler, msg: DouyinEnterRoomMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onLikeMsg(t: DouyinBinaryFrameHandler, msg: DouyinLikeMsg?) {
         this.subscriber?.onNext(msg)
     }
 

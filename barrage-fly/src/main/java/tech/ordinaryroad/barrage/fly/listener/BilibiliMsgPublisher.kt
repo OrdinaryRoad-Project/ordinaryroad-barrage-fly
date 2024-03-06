@@ -61,6 +61,10 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
         this.subscriber?.onNext(msg)
     }
 
+    override fun onLikeMsg(t: BilibiliBinaryFrameHandler, msg: LikeInfoV3ClickMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
     override fun subscribe(subscriber: Subscriber<in IMsg>) {
         subscriber.onSubscribe(this)
         this.subscriber = subscriber

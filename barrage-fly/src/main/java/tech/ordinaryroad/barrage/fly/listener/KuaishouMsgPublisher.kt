@@ -23,6 +23,7 @@ import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.kuaishou.listener.IKuaishouMsgListener
 import tech.ordinaryroad.live.chat.client.kuaishou.msg.KuaishouDanmuMsg
 import tech.ordinaryroad.live.chat.client.kuaishou.msg.KuaishouGiftMsg
+import tech.ordinaryroad.live.chat.client.kuaishou.msg.KuaishouLikeMsg
 import tech.ordinaryroad.live.chat.client.kuaishou.netty.handler.KuaishouBinaryFrameHandler
 
 /**
@@ -42,6 +43,10 @@ class KuaishouMsgPublisher : IKuaishouMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onGiftMsg(t: KuaishouBinaryFrameHandler, msg: KuaishouGiftMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onLikeMsg(t: KuaishouBinaryFrameHandler, msg: KuaishouLikeMsg) {
         this.subscriber?.onNext(msg)
     }
 
