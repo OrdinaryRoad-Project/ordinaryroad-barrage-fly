@@ -49,7 +49,7 @@ repositories {
 extra["springBootAdminVersion"] = "2.7.4"
 
 dependencies {
-    val liveChatClientVersion = "0.1.0"
+    val liveChatClientVersion = "0.2.2"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
     val qLExpressVersion = "3.3.2"

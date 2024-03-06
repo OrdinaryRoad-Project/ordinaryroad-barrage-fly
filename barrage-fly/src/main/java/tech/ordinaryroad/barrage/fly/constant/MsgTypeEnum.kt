@@ -27,6 +27,7 @@ enum class MsgTypeEnum {
     GIFT,
     SUPER_CHAT,
     ENTER_ROOM,
+    LIKE,
     ;
 
     companion object {
@@ -46,6 +47,10 @@ enum class MsgTypeEnum {
 
                 is IEnterRoomMsg -> {
                     ENTER_ROOM
+                }
+
+                is ILikeMsg -> {
+                    LIKE
                 }
 
                 else -> {

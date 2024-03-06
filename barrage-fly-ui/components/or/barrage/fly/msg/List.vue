@@ -41,6 +41,7 @@
                 <or-barrage-fly-msg-danmu v-if="'DANMU'===msg.type" :msg="msg" />
                 <or-barrage-fly-msg-gift v-else-if="'GIFT'===msg.type" :msg="msg" />
                 <or-barrage-fly-msg-enter-room v-else-if="'ENTER_ROOM'===msg.type" :msg="msg" />
+                <or-barrage-fly-msg-like v-else-if="'LIKE'===msg.type" :msg="msg" />
                 <span v-else-if="msg.message">{{ msg.message }}</span>
                 <span v-else>{{ msg }}</span>
               </v-list-item-title>
