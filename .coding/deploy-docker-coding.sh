@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-export APP_VERSION=1.0.8
+export APP_VERSION=1.0.9
 
 docker login ordinaryroad-docker.pkg.coding.net
 
