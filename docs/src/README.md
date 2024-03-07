@@ -18,7 +18,7 @@ highlights:
   - header: 功能
     features:
       - title: 监听不同平台不同直播间的弹幕，支持B站、斗鱼、虎牙、抖音、快手
-      - title: 使用统一的协议将弹幕转发出去，DANMU、GIFT、SUPER_CHAT
+      - title: 使用统一的协议将弹幕转发出去，DANMU、GIFT、SUPER_CHAT、ENTER_ROOM、LIKE
       - title: 支持弹幕流的过滤与转换，前置处理、消息过滤、后置处理、弹幕发送
       - title: 内置简易实时弹幕显示、实时任务状态统计
   - header: 作用
