@@ -31,10 +31,10 @@ docker tag ordinaryroad-barrage-fly-arm64 ordinaryroad-docker.pkg.coding.net/ord
 docker push ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64
 
 # 2 发布前端
-docker tag ordinaryroad-barrage-fly-ui:${APP_VERSION} ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
-docker push ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
-docker tag ordinaryroad-barrage-fly-ui ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
-docker push ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+#docker tag ordinaryroad-barrage-fly-ui:${APP_VERSION} ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
+#docker push ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
+#docker tag ordinaryroad-barrage-fly-ui ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+#docker push ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
 
 docker logout
 

@@ -33,5 +33,13 @@ cd ../.docker/ordinaryroad-barrage-fly-ui/app
 npm install
 npm run build
 cd ..
-docker build . -f Dockerfile -t ordinaryroad-barrage-fly-ui:${APP_VERSION}
-docker tag ordinaryroad-barrage-fly-ui:${APP_VERSION} ordinaryroad-barrage-fly-ui
+
+# 构建多平台版本
+docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
+docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+
+docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
+docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION} ordinaryroad-barrage-fly-ui:${APP_VERSION}
+
+docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
+docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
