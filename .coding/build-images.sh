@@ -34,7 +34,9 @@ npm install
 npm run build
 cd ..
 
-# 构建多平台版本
+docker login ordinaryroad-docker.pkg.coding.net
+
+# 构建并发布多平台版本
 docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:${APP_VERSION}
 docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
 
@@ -43,3 +45,5 @@ docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pu
 
 docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
 docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
+
+docker logout
