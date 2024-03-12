@@ -13,16 +13,15 @@ pip3 install aiohttp
 ## 2 运行查看效果
 
 ```
-usage: websocket.py [-h] [--host HOST] [-p P] -t T
+usage: websocket.py [-h] [--uri URI] -t T
 
 optional arguments:
-  -h, --help   show this help message and exit
-  --host HOST  HOST
-  -p P         PORT
-  -t T         taskIds
+  -h, --help  show this help message and exit
+  --uri URI   WebSocket Server Uri
+  -t T        taskIds
 ```
 
 ```shell
-# 默认localhost:9898
+# 默认ws://localhost:9898
 python websocket.py -t taskId1 -t taskId2
 ```

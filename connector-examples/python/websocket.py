@@ -11,6 +11,18 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import argparse
 import asyncio
@@ -80,12 +92,12 @@ class ChannelSubscriber(Subscriber):
 
 
 @asynccontextmanager
-async def connect(server_host, server_port):
+async def connect(websocket_uri):
     """
     创建一个Client，建立连接并return
     """
     async with aiohttp.ClientSession() as session:
-        async with session.ws_connect('ws://%s:%s' % (server_host, server_port)) as websocket:
+        async with session.ws_connect(websocket_uri) as websocket:
             async with RSocketClient(
                     single_transport_provider(TransportAioHttpClient(websocket=websocket)),
                     keep_alive_period=timedelta(seconds=30),
@@ -94,9 +106,9 @@ async def connect(server_host, server_port):
                 yield client
 
 
-async def main(server_host, server_port):
+async def main(websocket_uri):
     # 1 建立连接
-    async with connect(server_host, server_port) as client:
+    async with connect(websocket_uri) as client:
         # 阻塞等待Channel关闭事件
         channel_completion_event = Event()
 
@@ -162,17 +174,15 @@ if __name__ == '__main__':
     pip3 install rsocket
     pip3 install aiohttp
     
-    python websocket.py -t taskId1 -t taskId2 [-p PORT]
+    python websocket.py -t taskId1 -t taskId2
     """
     logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser()
-    parser.add_argument('--host', default='localhost', type=str, help="HOST")
-    parser.add_argument('-p', default='9898', type=int, help="PORT")
+    parser.add_argument('--uri', default='ws://localhost:9898', type=str, help="WebSocket Server Uri")
     parser.add_argument('-t', action='append', required=True, help="taskIds")
     args = parser.parse_args()
 
-    host = args.host
-    port = args.p
+    uri = args.uri
     subscribe_payload_json["data"]["taskIds"] = args.t
     print(subscribe_payload_json)
-    asyncio.run(main(host, port))
+    asyncio.run(main(uri))
