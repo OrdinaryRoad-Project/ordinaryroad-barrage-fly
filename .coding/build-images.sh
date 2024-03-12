@@ -46,4 +46,4 @@ docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pu
 docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui
 docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
 
-docker logout
+#docker logout ordinaryroad-docker.pkg.coding.net
