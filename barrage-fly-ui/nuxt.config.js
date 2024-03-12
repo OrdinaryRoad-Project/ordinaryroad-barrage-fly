@@ -148,10 +148,10 @@ export default {
 
   // https://www.nuxtjs.cn/guide/runtime-config#runtime-config-213
   publicRuntimeConfig: {
-    BASE_URL: process.env.BASE_URL,
     APP_VERSION: require('./package.json').version,
     RSA_PUBLIC_KEY: process.env.RSA_PUBLIC_KEY,
     SUB_BASE_URL: process.env.SUB_BASE_URL,
+    SPRING_BOOT_ADMIN_BASE_URL: process.env.SPRING_BOOT_ADMIN_BASE_URL,
     FOOTER_LINKS: [
       {
         href: 'https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client',
