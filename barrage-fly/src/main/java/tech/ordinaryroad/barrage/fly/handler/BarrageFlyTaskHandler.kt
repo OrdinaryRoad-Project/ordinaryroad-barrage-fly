@@ -43,11 +43,17 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
     suspend fun createTask(request: ServerRequest): ServerResponse {
         val task = request.awaitBody<BarrageFlyTaskDO>()
         val create = barrageFlyTaskService.create(task)
+
         request.queryParam("start").ifPresent {
             if (it.toBoolean()) {
-                BarrageFlyTaskContext.getOrCreateContext(create).start()
+                try {
+                    BarrageFlyTaskContext.getOrCreateContext(create).start()
+                } catch (e: Exception) {
+                    // ignore
+                }
             }
         }
+
         return ServerResponse.ok().bodyValueAndAwait(create.toDTO())
     }
 
@@ -92,9 +98,14 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
         }
 
         val update = barrageFlyTaskService.updateSelective(barrageFlyTaskDO)
+
         request.queryParam("start").ifPresent {
             if (it.toBoolean()) {
-                BarrageFlyTaskContext.getOrCreateContext(update).start()
+                try {
+                    BarrageFlyTaskContext.getOrCreateContext(update).start()
+                } catch (e: Exception) {
+                    // ignore
+                }
             }
         }
 
@@ -154,7 +165,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
                 if (!roomId.isNullOrBlank()) {
                     this.roomId = roomId
                 }
-                if (!remark.isNullOrBlank()){
+                if (!remark.isNullOrBlank()) {
                     this.remark = remark
                 }
             }, baseQueryRequest
