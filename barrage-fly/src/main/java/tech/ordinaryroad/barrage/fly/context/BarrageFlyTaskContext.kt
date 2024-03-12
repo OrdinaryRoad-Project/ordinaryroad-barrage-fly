@@ -314,7 +314,7 @@ class BarrageFlyTaskContext(
          * 任务终止时移除上下文
          */
         fun removeContext(taskId: String) {
-            taskContexts[taskId]?.destroy()
+            taskContexts.remove(taskId)?.destroy()
         }
 
         fun getContext(taskId: String?): BarrageFlyTaskContext? {
