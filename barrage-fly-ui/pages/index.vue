@@ -84,7 +84,7 @@
                 <v-btn
                   icon
                   target="_blank"
-                  :href="`${$config.SPRING_BOOT_ADMIN_BASE_URL}/admin/wallboard`"
+                  :href="`${$config.SPRING_BOOT_ADMIN_BASE_URL}/wallboard`"
                   v-bind="attrs"
                   v-on="on"
                 >
