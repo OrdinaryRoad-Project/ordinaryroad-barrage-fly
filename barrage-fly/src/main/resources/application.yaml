@@ -25,6 +25,8 @@ spring:
         username: ${ADMIN_USERNAME:admin}
         password: ${ADMIN_PASSWORD:admin}
       context-path: admin
+      ui:
+        public-url: ${ADMIN_BASE_URL:http://localhost:8080/admin}
   jackson:
     serialization:
       fail-on-empty-beans: false
