@@ -177,11 +177,11 @@ class BarrageFlyTaskContext(
             }
 
             PlatformEnum.DOUYIN -> {
-               DouyinMsgPublisher() as MsgListener
+                DouyinMsgPublisher() as MsgListener
             }
 
             PlatformEnum.KUAISHOU -> {
-               KuaishouMsgPublisher() as MsgListener
+                KuaishouMsgPublisher() as MsgListener
             }
         }
     }
