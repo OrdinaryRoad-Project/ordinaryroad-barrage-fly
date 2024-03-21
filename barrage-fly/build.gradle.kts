@@ -48,8 +48,11 @@ repositories {
 
 extra["springBootAdminVersion"] = "2.7.4"
 
+// val operatingSystem: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
+
 dependencies {
     val liveChatClientVersion = "0.3.2"
+    val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
     val qLExpressVersion = "3.3.2"
@@ -85,6 +88,54 @@ dependencies {
     implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
     implementation("com.alibaba:QLExpress:$qLExpressVersion")
     implementation("com.hubspot.jackson:jackson-datatype-protobuf:0.9.14")
+
+    // implementation("com.aayushatharva.brotli4j:brotli4j:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-windows-aarch64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-windows-x86_64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-osx-aarch64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-osx-x86_64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-armv7:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-aarch64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-x86_64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-s390x:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-riscv64:$liveChatClientBrotliVersion")
+    compileOnly("com.aayushatharva.brotli4j:native-linux-ppc64le:$liveChatClientBrotliVersion")
+//    compileOnly(
+//        "com.aayushatharva.brotli4j:native-" +
+//                if (operatingSystem.isWindows) {
+//                    if (DefaultNativePlatform.getCurrentArchitecture().isArm()) {
+//                        "windows-aarch64"
+//                    } else {
+//                        "windows-x86_64"
+//                    }
+//                } else if (operatingSystem.isMacOsX) {
+//                    if (DefaultNativePlatform.getCurrentArchitecture().isArm()) {
+//                        "osx-aarch64"
+//                    } else {
+//                        "osx-x86_64"
+//                    }
+//                } else if (operatingSystem.isLinux) {
+//                    if (Architectures.ARM_V7.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+//                        "linux-armv7"
+//                    } else if (Architectures.AARCH64.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+//                        "linux-aarch64"
+//                    } else if (Architectures.X86_64.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+//                        "linux-x86_64"
+//                    }
+////                    else if (Architectures.S390X.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+////                        "linux-s390x"
+////                    } else if (Architectures.RISCV_64.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+////                        "linux-riscv64"
+////                    } else if (Architectures.PPC64LE.isAlias(DefaultNativePlatform.getCurrentArchitecture().name)) {
+////                        "linux-ppc64le"
+////                    }
+//                    else {
+//                        throw IllegalStateException("Unsupported architecture: ${DefaultNativePlatform.getCurrentArchitecture().name}")
+//                    }
+//                } else {
+//                    throw IllegalStateException("Unsupported operating system: $operatingSystem")
+//                } + ":$brotliVersion"
+//    )
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
