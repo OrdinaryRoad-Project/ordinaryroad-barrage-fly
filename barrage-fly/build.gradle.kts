@@ -90,16 +90,16 @@ dependencies {
     implementation("com.hubspot.jackson:jackson-datatype-protobuf:0.9.14")
 
     // implementation("com.aayushatharva.brotli4j:brotli4j:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-windows-aarch64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-windows-x86_64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-osx-aarch64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-osx-x86_64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-armv7:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-aarch64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-x86_64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-s390x:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-riscv64:$liveChatClientBrotliVersion")
-    compileOnly("com.aayushatharva.brotli4j:native-linux-ppc64le:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-windows-aarch64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-windows-x86_64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-osx-aarch64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-osx-x86_64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-armv7:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-aarch64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-x86_64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-s390x:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-riscv64:$liveChatClientBrotliVersion")
+    implementation("com.aayushatharva.brotli4j:native-linux-ppc64le:$liveChatClientBrotliVersion")
 //    compileOnly(
 //        "com.aayushatharva.brotli4j:native-" +
 //                if (operatingSystem.isWindows) {
