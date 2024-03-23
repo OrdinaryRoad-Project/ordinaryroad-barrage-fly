@@ -25,7 +25,7 @@ plugins {
 }
 
 group = "tech.ordinaryroad"
-version = "1.1.2"
+version = "1.1.3"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -51,7 +51,7 @@ extra["springBootAdminVersion"] = "2.7.4"
 // val operatingSystem: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
 
 dependencies {
-    val liveChatClientVersion = "0.3.2"
+    val liveChatClientVersion = "0.4.0-SNAPSHOT"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"

@@ -38,6 +38,8 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
         if (msg is SendSmsReplyMsg) {
             if (msg.cmdEnum == BilibiliCmdEnum.DANMU_MSG || msg.cmdEnum == BilibiliCmdEnum.SEND_GIFT
                 || msg.cmdEnum == BilibiliCmdEnum.SUPER_CHAT_MESSAGE || msg.cmdEnum == BilibiliCmdEnum.INTERACT_WORD
+                || msg.cmdEnum == BilibiliCmdEnum.LIKE_INFO_V3_UPDATE
+                || msg.cmdEnum == BilibiliCmdEnum.LIVE || msg.cmdEnum == BilibiliCmdEnum.STOP_LIVE_ROOM_LIST
             ) {
                 return
             }
@@ -62,6 +64,10 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onLikeMsg(t: BilibiliBinaryFrameHandler, msg: LikeInfoV3ClickMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onLiveStatusMsg(t: BilibiliBinaryFrameHandler?, msg: BilibiliLiveStatusChangeMsg) {
         this.subscriber?.onNext(msg)
     }
 

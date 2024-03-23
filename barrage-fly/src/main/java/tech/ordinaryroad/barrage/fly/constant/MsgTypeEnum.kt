@@ -28,6 +28,7 @@ enum class MsgTypeEnum {
     SUPER_CHAT,
     ENTER_ROOM,
     LIKE,
+    LIVE_STATUS_CHANGE,
     ;
 
     companion object {
@@ -51,6 +52,10 @@ enum class MsgTypeEnum {
 
                 is ILikeMsg -> {
                     LIKE
+                }
+
+                is ILiveStatusChangeMsg -> {
+                    LIVE_STATUS_CHANGE
                 }
 
                 else -> {

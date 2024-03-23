@@ -23,10 +23,7 @@ import tech.ordinaryroad.live.chat.client.commons.base.msg.ICmdMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.douyin.constant.DouyinCmdEnum
 import tech.ordinaryroad.live.chat.client.douyin.listener.IDouyinMsgListener
-import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinDanmuMsg
-import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinEnterRoomMsg
-import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinGiftMsg
-import tech.ordinaryroad.live.chat.client.douyin.msg.DouyinLikeMsg
+import tech.ordinaryroad.live.chat.client.douyin.msg.*
 import tech.ordinaryroad.live.chat.client.douyin.netty.handler.DouyinBinaryFrameHandler
 import tech.ordinaryroad.live.chat.client.douyin.protobuf.douyin_cmd_msg
 
@@ -44,6 +41,7 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
             val cmdMsg = msg as ICmdMsg<*>
             if (cmdMsg.cmdEnum == DouyinCmdEnum.WebcastChatMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastGiftMessage
                 || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastLikeMessage
+                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastControlMessage
             ) {
                 return
             }
@@ -63,7 +61,11 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
         this.subscriber?.onNext(msg)
     }
 
-    override fun onLikeMsg(t: DouyinBinaryFrameHandler, msg: DouyinLikeMsg?) {
+    override fun onLikeMsg(t: DouyinBinaryFrameHandler, msg: DouyinLikeMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onLiveStatusMsg(t: DouyinBinaryFrameHandler?, msg: DouyinControlMsg) {
         this.subscriber?.onNext(msg)
     }
 
