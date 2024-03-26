@@ -30,6 +30,7 @@ services:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
       RSA_PUBLIC_KEY:
       SUB_BASE_URL:
+      SPRING_BOOT_ADMIN_BASE_URL: ${ADMIN_BASE_URL}
     hostname: ordinaryroad-barrage-fly-ui
     restart: always
 
@@ -41,6 +42,7 @@ services:
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      ADMIN_BASE_URL:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
       RSA_PUBLIC_KEY:
@@ -54,8 +56,16 @@ services:
     build:
       context: ./ordinaryroad-barrage-fly-nginx
     ports:
+      # UI
       - "81:81"
+      # Admin
+      - "8080:8080"
+      # 后端
       - "8081:8081"
+      # RSocket
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly-nginx
+    depends_on:
+      - ordinaryroad-barrage-fly
+      - ordinaryroad-barrage-fly-ui
     restart: always
