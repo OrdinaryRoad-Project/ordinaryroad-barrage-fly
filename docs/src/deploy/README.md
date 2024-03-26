@@ -43,6 +43,7 @@ WebSocket地址：wss://barragefly.ordinaryroad.tech:7100
 # MYSQL_USERNAME
 # MYSQL_PASSWORD
 # SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
+# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin地址）
 # RSA_PUBLIC_KEY（RSA）
 # ADMIN_USERNAME（任务管理后台登录用户名）
 # ADMIN_PASSWORD（任务管理后台登录密码）
@@ -90,6 +91,7 @@ services:
 # 需要的环境变量，其他可以环境变量可看每个目录下的.env文件
 # MYSQL_ROOT_PASSWORD（MySQL初始ROOT密码）
 # SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
+# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin地址）
 # RSA_PUBLIC_KEY（RSA）
 # ADMIN_USERNAME（任务管理后台登录用户名）
 # ADMIN_PASSWORD（任务管理后台登录密码）
@@ -149,6 +151,7 @@ services:
 # 需要的环境变量，其他可以环境变量可看每个目录下的.env文件
 # MYSQL_ROOT_PASSWORD（MySQL初始ROOT密码）
 # SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
+# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin地址）
 # RSA_PUBLIC_KEY（RSA）
 # ADMIN_USERNAME（任务管理后台登录用户名）
 # ADMIN_PASSWORD（任务管理后台登录密码）
