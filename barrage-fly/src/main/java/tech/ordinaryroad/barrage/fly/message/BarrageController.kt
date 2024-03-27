@@ -191,6 +191,91 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
             }
     }
 
+    @MessageMapping("")
+    fun stream(data: JsonNode, requester: RSocketRequester): Flux<Any> {
+        if (log.isDebugEnabled) {
+            log.debug("on stream {} {}", requester.hashCode(), requester)
+        }
+        val subscribedTaskIds: HashSet<String> = HashSet()
+        val cmd = data.get("cmd").asText()
+        val noContextTaskIds = arrayListOf<String>()
+        subscribedTaskIds.forEach { taskId ->
+            if (BarrageFlyTaskContext.getContext(taskId) == null) {
+                noContextTaskIds.add(taskId)
+            }
+        }
+        val taskIds = data.withArray<JsonNode>("taskIds").map { jsonNode -> jsonNode.asText() }
+        // 收到client发送的订阅请求
+        if (cmd == "SUBSCRIBE") {
+            subscribedTaskIds.addAll(taskIds)
+            BarrageFlyTaskContext.registerChannels(subscribedTaskIds.toList(), requester)
+        }
+        // 收到client发送的取消订阅请求
+        else if (cmd == "UNSUBSCRIBE") {
+            subscribedTaskIds.removeAll(taskIds.toSet())
+            BarrageFlyTaskContext.unregisterChannels(taskIds, requester)
+        }
+
+        if (cmd == "SUBSCRIBE" && noContextTaskIds.isNotEmpty()) {
+            return Flux.just(
+                OBJECT_MAPPER.createObjectNode().apply {
+                    put("status", HttpStatus.HTTP_BAD_REQUEST)
+                    put("message", "the task $noContextTaskIds don't have contexts yet")
+                }
+            )
+        } else {
+            val hashCode = requester.hashCode()
+            val toList = subscribedTaskIds.stream().map { taskId ->
+                val context = BarrageFlyTaskContext.getContext(taskId)!!
+                val publisher = context.rSocketClientMsgPublishers[hashCode]!!
+                val roomId = context.barrageFlyTaskDO.roomId
+                val expressContext = BarrageFlyExpressContext()
+                Flux.from(publisher)
+                    .map { msg ->
+                        expressContext.setMsg(BarrageFlyMsgDTO(roomId, msg))
+                        expressContext.getMsg()
+                    }
+                    .map {
+                        // 前置操作
+                        val result = expressRunner.executePreMapExpress(
+                            context.barrageFlyTaskDO.msgPreMapExpress,
+                            expressContext
+                        )
+                        expressContext.setMsg(result)
+                        result
+                    }
+                    .filterWhen { result ->
+                        Flux.just(result)
+                            .map {
+                                // 过滤
+                                expressRunner.executeFilterExpress(
+                                    context.barrageFlyTaskDO.msgFilterExpress,
+                                    expressContext
+                                )
+                            }
+                    }
+                    .map {
+                        // 后置操作
+                        val result = expressRunner.executePostMapExpress(
+                            context.barrageFlyTaskDO.msgPostMapExpress,
+                            expressContext
+                        )
+                        expressContext.setMsg(result)
+                        result
+                    }
+            }.collect(Collectors.toList())
+            val just = Flux.just(OBJECT_MAPPER.createObjectNode().apply {
+                put("status", HttpStatus.HTTP_OK)
+                put("message", "ok")
+            }) as Flux<Any>
+            return if (toList.isEmpty()) {
+                just
+            } else {
+                just.mergeWith(Flux.merge(toList))
+            }
+        }
+    }
+
     @ConnectMapping("example")
     fun exampleConnect(setupPayload: Mono<JsonNode>, requester: RSocketRequester) {
         if (log.isDebugEnabled) {
