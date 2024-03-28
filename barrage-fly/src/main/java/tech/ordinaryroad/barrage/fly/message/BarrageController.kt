@@ -69,8 +69,10 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                             if (log.isDebugEnabled) {
                                 log.debug("onClose finally {}", requester.hashCode())
                             }
-                            // 连接被关闭
+                            // 连接被关闭，注销连接的Client
                             BarrageFlyTaskContext.unregisterClient(requester)
+                            // 注销MsgPublisher（RequestChannel, RequestStream）
+                            BarrageFlyTaskContext.unregisterAllChannels(requester)
                         }
                         .subscribe()
                 }
@@ -120,7 +122,6 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                 if (log.isDebugEnabled) {
                     log.debug("channel finally {}", requester.hashCode())
                 }
-                BarrageFlyTaskContext.unregisterAllChannels(requester)
             }
             .switchMap {
                 val cmd = it.get("cmd").asText()
