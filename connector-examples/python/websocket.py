@@ -23,6 +23,18 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
 import argparse
 import asyncio
@@ -70,12 +82,12 @@ class ChannelSubscriber(Subscriber):
         if msg_type == "DANMU":
             msg = msg_dto['msg']
             logging.info(
-                f"{msg_dto['roomId']} 收到弹幕 {str(msg['badgeLevel']) + msg['badgeName'] if msg['badgeLevel'] != 0 else ''} {msg['username']}({str(msg['uid'])})：{msg['content']}"
+                f"{msg_dto['roomId']} 收到弹幕 {str(msg['badgeLevel']) + str(msg['badgeName']) if msg['badgeLevel'] != 0 else ''} {msg['username']}({str(msg['uid'])})：{msg['content']}"
             )
         elif msg_type == "GIFT":
             msg = msg_dto['msg']
             logging.info(
-                f"{msg_dto['roomId']} 收到礼物 {str(msg['badgeLevel']) + msg['badgeName'] if msg['badgeLevel'] != 0 else ''} {msg['username']}({str(msg['uid'])}) {msg['data']['action'] if msg.get('data') is not None and msg.get('data').get('action') is not None else '赠送'} {msg['giftName']}({str(msg['giftId'])})x{str(msg['giftCount'])}({str(msg['giftPrice'])})"
+                f"{msg_dto['roomId']} 收到礼物 {str(msg['badgeLevel']) + str(msg['badgeName']) if msg['badgeLevel'] != 0 else ''} {msg['username']}({str(msg['uid'])}) {str(msg['data']['action']) if msg.get('data') is not None and msg.get('data').get('action') is not None else '赠送'} {msg['giftName']}({str(msg['giftId'])})x{str(msg['giftCount'])}({str(msg['giftPrice'])})"
             )
         else:
             logging.info("收到消息 " + json.dumps(msg_dto))
