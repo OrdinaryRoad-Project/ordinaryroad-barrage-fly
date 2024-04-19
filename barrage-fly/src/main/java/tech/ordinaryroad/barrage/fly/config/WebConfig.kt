@@ -15,6 +15,7 @@
  */
 package tech.ordinaryroad.barrage.fly.config
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.web.ServerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -25,6 +26,7 @@ import org.springframework.web.server.WebFilter
  * @date 2024/4/19
  */
 @Configuration
+@ConditionalOnProperty("server.servlet.context-path")
 class WebConfig(val serverProperties: ServerProperties) {
 
     @Bean
