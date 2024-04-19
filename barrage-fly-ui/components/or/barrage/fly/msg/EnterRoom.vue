@@ -16,9 +16,7 @@
 <template>
   <div class="d-flex align-center justify-center">
     <or-barrage-fly-msg-user-avatar :msg="msg" size="36" class="me-2" />
-    <span v-if="msg.msg.badgeLevel && msg.msg.badgeLevel!==0" class="secondary--text me-1">
-      [{{ msg.msg.badgeLevel }}{{ msg.msg.badgeName }}]
-    </span>
+    <or-barrage-fly-msg-user-badge :msg="msg" />
     <or-barrage-fly-msg-username :msg="msg" class="me-1" />
     进入直播间
   </div>

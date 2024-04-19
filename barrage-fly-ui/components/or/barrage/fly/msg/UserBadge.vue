@@ -13,25 +13,29 @@
   - See the License for the specific language governing permissions and
   - limitations under the License.
   -->
+
 <template>
-  <div class="d-flex align-center">
-    <or-barrage-fly-msg-user-avatar :msg="msg" size="36" class="me-2" />
-    <or-barrage-fly-msg-user-badge :msg="msg" />
-    <or-barrage-fly-msg-username :msg="msg" />
-    ：{{ msg.msg.content }}
-  </div>
+  <span v-if="msg.msg.badgeLevel && msg.msg.badgeLevel!==0" class="secondary--text me-1">
+    [{{ msg.msg.badgeLevel }}-{{ msg.msg.badgeName }}]
+  </span>
 </template>
+
 <script>
 export default {
-  name: 'OrBarrageFlyMsgDanmu',
+  name: 'OrBarrageFlyMsgUserBadge',
   props: {
     msg: {
       type: Object,
       required: true
     }
+  },
+  data: () => ({
+  }),
+  created () {
   }
 }
 </script>
+
 <style scoped>
 
 </style>
