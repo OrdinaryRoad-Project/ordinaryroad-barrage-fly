@@ -52,3 +52,6 @@ management:
     web:
       exposure:
         include: "*"
+server:
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH:}
