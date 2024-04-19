@@ -35,7 +35,7 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
 
     override fun onMsg(binaryFrameHandler: BilibiliBinaryFrameHandler, msg: IMsg) {
         // B站防止重复添加消息，因为B站的弹幕、礼物、醒目留言、入房消息只是字段属性不同，都是属于SendSmsReplyMsg
-        if (msg is SendSmsReplyMsg) {
+        if (msg is MessageMsg) {
             if (msg.cmdEnum == BilibiliCmdEnum.DANMU_MSG || msg.cmdEnum == BilibiliCmdEnum.SEND_GIFT
                 || msg.cmdEnum == BilibiliCmdEnum.SUPER_CHAT_MESSAGE || msg.cmdEnum == BilibiliCmdEnum.INTERACT_WORD
                 || msg.cmdEnum == BilibiliCmdEnum.LIKE_INFO_V3_UPDATE
