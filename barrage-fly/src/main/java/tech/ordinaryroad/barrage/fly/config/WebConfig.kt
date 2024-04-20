@@ -15,7 +15,8 @@
  */
 package tech.ordinaryroad.barrage.fly.config
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import cn.hutool.log.LogFactory
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.boot.autoconfigure.web.ServerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -26,15 +27,18 @@ import org.springframework.web.server.WebFilter
  * @date 2024/4/19
  */
 @Configuration
-@ConditionalOnProperty("server.servlet.context-path")
 class WebConfig(val serverProperties: ServerProperties) {
 
+    private val log = LogFactory.get()
+
     @Bean
+    @ConditionalOnExpression("T(cn.hutool.core.util.StrUtil).isNotBlank('\${server.servlet.context-path}')")
     fun contextPathWebFilter(): WebFilter {
         val contextPath = serverProperties.servlet.contextPath
+        log.info("ContextPathWebFilter Enabled, ContextPathPrefix: $contextPath")
         return WebFilter { exchange, chain ->
             val request = exchange.request
-            if (contextPath.isNullOrBlank() || request.uri.getPath().startsWith(contextPath)) {
+            if (request.uri.getPath().startsWith(contextPath)) {
                 return@WebFilter chain.filter(
                     exchange.mutate()
                         .request(
