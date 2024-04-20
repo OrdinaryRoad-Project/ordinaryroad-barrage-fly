@@ -86,7 +86,8 @@ import Cookies from 'js-cookie'
 
 export default {
   layout: 'empty',
-  asyncData ({
+  async asyncData ({
+    $apis,
     store,
     route,
     redirect
@@ -97,6 +98,7 @@ export default {
       redirect(redirectPath)
     } else {
       return {
+        rsaPublicKey: await $apis.app.configurations().rsaPublicKey,
         redirect: redirectPath
       }
     }
@@ -109,7 +111,8 @@ export default {
       password: null,
       remember: false
     },
-    redirect: '/'
+    redirect: '/',
+    rsaPublicKey: null
   }),
   head () {
     return {
@@ -127,7 +130,7 @@ export default {
       const json = JSON.stringify(this.model)
       const JSEncrypt = require('jsencrypt').JSEncrypt
       const encrypt = new JSEncrypt()
-      encrypt.setPublicKey(this.$config.RSA_PUBLIC_KEY)
+      encrypt.setPublicKey(this.rsaPublicKey)
       const encrypted = encrypt.encrypt(json)
       this.$apis.user.login(encrypted)
         .then((data) => {

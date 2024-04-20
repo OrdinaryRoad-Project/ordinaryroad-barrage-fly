@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
+import appApis from './app/index'
 import taskApis from './task/index'
 import statsApis from './stats/index'
 import userApis from './user/index'
 
 export default function ({ $axios, app }, inject) {
   // 初始化axios
+  appApis.initAxios($axios)
   taskApis.initAxios($axios)
   statsApis.initAxios($axios)
   userApis.initAxios($axios)
   const $apis = {
+    app: appApis.apis,
     task: taskApis.apis,
     stats: statsApis.apis,
     user: userApis.apis,
