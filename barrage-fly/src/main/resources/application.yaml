@@ -32,6 +32,8 @@ spring:
       fail-on-empty-beans: false
     deserialization:
       fail-on-unknown-properties: false
+  thymeleaf:
+    check-template-location: false
 sa-token:
   timeout: 60480 # 7天：3600*24*7
   token-name: token
