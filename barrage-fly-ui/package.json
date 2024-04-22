@@ -15,7 +15,8 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "lintfix": "npm run lint:js -- --fix",
-    "copy": "rsync -av --exclude .nuxt --exclude node_modules ./ ../.docker/ordinaryroad-barrage-fly-ui/app"
+    "copy": "rsync -av --exclude .nuxt --exclude node_modules ./ ../.docker/ordinaryroad-barrage-fly-ui/app",
+    "copyDist": "rsync -av ./dist/ ../barrage-fly/src/main/resources/public"
   },
   "dependencies": {
     "@assortment/darkmodejs": "^1.2.1",

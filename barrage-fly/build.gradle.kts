@@ -165,8 +165,13 @@ tasks.withType<Test> {
 tasks.withType<BootJar> {
     val appName = "ordinaryroad-barrage-fly"
     doLast {
-        file("$buildDir/libs/${project.name}-${project.version}.jar")
-            .copyTo(file("$projectDir/../.docker/${appName}/app/${appName}.jar"), true)
+        file("$buildDir/libs/${project.name}-${project.version}.jar").let {
+            if (file("$projectDir/src/main/resources/static/index.html").exists()) {
+                it.copyTo(file("$projectDir/../.docker/${appName}-with-ui/app/${appName}.jar"), true)
+            } else {
+                it.copyTo(file("$projectDir/../.docker/${appName}/app/${appName}.jar"), true)
+            }
+        }
     }
 }
 
