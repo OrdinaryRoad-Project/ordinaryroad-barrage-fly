@@ -24,8 +24,6 @@ services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    build:
-      context: ./ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
       SUB_BASE_URL:
@@ -36,8 +34,6 @@ services:
   ordinaryroad-barrage-fly:
     image: ordinaryroad-barrage-fly
     container_name: ordinaryroad-barrage-fly
-    build:
-      context: ./ordinaryroad-barrage-fly
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
