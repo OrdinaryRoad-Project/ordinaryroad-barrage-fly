@@ -28,7 +28,6 @@ services:
       context: ./ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      RSA_PUBLIC_KEY:
       SUB_BASE_URL:
       SPRING_BOOT_ADMIN_BASE_URL: ${ADMIN_BASE_URL}
     hostname: ordinaryroad-barrage-fly-ui
