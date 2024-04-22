@@ -19,6 +19,7 @@ export APP_VERSION=1.1.7
 
 # 1 后端
 cd ../barrage-fly
+rm -rf ./src/main/resources/public/*
 ./gradlew clean bootJar
 cd ../.docker/ordinaryroad-barrage-fly
 docker build . -f Dockerfile -t ordinaryroad-barrage-fly:${APP_VERSION}
