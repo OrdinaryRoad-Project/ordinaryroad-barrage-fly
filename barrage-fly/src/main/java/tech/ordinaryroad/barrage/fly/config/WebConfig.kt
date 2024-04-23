@@ -16,11 +16,9 @@
 package tech.ordinaryroad.barrage.fly.config
 
 import cn.hutool.log.LogFactory
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression
 import org.springframework.boot.autoconfigure.web.ServerProperties
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.server.WebFilter
+
 
 /**
  * @author mjz
@@ -31,26 +29,31 @@ class WebConfig(val serverProperties: ServerProperties) {
 
     private val log = LogFactory.get()
 
-    @Bean
-    @ConditionalOnExpression("T(cn.hutool.core.util.StrUtil).isNotBlank('\${server.servlet.context-path}')")
-    fun contextPathWebFilter(): WebFilter {
-        val contextPath = serverProperties.servlet.contextPath
-        log.info("ContextPathWebFilter Enabled, ContextPathPrefix: $contextPath")
-        return WebFilter { exchange, chain ->
-            val request = exchange.request
-            if (request.uri.getPath().startsWith(contextPath)) {
-                return@WebFilter chain.filter(
-                    exchange.mutate()
-                        .request(
-                            request.mutate()
-                                .contextPath(contextPath)
-                                .build()
-                        )
-                        .build()
-                )
-            }
-            chain.filter(exchange)
-        }
-    }
+// TODO Spring Boot Webflux静态资源有问题，按钮跳转可以正常访问，刷新后就404了
+//    @Bean
+//    @ConditionalOnExpression("T(cn.hutool.core.util.StrUtil).isNotBlank('\${server.servlet.context-path}')")
+//    fun contextPathWebFilter(): WebFilter {
+////        val contextPath = serverProperties.servlet.contextPath
+//        val contextPath = "/api"
+//        log.info("ContextPathWebFilter Enabled, ContextPathPrefix: $contextPath")
+//        return WebFilter { exchange, chain ->
+//            val request = exchange.request
+//            return@WebFilter if (request.uri.getPath().startsWith(contextPath)) {
+//                chain.filter(
+//                    exchange.mutate()
+//                        .request(
+//                            request.mutate()
+//                                // .contextPath(contextPath)
+//                                 .path(request.uri.getPath().replaceFirst(contextPath, ""))
+////                                .path(request.uri.getPath())
+//                                .build()
+//                        )
+//                        .build()
+//                )
+//            } else {
+//                chain.filter(exchange)
+//            }
+//        }
+//    }
 
 }
