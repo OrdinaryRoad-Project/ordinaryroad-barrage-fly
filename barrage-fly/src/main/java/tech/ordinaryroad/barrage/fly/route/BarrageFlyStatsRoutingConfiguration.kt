@@ -16,6 +16,7 @@
 
 package tech.ordinaryroad.barrage.fly.route
 
+import cn.hutool.core.util.StrUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
@@ -24,9 +25,10 @@ import org.springframework.web.reactive.function.server.RouterFunction
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.router
 import tech.ordinaryroad.barrage.fly.handler.BarrageFlyStatsHandler
+import tech.ordinaryroad.barrage.fly.property.ApiProperties
 
 @Configuration(proxyBeanMethods = false)
-class BarrageFlyStatsRoutingConfiguration {
+class BarrageFlyStatsRoutingConfiguration(val apiProperties: ApiProperties) {
 
 //    @Bean
 //    fun statsRouterFunction(handler: BarrageFlyStatsHandler): RouterFunction<ServerResponse> {
@@ -42,7 +44,7 @@ class BarrageFlyStatsRoutingConfiguration {
     @Bean
     fun statsMonoRouterFunction(handler: BarrageFlyStatsHandler): RouterFunction<ServerResponse> {
         return router {
-            "/stats".nest {
+            "${StrUtil.emptyIfNull(apiProperties.prefix)}/stats".nest {
                 GET("/counts", handler::counts)
             }
         }

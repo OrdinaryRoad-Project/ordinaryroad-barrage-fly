@@ -17,6 +17,7 @@
 package tech.ordinaryroad.barrage.fly.route
 
 import cn.dev33.satoken.stp.StpUtil
+import cn.hutool.core.util.StrUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
@@ -25,14 +26,15 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 import org.springframework.web.reactive.function.server.router
 import tech.ordinaryroad.barrage.fly.handler.BarrageFlyUserHandler
+import tech.ordinaryroad.barrage.fly.property.ApiProperties
 
 @Configuration(proxyBeanMethods = false)
-class BarrageFlyUserRoutingConfiguration {
+class BarrageFlyUserRoutingConfiguration(val apiProperties: ApiProperties) {
 
     @Bean
     fun userRouterFunction(handler: BarrageFlyUserHandler): RouterFunction<ServerResponse> {
         return coRouter {
-            "/user".nest {
+            "${StrUtil.emptyIfNull(apiProperties.prefix)}/user".nest {
                 POST("/login", accept(MediaType.TEXT_PLAIN), handler::login)
             }
         }
@@ -41,7 +43,7 @@ class BarrageFlyUserRoutingConfiguration {
     @Bean
     fun userMonoRouterFunction(handler: BarrageFlyUserHandler): RouterFunction<ServerResponse> {
         return router {
-            "/user".nest {
+            "${StrUtil.emptyIfNull(apiProperties.prefix)}/user".nest {
                 before {
                     StpUtil.checkLogin()
                     it

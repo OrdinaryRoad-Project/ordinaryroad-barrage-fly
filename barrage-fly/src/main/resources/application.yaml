@@ -44,6 +44,8 @@ tech:
     barrage:
       fly:
         config:
+          api:
+            prefix: ${API_PREFIX:}
           admin:
             username: ${ADMIN_USERNAME:admin}
             password: ${ADMIN_PASSWORD:admin}
@@ -54,6 +56,6 @@ management:
     web:
       exposure:
         include: "*"
-server:
-  servlet:
-    context-path: ${SERVER_SERVLET_CONTEXT_PATH:}
+#server:
+#  servlet:
+#    context-path: ${SERVER_SERVLET_CONTEXT_PATH:}

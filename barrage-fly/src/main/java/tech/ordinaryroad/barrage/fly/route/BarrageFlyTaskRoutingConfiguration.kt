@@ -17,19 +17,21 @@
 package tech.ordinaryroad.barrage.fly.route
 
 import cn.dev33.satoken.stp.StpUtil
+import cn.hutool.core.util.StrUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.*
 import tech.ordinaryroad.barrage.fly.handler.BarrageFlyTaskHandler
+import tech.ordinaryroad.barrage.fly.property.ApiProperties
 
 @Configuration(proxyBeanMethods = false)
-class BarrageFlyTaskRoutingConfiguration {
+class BarrageFlyTaskRoutingConfiguration(val apiProperties: ApiProperties) {
 
     @Bean
     fun taskRouterFunction(handler: BarrageFlyTaskHandler): RouterFunction<ServerResponse> {
         return coRouter {
-            "/task".nest {
+            "${StrUtil.emptyIfNull(apiProperties.prefix)}/task".nest {
                 before {
                     StpUtil.checkLogin()
                     it
@@ -47,7 +49,7 @@ class BarrageFlyTaskRoutingConfiguration {
     @Bean
     fun taskMonoRouterFunction(handler: BarrageFlyTaskHandler): RouterFunction<ServerResponse> {
         return router {
-            "/task".nest {
+            "${StrUtil.emptyIfNull(apiProperties.prefix)}/task".nest {
                 before {
                     StpUtil.checkLogin()
                     it
