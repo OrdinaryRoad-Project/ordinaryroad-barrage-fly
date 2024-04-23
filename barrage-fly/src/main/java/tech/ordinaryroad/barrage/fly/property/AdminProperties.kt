@@ -15,8 +15,12 @@
  */
 package tech.ordinaryroad.barrage.fly.property
 
+import cn.hutool.crypto.asymmetric.RSA
+import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
+import tech.ordinaryroad.commons.base.exception.BaseException
+import javax.annotation.PostConstruct
 
 /**
  * @author mjz
@@ -29,4 +33,31 @@ data class AdminProperties(
     var password: String = "",
     var rsaPublicKey: String = "",
     var rsaPrivateKey: String = "",
-)
+) {
+    private val log = LoggerFactory.getLogger(AdminProperties::class.java)
+
+    @PostConstruct
+    fun postConstruct() {
+        if (rsaPublicKey.isEmpty() || rsaPrivateKey.isEmpty()) {
+            if (rsaPublicKey.isEmpty() && rsaPrivateKey.isEmpty()) {
+                if (log.isInfoEnabled) {
+                    log.info("RSA Key Not Set, Generating")
+                }
+
+                val rsa = RSA()
+                val publicKey = rsa.publicKeyBase64
+                val privateKey = rsa.privateKeyBase64
+
+                this@AdminProperties.rsaPublicKey = publicKey
+                this@AdminProperties.rsaPrivateKey = privateKey
+
+                if (log.isInfoEnabled) {
+                    log.info("RSA Key Successfully Generated")
+                }
+            } else {
+                log.error("RSA Key Error")
+                throw BaseException("RSA Key Error, Please Check Your Configuration")
+            }
+        }
+    }
+}
