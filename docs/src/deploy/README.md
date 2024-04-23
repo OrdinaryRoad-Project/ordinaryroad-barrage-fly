@@ -45,8 +45,8 @@
 # MYSQL_PASSWORD
 # ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
 # ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址，注意请勿用localhost、127.0.0.1）
 
 version: "3.0"
 services:
@@ -55,8 +55,8 @@ services:
     container_name: ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      SUB_BASE_URL: ws://localhost:9898
       SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
+      SUB_BASE_URL:
     ports:
       - "30000:3000"
     hostname: ordinaryroad-barrage-fly-ui
@@ -73,6 +73,7 @@ services:
       MYSQL_PASSWORD:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
+      JAVA_OPTS:
     ports:
       - "8080:8080"
       - "9898:9898"
@@ -87,8 +88,8 @@ services:
 # MYSQL_ROOT_PASSWORD（MySQL初始ROOT密码）
 # ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
 # ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 
 version: "3.0"
 services:
@@ -112,8 +113,8 @@ services:
     container_name: ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      SUB_BASE_URL: ws://localhost:9898
       SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
+      SUB_BASE_URL:
     ports:
       - "30000:3000"
     hostname: ordinaryroad-barrage-fly-ui
@@ -127,6 +128,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
+      JAVA_OPTS:
     ports:
       - "8080:8080"
       - "9898:9898"
@@ -141,8 +143,8 @@ services:
 # MYSQL_ROOT_PASSWORD（MySQL初始ROOT密码）
 # ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
 # ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 
 version: "3.0"
 services:
@@ -166,8 +168,8 @@ services:
     container_name: ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      SUB_BASE_URL: ws://localhost:9898
       SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
+      SUB_BASE_URL:
     hostname: ordinaryroad-barrage-fly-ui
     restart: always
 
