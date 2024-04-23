@@ -98,7 +98,7 @@ export default {
       redirect(redirectPath)
     } else {
       return {
-        rsaPublicKey: await $apis.app.configurations().rsaPublicKey,
+        rsaPublicKey: (await $apis.app.configurations()).rsaPublicKey,
         redirect: redirectPath
       }
     }
