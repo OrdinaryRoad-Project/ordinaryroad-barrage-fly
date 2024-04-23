@@ -32,9 +32,10 @@
 
 项目前后端分离，可以使用Docker Compose进行部署，或者clone项目到本地后分别打包后部署
 
-演示DEMO：https://barragefly.ordinaryroad.tech:7000，帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
+- 演示DEMO：[https://barragefly.ordinaryroad.tech:7000](https://barragefly.ordinaryroad.tech:7000)
+- WebSocket地址：wss://barragefly.ordinaryroad.tech:7100
 
-WebSocket地址：wss://barragefly.ordinaryroad.tech:7100
+> 帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
 
 ## 3 在线文档
 
