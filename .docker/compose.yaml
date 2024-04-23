@@ -34,6 +34,7 @@ services:
       MYSQL_PASSWORD:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
+      JAVA_OPTS:
     ports:
       - "8080:8080"
       - "9898:9898"
