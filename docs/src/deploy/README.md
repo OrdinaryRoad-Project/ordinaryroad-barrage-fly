@@ -220,16 +220,11 @@ MYSQL_PORT=3306
 MYSQL_DATABASE=or_barrage_fly
 MYSQL_USERNAME=root
 MYSQL_PASSWORD=root
-# 管理后台的账号密码
+# TODO 根据实际部署情况修改
+SUB_BASE_URL=ws://localhost:9898
+# TODO 管理后台的账号密码
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin
-# TODO 根据实际部署情况修改
-# 例如：增加一条host记录`127.0.0.1 ordinaryroad-barrage-fly`
-# SUB_BASE_URL=ws://ordinaryroad-barrage-fly:9898
-SUB_BASE_URL=ws://192.168.1.2:9898
-# TODO 更换RSA密钥
-RSA_PUBLIC_KEY=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNqVTCHbPojzNaR5TwhFxeKcuP/Po4J8WAc5dz1pHQ8FasH/hrSWwoFGpTTo6tfTl0mnAotu4p93kSMe+K2pc2VqUJwCcFj9cD6rhaKfjdj7/Kd2rHH43mXPI+OtggzzOKOOPsaMP5/r2Dyooafa1ChYDuSmf2fDM53CSIx+KDUwIDAQAB
-RSA_PRIVATE_KEY=MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAM2pVMIds+iPM1pHlPCEXF4py4/8+jgnxYBzl3PWkdDwVqwf+GtJbCgUalNOjq19OXSacCi27in3eRIx74ralzZWpQnAJwWP1wPquFop+N2Pv8p3ascfjeZc8j462CDPM4o44+xow/n+vYPKihp9rUKFgO5KZ/Z8MzncJIjH4oNTAgMBAAECgYEAs+ttoRzHJa8Rp+tzmy7Qd/hsg503ciUpHYUCfG68xmNcD90wQPvMyQuDMTpKi/A/cYkikhvnI4PCwW46N+mf2nJZEYG1DARTVj0lWaW+RqzerXG1Jg6v1WbgJwy5myZhFm9AOSb0OW3HskbRRyqxkiFX2Fr7ZKYXfrIWvooiVWECQQDnc0PPBpl5XPB+yGKepEatRwCMKdoIoD3R96Iykq9xowskafwob+gOn3mqEiH8YuDPOntcC4tqeLSzNiHYftKpAkEA43nN5SqvJZ3Gp/Vm4VY7DRAAT4cCxcxyYy3p1iuZf19y0UGdRrURQl4jx+I9RGSIy4v/hfpU05wnecvLh3KfmwJBANUz1pjUSXgEZv1C9aWRShHAP/7dZp1fjtLlvCG+AaM6P79RahiNzUP7H4XMokXth40dIBmQAOMZQct75/2YBdECQQCpwP0Y1pir/qkAME8dO+eHYPiKYJt+FosKXnoRXKoI9qbNaCTBXmBJ4czb3oaQImI/W/NM/ToOTIrdBmuVYcGfAkA6bkUO1fjjSC8N00xX1uGxJTcWwd9MQAffS+jm+C69lOyNW/azJjgXnmkbjKKB0kDcMDn6bkuYblcm4GOrVhqA
 # TODO 根据实际需要修改
 JAVA_OPTS="-Xmn256m"
 ```
@@ -245,7 +240,7 @@ services:
     container_name: ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      RSA_PUBLIC_KEY:
+      SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
       SUB_BASE_URL:
     ports:
       - "30000:3000"
@@ -263,8 +258,6 @@ services:
       MYSQL_PASSWORD:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
-      RSA_PUBLIC_KEY:
-      RSA_PRIVATE_KEY:
       JAVA_OPTS:
     ports:
       # 用于访问Spring Boot Admin
