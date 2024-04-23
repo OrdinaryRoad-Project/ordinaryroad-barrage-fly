@@ -4,11 +4,10 @@
 # MYSQL_DATABASE
 # MYSQL_USERNAME
 # MYSQL_PASSWORD
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
-# RSA_PUBLIC_KEY（RSA）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
+# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
 # ADMIN_USERNAME（任务管理后台登录用户名）
 # ADMIN_PASSWORD（任务管理后台登录密码）
-# RSA_PRIVATE_KEY（RSA）
 
 version: "3.0"
 services:
@@ -17,6 +16,7 @@ services:
     container_name: ordinaryroad-barrage-fly-ui
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
+      SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
       SUB_BASE_URL:
     ports:
       - "30000:3000"
