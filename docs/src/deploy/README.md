@@ -139,12 +139,10 @@ services:
 ```yaml
 # 需要的环境变量，其他可以环境变量可看每个目录下的.env文件
 # MYSQL_ROOT_PASSWORD（MySQL初始ROOT密码）
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的地址）
-# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin地址）
-# RSA_PUBLIC_KEY（RSA）
-# ADMIN_USERNAME（任务管理后台登录用户名）
-# ADMIN_PASSWORD（任务管理后台登录密码）
-# RSA_PRIVATE_KEY（RSA）
+# ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
+# ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
+# SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
 
 version: "3.0"
 services:
@@ -158,17 +156,18 @@ services:
       - $PWD/ordinaryroad-barrage-fly-mysql/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD:
+    ports:
+      - "33066:3306"
     hostname: ordinaryroad-barrage-fly-mysql
     restart: always
 
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui
     container_name: ordinaryroad-barrage-fly-ui
-    volumes:
-      - $PWD/ordinaryroad-barrage-fly-ui/app:/ordinaryroad/ordinaryroad-barrage-fly-ui/app
     environment:
       BASE_URL: http://ordinaryroad-barrage-fly:8080
-      SUB_BASE_URL:
+      SUB_BASE_URL: ws://localhost:9898
+      SPRING_BOOT_ADMIN_BASE_URL: http://localhost:8080/admin
     hostname: ordinaryroad-barrage-fly-ui
     restart: always
 
@@ -178,10 +177,9 @@ services:
     environment:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      ADMIN_BASE_URL:
       ADMIN_USERNAME:
       ADMIN_PASSWORD:
-      RSA_PUBLIC_KEY:
-      RSA_PRIVATE_KEY:
     hostname: ordinaryroad-barrage-fly
     restart: always
 
@@ -191,10 +189,18 @@ services:
     build:
       context: ./ordinaryroad-barrage-fly-nginx
     ports:
+      # UI
       - "81:81"
+      # Admin
+      - "8080:8080"
+      # 后端
       - "8081:8081"
+      # RSocket
       - "9898:9898"
     hostname: ordinaryroad-barrage-fly-nginx
+    depends_on:
+      - ordinaryroad-barrage-fly
+      - ordinaryroad-barrage-fly-ui
     restart: always
 ```
 
