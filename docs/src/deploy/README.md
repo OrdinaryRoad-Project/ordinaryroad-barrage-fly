@@ -248,7 +248,7 @@ services:
     restart: always
 
   ordinaryroad-barrage-fly:
-    image: ordinaryroad-barrage-fly-arm64
+    image: ordinaryroad-barrage-fly
     container_name: ordinaryroad-barrage-fly
     environment:
       MYSQL_HOST:
