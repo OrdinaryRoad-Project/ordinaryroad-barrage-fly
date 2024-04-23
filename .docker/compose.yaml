@@ -4,8 +4,8 @@
 # MYSQL_DATABASE
 # MYSQL_USERNAME
 # MYSQL_PASSWORD
-# ADMIN_USERNAME（任务管理后台登录用户名）
-# ADMIN_PASSWORD（任务管理后台登录密码）
+# ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
+# ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
 # SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
 
