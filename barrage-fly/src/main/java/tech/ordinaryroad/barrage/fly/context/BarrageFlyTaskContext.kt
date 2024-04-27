@@ -30,10 +30,11 @@ import tech.ordinaryroad.barrage.fly.listener.*
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.commons.client.BaseLiveChatClient
 import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums
+import tech.ordinaryroad.live.chat.client.commons.client.listener.IClientStatusChangeListener
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 import tech.ordinaryroad.live.chat.client.douyin.client.DouyinLiveChatClient
 import tech.ordinaryroad.live.chat.client.douyin.config.DouyinLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.douyin.listener.IDouyinMsgListener
@@ -47,7 +48,6 @@ import tech.ordinaryroad.live.chat.client.kuaishou.client.KuaishouLiveChatClient
 import tech.ordinaryroad.live.chat.client.kuaishou.config.KuaishouLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.kuaishou.listener.IKuaishouMsgListener
 import tech.ordinaryroad.live.chat.client.servers.netty.client.config.BaseNettyClientConfig
-import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport
 import java.util.concurrent.ConcurrentHashMap
 
@@ -84,8 +84,8 @@ class BarrageFlyTaskContext(
         }
     var statusChangeSupport = PropertyChangeSupport(status)
 
-    private val clientStatusChangeListener = PropertyChangeListener {
-        this.status = when (it.newValue) {
+    private val clientStatusChangeListener = IClientStatusChangeListener { _, _, newValue ->
+        this.status = when (newValue) {
             ClientStatusEnums.CONNECTING -> {
                 BarrageFlyTaskStatusEnum.CONNECTING
             }
@@ -141,23 +141,23 @@ class BarrageFlyTaskContext(
     ): Config {
         return when (platform) {
             PlatformEnum.BILIBILI -> {
-                OBJECT_MAPPER.readValue(clientConfigJson, BilibiliLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance().readValue(clientConfigJson, BilibiliLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.DOUYU -> {
-                OBJECT_MAPPER.readValue(clientConfigJson, DouyuLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance().readValue(clientConfigJson, DouyuLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.HUYA -> {
-                OBJECT_MAPPER.readValue(clientConfigJson, HuyaLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance().readValue(clientConfigJson, HuyaLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.DOUYIN -> {
-                OBJECT_MAPPER.readValue(clientConfigJson, DouyinLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance().readValue(clientConfigJson, DouyinLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.KUAISHOU -> {
-                OBJECT_MAPPER.readValue(clientConfigJson, KuaishouLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance().readValue(clientConfigJson, KuaishouLiveChatClientConfig::class.java) as Config
             }
         }
     }
@@ -289,7 +289,7 @@ class BarrageFlyTaskContext(
          * 任务启动时注册上下文，未注册时新建
          */
         fun getOrCreateContext(barrageFlyTaskDO: BarrageFlyTaskDO): BarrageFlyTaskContext {
-            val clientConfigJson = (OBJECT_MAPPER.readTree(
+            val clientConfigJson = (OrJacksonUtil.getInstance().readTree(
                 StrUtil.blankToDefault(
                     barrageFlyTaskDO.clientConfigJson,
                     StrUtil.EMPTY_JSON

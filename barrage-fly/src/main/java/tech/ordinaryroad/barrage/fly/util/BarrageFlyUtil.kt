@@ -27,16 +27,16 @@ import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu.Companion.KEY_DO_SEND_DANMU_BOOLEAN
-import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SendGiftMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SuperChatMessageMsg
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.DanmuMsgMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SendGiftMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SuperChatMessageMsg
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.ChatmsgMsg
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.DgbMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.MessageNoticeMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.SendItemSubBroadcastPacketMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 import tech.ordinaryroad.live.chat.client.commons.util.OrLiveChatCookieUtil
-import tech.ordinaryroad.live.chat.client.douyu.msg.ChatmsgMsg
-import tech.ordinaryroad.live.chat.client.douyu.msg.DgbMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
 import java.util.function.Consumer
 
 /**
@@ -68,7 +68,7 @@ object BarrageFlyUtil {
 
                     var barrageFlyMsgDTO: BarrageFlyMsgDTO? = null
                     try {
-                        val jsonNode = OBJECT_MAPPER.readTree(line)
+                        val jsonNode = OrJacksonUtil.getInstance().readTree(line)
                         val roomId = jsonNode.get("roomId").asText()
                         val msgString = jsonNode.get("msg").toString()
                         val platformEnum = PlatformEnum.getByString(jsonNode.get("platform").asText())
@@ -77,17 +77,17 @@ object BarrageFlyUtil {
                         else when (platformEnum) {
                             PlatformEnum.BILIBILI -> {
                                 when (msgTypeEnum) {
-                                    MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.DANMU -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         DanmuMsgMsg::class.java
                                     )
 
-                                    MsgTypeEnum.GIFT -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.GIFT -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         SendGiftMsg::class.java
                                     )
 
-                                    MsgTypeEnum.SUPER_CHAT -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.SUPER_CHAT -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         SuperChatMessageMsg::class.java
                                     )
@@ -98,12 +98,12 @@ object BarrageFlyUtil {
 
                             PlatformEnum.DOUYU -> {
                                 when (msgTypeEnum) {
-                                    MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.DANMU -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         ChatmsgMsg::class.java
                                     )
 
-                                    MsgTypeEnum.GIFT -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.GIFT -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         DgbMsg::class.java
                                     )
@@ -118,13 +118,13 @@ object BarrageFlyUtil {
 
                             PlatformEnum.HUYA -> {
                                 when (msgTypeEnum) {
-                                    MsgTypeEnum.DANMU -> OBJECT_MAPPER.readValue(
+                                    MsgTypeEnum.DANMU -> OrJacksonUtil.getInstance().readValue(
                                         msgString,
                                         MessageNoticeMsg::class.java
                                     )
 
                                     MsgTypeEnum.GIFT -> {
-                                        OBJECT_MAPPER.readValue(
+                                        OrJacksonUtil.getInstance().readValue(
                                             msgString,
                                             SendItemSubBroadcastPacketMsg::class.java
                                         )

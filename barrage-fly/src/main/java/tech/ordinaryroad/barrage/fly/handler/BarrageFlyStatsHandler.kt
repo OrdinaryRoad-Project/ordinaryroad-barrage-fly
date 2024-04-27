@@ -25,7 +25,7 @@ import reactor.core.publisher.Mono
 import tech.ordinaryroad.barrage.fly.constant.BarrageFlyTaskStatusEnum
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 
 @Component
 class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskService) {
@@ -46,7 +46,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
         // 已创建不同状态的任务个数
         val taskStatuses = taskContexts.map {
             val taskStatus = it.value.status
-            OBJECT_MAPPER.createObjectNode().apply {
+            OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("status", taskStatus.name)
                 put("platform", it.value.barrageFlyTaskDO.platform.name)
                 put("roomId", it.value.barrageFlyTaskDO.roomId)
@@ -63,7 +63,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
             }
         val taskClients = barrageFlyTaskService.findIds(runningTasks.map { it.key })
             .map {
-                OBJECT_MAPPER.createObjectNode().apply {
+                OrJacksonUtil.getInstance().createObjectNode().apply {
                     putPOJO("task", HashMap<String, String>(3).apply {
                         put("platform", it.platform.name)
                         put("roomId", it.roomId)
@@ -74,7 +74,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
             }
 
         // heap内存
-        val heapMemoryStatuses = OBJECT_MAPPER.createObjectNode().apply {
+        val heapMemoryStatuses = OrJacksonUtil.getInstance().createObjectNode().apply {
             val memoryMXBean = SystemUtil.getMemoryMXBean()
             val heapMemoryUsage = memoryMXBean.heapMemoryUsage
             put("committed", heapMemoryUsage.committed)
@@ -83,7 +83,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
         }
 
         // 线程
-        val threadStatuses = OBJECT_MAPPER.createObjectNode().apply {
+        val threadStatuses = OrJacksonUtil.getInstance().createObjectNode().apply {
             val threadMXBean = SystemUtil.getThreadMXBean()
             put("live", threadMXBean.threadCount)
             put("daemon", threadMXBean.daemonThreadCount)
@@ -91,7 +91,7 @@ class BarrageFlyStatsHandler(private val barrageFlyTaskService: BarrageFlyTaskSe
         }
 
         return ServerResponse.ok().bodyValue(
-            OBJECT_MAPPER.createObjectNode().apply {
+            OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("tasksCount", ids.size)
                 put("clientsCount", clientsCount)
                 putPOJO("taskStatuses", taskStatuses)

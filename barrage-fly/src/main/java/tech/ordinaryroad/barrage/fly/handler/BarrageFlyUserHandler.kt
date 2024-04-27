@@ -30,8 +30,7 @@ import reactor.core.publisher.Mono
 import tech.ordinaryroad.barrage.fly.dto.UserDTO
 import tech.ordinaryroad.barrage.fly.dto.UserInfoDTO
 import tech.ordinaryroad.barrage.fly.property.AdminProperties
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
-
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 
 @Component
 class BarrageFlyUserHandler(private val adminProperties: AdminProperties) {
@@ -41,7 +40,7 @@ class BarrageFlyUserHandler(private val adminProperties: AdminProperties) {
     suspend fun login(request: ServerRequest): ServerResponse {
         val body = request.awaitBody(String::class)
         val rsa = SecureUtil.rsa(adminProperties.rsaPrivateKey, adminProperties.rsaPublicKey)
-        val jsonNode = OBJECT_MAPPER.readTree(rsa.decrypt(body, KeyType.PrivateKey)) as ObjectNode
+        val jsonNode = OrJacksonUtil.getInstance().readTree(rsa.decrypt(body, KeyType.PrivateKey)) as ObjectNode
         val username = jsonNode.get("username").asText()
         val password = jsonNode.get("password").asText()
         val remember = jsonNode.get("remember").asBoolean()
@@ -50,7 +49,7 @@ class BarrageFlyUserHandler(private val adminProperties: AdminProperties) {
             StpUtil.login(username, remember)
             ServerResponse.ok()
                 .bodyValueAndAwait(
-                    OBJECT_MAPPER.createObjectNode().apply {
+                    OrJacksonUtil.getInstance().createObjectNode().apply {
                         putPOJO("userInfo", UserInfoDTO(UserDTO(username)))
                         put("timeout", StpUtil.getTokenTimeout())
                     }

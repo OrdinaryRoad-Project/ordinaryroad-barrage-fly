@@ -19,8 +19,8 @@ package tech.ordinaryroad.barrage.fly.dto.msg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum;
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum;
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg;
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg;
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil;
 
 import java.util.Optional;
 
@@ -80,7 +80,7 @@ public class BarrageFlyMsgDTO {
     @Override
     public String toString() {
         try {
-            return BaseMsg.OBJECT_MAPPER.writeValueAsString(this);
+            return OrJacksonUtil.getInstance().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

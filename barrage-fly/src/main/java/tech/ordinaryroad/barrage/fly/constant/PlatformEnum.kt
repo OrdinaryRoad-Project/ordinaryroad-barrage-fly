@@ -16,12 +16,12 @@
 package tech.ordinaryroad.barrage.fly.constant
 
 import cn.hutool.core.util.StrUtil
-import tech.ordinaryroad.live.chat.client.bilibili.msg.base.IBilibiliMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.base.IBilibiliMsg
+import tech.ordinaryroad.live.chat.client.codec.douyin.msg.base.IDouyinMsg
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.base.IDouyuMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.base.IHuyaMsg
+import tech.ordinaryroad.live.chat.client.codec.kuaishou.msg.base.IKuaishouMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
-import tech.ordinaryroad.live.chat.client.douyin.msg.base.IDouyinMsg
-import tech.ordinaryroad.live.chat.client.douyu.msg.base.IDouyuMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.base.IHuyaMsg
-import tech.ordinaryroad.live.chat.client.kuaishou.msg.base.IKuaishouMsg
 
 /**
  * @author mjz

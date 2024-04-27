@@ -36,7 +36,8 @@ import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.barrage.fly.listener.ExampleMsgPublisher
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
+
 import java.util.stream.Collectors
 
 /**
@@ -133,7 +134,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                 }
                 if (cmd == "SUBSCRIBE" && noContextTaskIds.isNotEmpty()) {
                     Flux.just(
-                        OBJECT_MAPPER.createObjectNode().apply {
+                        OrJacksonUtil.getInstance().createObjectNode().apply {
                             put("status", HttpStatus.HTTP_BAD_REQUEST)
                             put("message", "the task $noContextTaskIds don't have contexts yet")
                         }
@@ -179,7 +180,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                                 result
                             }
                     }.collect(Collectors.toList())
-                    val just = Flux.just(OBJECT_MAPPER.createObjectNode().apply {
+                    val just = Flux.just(OrJacksonUtil.getInstance().createObjectNode().apply {
                         put("status", HttpStatus.HTTP_OK)
                         put("message", "ok")
                     }) as Flux<Any>
@@ -219,7 +220,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
 
         if (cmd == "SUBSCRIBE" && noContextTaskIds.isNotEmpty()) {
             return Flux.just(
-                OBJECT_MAPPER.createObjectNode().apply {
+                OrJacksonUtil.getInstance().createObjectNode().apply {
                     put("status", HttpStatus.HTTP_BAD_REQUEST)
                     put("message", "the task $noContextTaskIds don't have contexts yet")
                 }
@@ -265,7 +266,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                         result
                     }
             }.collect(Collectors.toList())
-            val just = Flux.just(OBJECT_MAPPER.createObjectNode().apply {
+            val just = Flux.just(OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("status", HttpStatus.HTTP_OK)
                 put("message", "ok")
             }) as Flux<Any>
@@ -292,7 +293,7 @@ class BarrageController(private val expressRunner: BarrageFlyExpressRunner) {
                 taskNode.remove("id")?.let {
                     taskNode.put("uuid", it.asText())
                 }
-                OBJECT_MAPPER.readValue(taskNode.toString(), BarrageFlyTaskDO::class.java)
+                OrJacksonUtil.getInstance().readValue(taskNode.toString(), BarrageFlyTaskDO::class.java)
             }
             .switchMap { barrageFlyTaskDO ->
                 val expressContext = BarrageFlyExpressContext()

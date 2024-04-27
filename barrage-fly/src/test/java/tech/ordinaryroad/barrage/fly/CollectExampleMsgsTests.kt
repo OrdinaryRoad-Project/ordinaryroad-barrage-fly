@@ -23,19 +23,19 @@ import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
-import tech.ordinaryroad.live.chat.client.bilibili.msg.DanmuMsgMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SendGiftMsg
-import tech.ordinaryroad.live.chat.client.bilibili.msg.SuperChatMessageMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.DanmuMsgMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SendGiftMsg
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SuperChatMessageMsg
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.ChatmsgMsg
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.DgbMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.MessageNoticeMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.SendItemSubBroadcastPacketMsg
 import tech.ordinaryroad.live.chat.client.douyu.client.DouyuLiveChatClient
 import tech.ordinaryroad.live.chat.client.douyu.config.DouyuLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.douyu.listener.IDouyuMsgListener
-import tech.ordinaryroad.live.chat.client.douyu.msg.ChatmsgMsg
-import tech.ordinaryroad.live.chat.client.douyu.msg.DgbMsg
 import tech.ordinaryroad.live.chat.client.huya.client.HuyaLiveChatClient
 import tech.ordinaryroad.live.chat.client.huya.config.HuyaLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.huya.listener.IHuyaMsgListener
-import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
 
 /**
  * @author mjz

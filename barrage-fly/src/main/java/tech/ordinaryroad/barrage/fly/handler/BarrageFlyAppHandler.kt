@@ -22,7 +22,7 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 import tech.ordinaryroad.barrage.fly.property.AdminProperties
-import tech.ordinaryroad.live.chat.client.commons.base.msg.BaseMsg.OBJECT_MAPPER
+import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 
 @Component
 class BarrageFlyAppHandler(val adminProperties: AdminProperties) {
@@ -31,7 +31,7 @@ class BarrageFlyAppHandler(val adminProperties: AdminProperties) {
 
     fun configurations(request: ServerRequest): Mono<ServerResponse> {
         return ServerResponse.ok().bodyValue(
-            OBJECT_MAPPER.createObjectNode().apply {
+            OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("rsaPublicKey", adminProperties.rsaPublicKey)
             }
         )
