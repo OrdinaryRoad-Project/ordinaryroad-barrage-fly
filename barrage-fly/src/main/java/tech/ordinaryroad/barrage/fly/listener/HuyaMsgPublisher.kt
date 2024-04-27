@@ -19,15 +19,15 @@ package tech.ordinaryroad.barrage.fly.listener
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
+import tech.ordinaryroad.live.chat.client.codec.huya.constant.HuyaCmdEnum
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.MessageNoticeMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.SendItemSubBroadcastPacketMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.VipEnterBannerMsg
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.WSPushMessage
+import tech.ordinaryroad.live.chat.client.codec.huya.msg.dto.WSMsgItem
 import tech.ordinaryroad.live.chat.client.commons.base.msg.ICmdMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
-import tech.ordinaryroad.live.chat.client.huya.constant.HuyaCmdEnum
 import tech.ordinaryroad.live.chat.client.huya.listener.IHuyaMsgListener
-import tech.ordinaryroad.live.chat.client.huya.msg.MessageNoticeMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.SendItemSubBroadcastPacketMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.VipEnterBannerMsg
-import tech.ordinaryroad.live.chat.client.huya.msg.WSPushMessage
-import tech.ordinaryroad.live.chat.client.huya.msg.dto.WSMsgItem
 import tech.ordinaryroad.live.chat.client.huya.netty.handler.HuyaBinaryFrameHandler
 
 /**
@@ -55,6 +55,9 @@ class HuyaMsgPublisher : IHuyaMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun onGiftMsg(t: HuyaBinaryFrameHandler, msg: SendItemSubBroadcastPacketMsg) {
+        if (msg.giftCount <= 0) {
+            return
+        }
         this.subscriber?.onNext(msg)
     }
 

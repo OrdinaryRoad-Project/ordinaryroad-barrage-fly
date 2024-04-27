@@ -19,10 +19,10 @@ package tech.ordinaryroad.barrage.fly.listener
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
-import tech.ordinaryroad.live.chat.client.bilibili.constant.BilibiliCmdEnum
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
-import tech.ordinaryroad.live.chat.client.bilibili.msg.*
 import tech.ordinaryroad.live.chat.client.bilibili.netty.handler.BilibiliBinaryFrameHandler
+import tech.ordinaryroad.live.chat.client.codec.bilibili.constant.BilibiliCmdEnum
+import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.*
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 
 /**
@@ -52,6 +52,9 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onGiftMsg(t: BilibiliBinaryFrameHandler, msg: SendGiftMsg) {
+        if (msg.giftCount <= 0) {
+            return
+        }
         this.subscriber?.onNext(msg)
     }
 

@@ -19,6 +19,7 @@ package tech.ordinaryroad.barrage.fly.listener
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
+import tech.ordinaryroad.live.chat.client.codec.douyu.msg.DgbMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.douyu.listener.IDouyuMsgListener
 import tech.ordinaryroad.live.chat.client.douyu.netty.handler.DouyuBinaryFrameHandler
@@ -33,6 +34,9 @@ class DouyuMsgPublisher : IDouyuMsgListener, Publisher<IMsg>, Subscription {
     private var subscriber: Subscriber<in IMsg>? = null
 
     override fun onMsg(binaryFrameHandler: DouyuBinaryFrameHandler, msg: IMsg) {
+        if (msg is DgbMsg && msg.giftCount <= 0) {
+            return
+        }
         this.subscriber?.onNext(msg)
     }
 

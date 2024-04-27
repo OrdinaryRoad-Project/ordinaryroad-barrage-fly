@@ -19,13 +19,12 @@ package tech.ordinaryroad.barrage.fly.listener
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
+import tech.ordinaryroad.live.chat.client.codec.douyin.constant.DouyinCmdEnum
+import tech.ordinaryroad.live.chat.client.codec.douyin.msg.*
 import tech.ordinaryroad.live.chat.client.commons.base.msg.ICmdMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
-import tech.ordinaryroad.live.chat.client.douyin.constant.DouyinCmdEnum
 import tech.ordinaryroad.live.chat.client.douyin.listener.IDouyinMsgListener
-import tech.ordinaryroad.live.chat.client.douyin.msg.*
 import tech.ordinaryroad.live.chat.client.douyin.netty.handler.DouyinBinaryFrameHandler
-import tech.ordinaryroad.live.chat.client.douyin.protobuf.douyin_cmd_msg
 
 /**
  * @author mjz
@@ -37,7 +36,7 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
 
     override fun onMsg(binaryFrameHandler: DouyinBinaryFrameHandler, msg: IMsg) {
         // 防止重复添加消息
-        if (msg is douyin_cmd_msg) {
+        if (msg is DouyinCmdMsg) {
             val cmdMsg = msg as ICmdMsg<*>
             if (cmdMsg.cmdEnum == DouyinCmdEnum.WebcastChatMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastGiftMessage
                 || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastLikeMessage
@@ -54,6 +53,9 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun onGiftMsg(t: DouyinBinaryFrameHandler, msg: DouyinGiftMsg) {
+        if (msg.giftCount <= 0) {
+            return
+        }
         this.subscriber?.onNext(msg)
     }
 

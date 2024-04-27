@@ -39,7 +39,7 @@
             <v-list-item v-for="(msg) in msgs" :key="`${msg._id}`">
               <v-list-item-title class="d-flex align-center">
                 <or-barrage-fly-msg-danmu v-if="'DANMU'===msg.type" :msg="msg" />
-                <or-barrage-fly-msg-gift v-else-if="'GIFT'===msg.type && msg.msg.giftCount>0" :msg="msg" />
+                <or-barrage-fly-msg-gift v-else-if="'GIFT'===msg.type" :msg="msg" />
                 <or-barrage-fly-msg-enter-room v-else-if="'ENTER_ROOM'===msg.type" :msg="msg" />
                 <or-barrage-fly-msg-like v-else-if="'LIKE'===msg.type" :msg="msg" />
                 <span v-else-if="msg.message">{{ msg.message }}</span>
