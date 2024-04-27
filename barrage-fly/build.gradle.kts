@@ -51,7 +51,7 @@ extra["springBootAdminVersion"] = "2.7.4"
 // val operatingSystem: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
 
 dependencies {
-    val liveChatClientVersion = "0.5.0"
+    val liveChatClientVersion = "0.6.0"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
@@ -87,7 +87,7 @@ dependencies {
     }
     implementation("cn.dev33:sa-token-reactor-spring-boot-starter:$saTokenVersion")
     implementation("com.alibaba:QLExpress:$qLExpressVersion")
-    implementation("com.hubspot.jackson:jackson-datatype-protobuf:0.9.14")
+    implementation("com.hubspot.jackson:jackson-datatype-protobuf:0.9.15")
 
     // implementation("com.aayushatharva.brotli4j:brotli4j:$liveChatClientBrotliVersion")
     implementation("com.aayushatharva.brotli4j:native-windows-aarch64:$liveChatClientBrotliVersion")
