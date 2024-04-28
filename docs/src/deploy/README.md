@@ -46,7 +46,7 @@
 # ADMIN_USERNAME（任务管理后台登录用户名，默认admin）
 # ADMIN_PASSWORD（任务管理后台登录密码，默认admin）
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
-# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址，注意请勿用localhost、127.0.0.1）
+# SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址）
 
 version: "3.0"
 services:
