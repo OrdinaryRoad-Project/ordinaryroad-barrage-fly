@@ -16,9 +16,15 @@
 
 <template>
   <div>
-    <div class="text-center overflow-auto">
-      点赞数：{{ roomStatsMsg?.likedCount }} | 当前观看人数：{{ roomStatsMsg?.watchingCount }} | 累计观看人数：{{ roomStatsMsg?.watchedCount }}
-    </div>
+    <v-alert
+      class="my-2"
+      dense
+      dismissible
+    >
+      <div class="text-center overflow-auto">
+        点赞数：{{ roomStatsMsg?.likedCount }} | 当前观看人数：{{ roomStatsMsg?.watchingCount }} | 累计观看人数：{{ roomStatsMsg?.watchedCount }}
+      </div>
+    </v-alert>
     <or-barrage-fly-msg-list ref="msgList" :height="height" />
   </div>
 </template>
