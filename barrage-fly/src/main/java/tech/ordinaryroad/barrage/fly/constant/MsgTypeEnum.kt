@@ -29,6 +29,7 @@ enum class MsgTypeEnum {
     ENTER_ROOM,
     LIKE,
     LIVE_STATUS_CHANGE,
+    ROOM_STATS,
     ;
 
     companion object {
@@ -56,6 +57,10 @@ enum class MsgTypeEnum {
 
                 is ILiveStatusChangeMsg -> {
                     LIVE_STATUS_CHANGE
+                }
+
+                is IRoomStatsMsg -> {
+                    ROOM_STATS
                 }
 
                 else -> {

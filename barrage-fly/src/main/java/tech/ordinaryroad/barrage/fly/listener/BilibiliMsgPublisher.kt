@@ -40,6 +40,7 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
                 || msg.cmdEnum == BilibiliCmdEnum.SUPER_CHAT_MESSAGE || msg.cmdEnum == BilibiliCmdEnum.INTERACT_WORD
                 || msg.cmdEnum == BilibiliCmdEnum.LIKE_INFO_V3_UPDATE
                 || msg.cmdEnum == BilibiliCmdEnum.LIVE || msg.cmdEnum == BilibiliCmdEnum.STOP_LIVE_ROOM_LIST
+                || msg.cmdEnum == BilibiliCmdEnum.ONLINE_RANK_COUNT || msg.cmdEnum == BilibiliCmdEnum.WATCHED_CHANGE
             ) {
                 return
             }
@@ -71,6 +72,10 @@ class BilibiliMsgPublisher : IBilibiliMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onLiveStatusMsg(t: BilibiliBinaryFrameHandler?, msg: BilibiliLiveStatusChangeMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onRoomStatsMsg(msg: BilibiliRoomStatsMsg?) {
         this.subscriber?.onNext(msg)
     }
 

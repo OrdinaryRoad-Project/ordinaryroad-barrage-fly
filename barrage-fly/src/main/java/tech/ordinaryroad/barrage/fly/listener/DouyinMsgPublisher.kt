@@ -40,7 +40,7 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
             val cmdMsg = msg as ICmdMsg<*>
             if (cmdMsg.cmdEnum == DouyinCmdEnum.WebcastChatMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastGiftMessage
                 || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastLikeMessage
-                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastControlMessage
+                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastControlMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastRoomStatsMessage
             ) {
                 return
             }
@@ -68,6 +68,10 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
     }
 
     override fun onLiveStatusMsg(t: DouyinBinaryFrameHandler?, msg: DouyinControlMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onRoomStatsMsg(t: DouyinBinaryFrameHandler?, msg: DouyinRoomStatsMsg?) {
         this.subscriber?.onNext(msg)
     }
 

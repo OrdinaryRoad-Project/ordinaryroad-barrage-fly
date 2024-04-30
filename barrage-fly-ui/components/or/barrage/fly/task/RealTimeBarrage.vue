@@ -15,7 +15,12 @@
   -->
 
 <template>
-  <or-barrage-fly-msg-list ref="msgList" :height="height" />
+  <div>
+    <div class="text-center overflow-auto">
+      点赞数：{{ roomStatsMsg?.likedCount }} | 当前观看人数：{{ roomStatsMsg?.watchingCount }} | 累计观看人数：{{ roomStatsMsg?.watchedCount }}
+    </div>
+    <or-barrage-fly-msg-list ref="msgList" :height="height" />
+  </div>
 </template>
 
 <script>
@@ -34,6 +39,11 @@ export default {
     }
   },
   data: () => ({
+    roomStatsMsg: {
+      likedCount: '-',
+      watchingCount: '-',
+      watchedCount: '-'
+    },
     webSocketClient: null
   }),
   computed: {},
@@ -61,7 +71,14 @@ export default {
         })
         .onMsg((msgs) => {
           msgs.forEach((msg) => {
-            this.$refs.msgList.pushMsg(msg)
+            if (msg.data.type === 'ROOM_STATS') {
+              const { likedCount, watchingCount, watchedCount } = msg.data.msg
+              if (likedCount) { this.roomStatsMsg.likedCount = likedCount }
+              if (watchingCount) { this.roomStatsMsg.watchingCount = watchingCount }
+              if (watchedCount) { this.roomStatsMsg.watchedCount = watchedCount }
+            } else {
+              this.$refs.msgList.pushMsg(msg)
+            }
           })
         })
 

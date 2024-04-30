@@ -22,6 +22,7 @@ import org.reactivestreams.Subscription
 import tech.ordinaryroad.live.chat.client.codec.kuaishou.msg.KuaishouDanmuMsg
 import tech.ordinaryroad.live.chat.client.codec.kuaishou.msg.KuaishouGiftMsg
 import tech.ordinaryroad.live.chat.client.codec.kuaishou.msg.KuaishouLikeMsg
+import tech.ordinaryroad.live.chat.client.codec.kuaishou.msg.KuaishouRoomStatsMsg
 import tech.ordinaryroad.live.chat.client.commons.base.msg.IMsg
 import tech.ordinaryroad.live.chat.client.kuaishou.listener.IKuaishouMsgListener
 import tech.ordinaryroad.live.chat.client.kuaishou.netty.handler.KuaishouBinaryFrameHandler
@@ -50,6 +51,10 @@ class KuaishouMsgPublisher : IKuaishouMsgListener, Publisher<IMsg>, Subscription
     }
 
     override fun onLikeMsg(t: KuaishouBinaryFrameHandler, msg: KuaishouLikeMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onRoomStatsMsg(t: KuaishouBinaryFrameHandler?, msg: KuaishouRoomStatsMsg?) {
         this.subscriber?.onNext(msg)
     }
 
