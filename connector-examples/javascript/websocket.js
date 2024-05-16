@@ -19,7 +19,8 @@ const WebSocket = require('ws')
 // TODO 修改连接地址
 const url = "ws://localhost:9898"
 // TODO 修改任务ID
-const taskIds = ["1701164893396299776", "1711738902803615744"]
+// const taskIds = ["1701164893396299776", "1711738902803615744"]
+const taskIds = ["1718481386431119360"]
 
 const payloadData = {
     taskIds,
