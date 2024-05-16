@@ -30,6 +30,7 @@ enum class MsgTypeEnum {
     LIKE,
     LIVE_STATUS_CHANGE,
     ROOM_STATS,
+    SOCIAL,
     ;
 
     companion object {
@@ -61,6 +62,10 @@ enum class MsgTypeEnum {
 
                 is IRoomStatsMsg -> {
                     ROOM_STATS
+                }
+
+                is ISocialMsg -> {
+                    SOCIAL
                 }
 
                 else -> {

@@ -41,6 +41,7 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
             if (cmdMsg.cmdEnum == DouyinCmdEnum.WebcastChatMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastGiftMessage
                 || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastMemberMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastLikeMessage
                 || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastControlMessage || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastRoomStatsMessage
+                || cmdMsg.cmdEnum == DouyinCmdEnum.WebcastSocialMessage
             ) {
                 return
             }
@@ -67,11 +68,15 @@ class DouyinMsgPublisher : IDouyinMsgListener, Publisher<IMsg>, Subscription {
         this.subscriber?.onNext(msg)
     }
 
-    override fun onLiveStatusMsg(t: DouyinBinaryFrameHandler?, msg: DouyinControlMsg) {
+    override fun onLiveStatusMsg(t: DouyinBinaryFrameHandler, msg: DouyinControlMsg) {
         this.subscriber?.onNext(msg)
     }
 
-    override fun onRoomStatsMsg(t: DouyinBinaryFrameHandler?, msg: DouyinRoomStatsMsg?) {
+    override fun onRoomStatsMsg(t: DouyinBinaryFrameHandler, msg: DouyinRoomStatsMsg) {
+        this.subscriber?.onNext(msg)
+    }
+
+    override fun onSocialMsg(t: DouyinBinaryFrameHandler?, msg: DouyinSocialMsg) {
         this.subscriber?.onNext(msg)
     }
 
