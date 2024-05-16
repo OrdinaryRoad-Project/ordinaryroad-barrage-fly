@@ -1,0 +1,8 @@
+tech:
+  ordinaryroad:
+    barrage:
+      fly:
+        config:
+          demo:
+            stop-task-enable: true
+            stop-task-time: '00:00:00'
