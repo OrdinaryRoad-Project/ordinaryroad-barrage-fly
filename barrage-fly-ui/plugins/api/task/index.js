@@ -23,19 +23,19 @@ export default {
     $axios = $axios || axios
   },
   apis: {
-    create: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    create: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }, start = false) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
       return $axios({ url: `/task?start=${start}`, method: 'post', data })
     },
     delete: (id) => {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
-    update: ({ id, platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }, start = false) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    update: ({ id, platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }, start = false) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
       return $axios({ url: `/task?id=${id}&start=${start}`, method: 'put', data })
     },
-    validate: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
+    validate: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }) => {
+      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
       return $axios({ url: '/task/validate', method: 'put', data })
     },
     validateExpress: ({ msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {

@@ -95,6 +95,10 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
             msgPreMapExpress = task.msgPreMapExpress
             msgFilterExpress = task.msgFilterExpress
             msgPostMapExpress = task.msgPostMapExpress
+            socks5ProxyHost = task.socks5ProxyHost
+            socks5ProxyPort = task.socks5ProxyPort
+            socks5ProxyUsername = task.socks5ProxyUsername
+            socks5ProxyPassword = task.socks5ProxyPassword
         }
 
         val update = barrageFlyTaskService.updateSelective(barrageFlyTaskDO)

@@ -162,6 +162,38 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
         this.msgPostMapExpress = msgPostMapExpress;
     }
 
+    public String getSocks5ProxyHost() {
+        return socks5ProxyHost;
+    }
+
+    public void setSocks5ProxyHost(String socks5ProxyHost) {
+        this.socks5ProxyHost = socks5ProxyHost;
+    }
+
+    public int getSocks5ProxyPort() {
+        return socks5ProxyPort;
+    }
+
+    public void setSocks5ProxyPort(int socks5ProxyPort) {
+        this.socks5ProxyPort = socks5ProxyPort;
+    }
+
+    public String getSocks5ProxyUsername() {
+        return socks5ProxyUsername;
+    }
+
+    public void setSocks5ProxyUsername(String socks5ProxyUsername) {
+        this.socks5ProxyUsername = socks5ProxyUsername;
+    }
+
+    public String getSocks5ProxyPassword() {
+        return socks5ProxyPassword;
+    }
+
+    public void setSocks5ProxyPassword(String socks5ProxyPassword) {
+        this.socks5ProxyPassword = socks5ProxyPassword;
+    }
+
     public String getClientConfigJson() {
         return clientConfigJson;
     }

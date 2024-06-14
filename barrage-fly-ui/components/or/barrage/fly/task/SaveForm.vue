@@ -172,7 +172,11 @@ export default {
         cookie: null,
         msgPreMapExpress: null,
         msgFilterExpress: null,
-        msgPostMapExpress: null
+        msgPostMapExpress: null,
+        socks5ProxyHost: null,
+        socks5ProxyPort: null,
+        socks5ProxyUsername: null,
+        socks5ProxyPassword: null
       })
     }
   },
