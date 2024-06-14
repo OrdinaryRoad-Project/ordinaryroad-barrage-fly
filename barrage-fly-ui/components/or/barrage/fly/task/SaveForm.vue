@@ -66,46 +66,80 @@
           </v-toolbar-title>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-alert
-            outlined
-            type="info"
-            dismissible
-          >
-            以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
-              QLExpress
-            </or-link><br>
-            <or-link href="https://barragefly.ordinaryroad.tech/guide/msgflow.html#_4-4-一些例子">
-              一些例子
-            </or-link>
-          </v-alert>
-          <v-textarea
-            v-model="model.msgPreMapExpress"
-            persistent-hint
-            hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
-            :label="$t('barrageFlyTask.msgPreMapExpress')"
-          />
-          <v-textarea
-            v-model="model.msgFilterExpress"
-            persistent-hint
-            hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
-            :label="$t('barrageFlyTask.msgFilterExpress')"
-          />
-          <v-textarea
-            v-model="model.msgPostMapExpress"
-            persistent-hint
-            hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
-            :label="$t('barrageFlyTask.msgPostMapExpress')"
-          />
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              text
-              color="primary"
-              @click="onClickTest"
-            >
-              测试一下
-            </v-btn>
-          </v-card-actions>
+          <v-card outlined>
+            <v-card-title>弹幕流设置</v-card-title>
+            <v-card-text>
+              <v-alert
+                outlined
+                type="info"
+                dismissible
+              >
+                以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
+                  QLExpress
+                </or-link><br>
+                <or-link href="https://barragefly.ordinaryroad.tech/guide/msgflow.html#_4-4-一些例子">
+                  一些例子
+                </or-link>
+              </v-alert>
+              <v-textarea
+                v-model="model.msgPreMapExpress"
+                persistent-hint
+                hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
+                :label="$t('barrageFlyTask.msgPreMapExpress')"
+              />
+              <v-textarea
+                v-model="model.msgFilterExpress"
+                persistent-hint
+                hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
+                :label="$t('barrageFlyTask.msgFilterExpress')"
+              />
+              <v-textarea
+                v-model="model.msgPostMapExpress"
+                persistent-hint
+                hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
+                :label="$t('barrageFlyTask.msgPostMapExpress')"
+              />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                text
+                color="primary"
+                @click="onClickTest"
+              >
+                测试一下
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+
+          <v-card outlined>
+            <v-card-title>Socks5代理设置</v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-col cols="8">
+                  <v-text-field
+                    v-model="model.socks5ProxyHost"
+                    label="地址"
+                  />
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="model.socks5ProxyPort"
+                    type="number"
+                    label="端口"
+                  />
+                </v-col>
+              </v-row>
+              <v-text-field
+                v-model="model.socks5ProxyUsername"
+                label="用户名"
+              />
+              <v-text-field
+                v-model="model.socks5ProxyPassword"
+                label="密码"
+              />
+            </v-card-text>
+          </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

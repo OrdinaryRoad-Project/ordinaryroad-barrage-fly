@@ -48,6 +48,7 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     /**
      * 备注
+     *
      * @since v1.0.8
      */
     private String remark;
@@ -71,6 +72,34 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      * 消息后置处理规则引擎脚本
      */
     private String msgPostMapExpress;
+
+    /**
+     * Socks5代理——地址
+     *
+     * @since v1.2.0
+     */
+    private String socks5ProxyHost;
+
+    /**
+     * Socks5代理——端口
+     *
+     * @since v1.2.0
+     */
+    private int socks5ProxyPort;
+
+    /**
+     * Socks5代理——用户名
+     *
+     * @since v1.2.0
+     */
+    private String socks5ProxyUsername;
+
+    /**
+     * Socks5代理——密码
+     *
+     * @since v1.2.0
+     */
+    private String socks5ProxyPassword;
 
     /**
      * Json序列化后的Client配置类

@@ -35,6 +35,10 @@ data class BarrageFlyTaskDTO(
     var msgPreMapExpress: String? = null,
     var msgFilterExpress: String? = null,
     var msgPostMapExpress: String? = null,
+    var socks5ProxyHost: String? = null,
+    var socks5ProxyPort: Int? = null,
+    var socks5ProxyUsername: String? = null,
+    var socks5ProxyPassword: String? = null,
     var status: BarrageFlyTaskStatusEnum? = null,
 ) {
     companion object {
