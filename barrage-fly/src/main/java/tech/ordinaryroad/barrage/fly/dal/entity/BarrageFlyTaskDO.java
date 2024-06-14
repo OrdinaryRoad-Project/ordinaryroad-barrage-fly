@@ -85,7 +85,7 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      *
      * @since v1.2.0
      */
-    private int socks5ProxyPort;
+    private Integer socks5ProxyPort;
 
     /**
      * Socks5代理——用户名
@@ -100,11 +100,6 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      * @since v1.2.0
      */
     private String socks5ProxyPassword;
-
-    /**
-     * Json序列化后的Client配置类
-     */
-    private String clientConfigJson;
 
     public PlatformEnum getPlatform() {
         return platform;
@@ -170,11 +165,11 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
         this.socks5ProxyHost = socks5ProxyHost;
     }
 
-    public int getSocks5ProxyPort() {
+    public Integer getSocks5ProxyPort() {
         return socks5ProxyPort;
     }
 
-    public void setSocks5ProxyPort(int socks5ProxyPort) {
+    public void setSocks5ProxyPort(Integer socks5ProxyPort) {
         this.socks5ProxyPort = socks5ProxyPort;
     }
 
@@ -192,13 +187,5 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     public void setSocks5ProxyPassword(String socks5ProxyPassword) {
         this.socks5ProxyPassword = socks5ProxyPassword;
-    }
-
-    public String getClientConfigJson() {
-        return clientConfigJson;
-    }
-
-    public void setClientConfigJson(String clientConfigJson) {
-        this.clientConfigJson = clientConfigJson;
     }
 }

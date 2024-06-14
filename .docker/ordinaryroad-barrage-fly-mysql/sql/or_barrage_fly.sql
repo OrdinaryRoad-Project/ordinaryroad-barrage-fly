@@ -56,8 +56,9 @@ ALTER TABLE `barrage_fly_task`
 
 # since v1.2.0
 ALTER TABLE `barrage_fly_task`
-    ADD `socks5_proxy_host` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——地址' AFTER `msg_post_map_express`,
-    ADD `socks5_proxy_port` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——端口' AFTER `socks5_proxy_host`,
+    DROP `client_config_json`,
+    ADD `socks5_proxy_host`     VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——地址' AFTER `msg_post_map_express`,
+    ADD `socks5_proxy_port`     MEDIUMINT                          NULL DEFAULT NULL COMMENT 'Socks5代理——端口' AFTER `socks5_proxy_host`,
     ADD `socks5_proxy_username` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——用户名' AFTER `socks5_proxy_port`,
     ADD `socks5_proxy_password` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——密码' AFTER `socks5_proxy_username`;
 

@@ -18,8 +18,6 @@ package tech.ordinaryroad.barrage.fly.context
 import cn.hutool.cache.impl.CacheObj
 import cn.hutool.cache.impl.TimedCache
 import cn.hutool.core.lang.mutable.Mutable
-import cn.hutool.core.util.StrUtil
-import com.fasterxml.jackson.databind.node.ObjectNode
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import org.springframework.messaging.rsocket.RSocketRequester
@@ -141,7 +139,8 @@ class BarrageFlyTaskContext(
     ): Config {
         return when (platform) {
             PlatformEnum.BILIBILI -> {
-                OrJacksonUtil.getInstance().readValue(clientConfigJson, BilibiliLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance()
+                    .readValue(clientConfigJson, BilibiliLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.DOUYU -> {
@@ -153,11 +152,13 @@ class BarrageFlyTaskContext(
             }
 
             PlatformEnum.DOUYIN -> {
-                OrJacksonUtil.getInstance().readValue(clientConfigJson, DouyinLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance()
+                    .readValue(clientConfigJson, DouyinLiveChatClientConfig::class.java) as Config
             }
 
             PlatformEnum.KUAISHOU -> {
-                OrJacksonUtil.getInstance().readValue(clientConfigJson, KuaishouLiveChatClientConfig::class.java) as Config
+                OrJacksonUtil.getInstance()
+                    .readValue(clientConfigJson, KuaishouLiveChatClientConfig::class.java) as Config
             }
         }
     }
@@ -289,14 +290,13 @@ class BarrageFlyTaskContext(
          * 任务启动时注册上下文，未注册时新建
          */
         fun getOrCreateContext(barrageFlyTaskDO: BarrageFlyTaskDO): BarrageFlyTaskContext {
-            val clientConfigJson = (OrJacksonUtil.getInstance().readTree(
-                StrUtil.blankToDefault(
-                    barrageFlyTaskDO.clientConfigJson,
-                    StrUtil.EMPTY_JSON
-                )
-            ) as ObjectNode).apply {
+            val clientConfigJson = OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("roomId", barrageFlyTaskDO.roomId)
                 put("cookie", barrageFlyTaskDO.cookie)
+                put("socks5ProxyHost", barrageFlyTaskDO.socks5ProxyHost)
+                put("socks5ProxyPort", barrageFlyTaskDO.socks5ProxyPort)
+                put("socks5ProxyUsername", barrageFlyTaskDO.socks5ProxyUsername)
+                put("socks5ProxyPassword", barrageFlyTaskDO.socks5ProxyPassword)
             }.toString()
             return taskContexts.getOrPut(barrageFlyTaskDO.uuid) {
                 BarrageFlyTaskContext(
