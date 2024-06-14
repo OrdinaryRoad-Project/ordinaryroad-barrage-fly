@@ -26,8 +26,12 @@
               right
               nudge-top="40"
             >
-              <template #activator>
-                <or-barrage-fly-task-item-room-info :item="item" />
+              <template #activator="{ on, attrs }">
+                <or-barrage-fly-task-item-room-info
+                  v-bind="attrs"
+                  :item="item"
+                  v-on="on"
+                />
               </template>
               <template #default>
                 {{ item.remark }}
