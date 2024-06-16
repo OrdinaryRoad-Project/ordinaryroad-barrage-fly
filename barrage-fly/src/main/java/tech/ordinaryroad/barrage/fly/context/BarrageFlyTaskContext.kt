@@ -292,11 +292,11 @@ class BarrageFlyTaskContext(
         fun getOrCreateContext(barrageFlyTaskDO: BarrageFlyTaskDO): BarrageFlyTaskContext {
             val clientConfigJson = OrJacksonUtil.getInstance().createObjectNode().apply {
                 put("roomId", barrageFlyTaskDO.roomId)
-                put("cookie", barrageFlyTaskDO.cookie)
-                put("socks5ProxyHost", barrageFlyTaskDO.socks5ProxyHost)
-                put("socks5ProxyPort", barrageFlyTaskDO.socks5ProxyPort)
-                put("socks5ProxyUsername", barrageFlyTaskDO.socks5ProxyUsername)
-                put("socks5ProxyPassword", barrageFlyTaskDO.socks5ProxyPassword)
+                barrageFlyTaskDO.cookie?.let { put("cookie", it) }
+                barrageFlyTaskDO.socks5ProxyHost?.let { put("socks5ProxyHost", it) }
+                barrageFlyTaskDO.socks5ProxyPort?.let { put("socks5ProxyPort", it) }
+                barrageFlyTaskDO.socks5ProxyUsername?.let { put("socks5ProxyUsername", it) }
+                barrageFlyTaskDO.socks5ProxyPassword?.let { put("socks5ProxyPassword", it) }
             }.toString()
             return taskContexts.getOrPut(barrageFlyTaskDO.uuid) {
                 BarrageFlyTaskContext(
