@@ -51,6 +51,7 @@ extra["springBootAdminVersion"] = "2.7.4"
 // val operatingSystem: OperatingSystem = DefaultNativePlatform.getCurrentOperatingSystem()
 
 dependencies {
+    // https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client
     val liveChatClientVersion = "1.0.0"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
