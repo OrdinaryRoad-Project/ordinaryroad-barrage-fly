@@ -52,7 +52,7 @@ extra["springBootAdminVersion"] = "2.7.4"
 
 dependencies {
     // https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client
-    val liveChatClientVersion = "1.0.0"
+    val liveChatClientVersion = "1.1.1"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
