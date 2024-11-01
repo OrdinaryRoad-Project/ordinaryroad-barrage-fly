@@ -6,7 +6,7 @@
 - WebSocket地址：wss://barragefly.ordinaryroad.tech:7100
 
 > 帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
-> <img src="docs/src/.vuepress/public/assets/image/QQPD.jpg" width="400"/><img src="docs/src/.vuepress/public/assets/image/WeChatPD.jpg" width="400"/>
+> <img src="/assets/image/QQPD.jpg" width="400"/><img src="/assets/image/WeChatPD.jpg" width="400"/>
 
 ## 2.1 Docker Compose
 
