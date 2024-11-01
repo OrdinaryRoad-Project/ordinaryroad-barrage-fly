@@ -43,7 +43,7 @@
 
 ## 交流讨论
 
-扫描二维码<img src="assets/QQ频道.jpg" width="200px">
+扫描二维码<img src="assets/QQ频道.jpg" width="200px"><img src="assets/微信频道.jpg" width="200px">
 或点击链接加入QQ频道【OrdinaryRoad】：https://pd.qq.com/s/3id0n7fvs
 
 ## 其他

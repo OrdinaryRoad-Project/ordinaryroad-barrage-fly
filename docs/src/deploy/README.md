@@ -6,6 +6,7 @@
 - WebSocket地址：wss://barragefly.ordinaryroad.tech:7100
 
 > 帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
+> <img src="docs/src/.vuepress/public/assets/image/QQPD.png" width="400"/><img src="docs/src/.vuepress/public/assets/image/WeChatPD.png" width="400"/>
 
 ## 2.1 Docker Compose
 
@@ -21,17 +22,17 @@
 >
 > ```shell
 > # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-> # 拉取最新版1.3.0
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.3.0
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.3.0
-> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.3.0
+> # 拉取最新版1.4.0
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.4.0
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.4.0
+> docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.4.0
 > ```
 
 > 拉到本地后需要根据compose文件重命名镜像
 > ```shell
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.3.0 ordinaryroad-barrage-fly
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.3.0 ordinaryroad-barrage-fly-arm64
-> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.3.0 ordinaryroad-barrage-fly-ui
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.4.0 ordinaryroad-barrage-fly
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-arm64:1.4.0 ordinaryroad-barrage-fly-arm64
+> docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.4.0 ordinaryroad-barrage-fly-ui
 > ```
 
 ### 2.1.1 前端+后端
