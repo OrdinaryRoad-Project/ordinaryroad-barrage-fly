@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     login () {
-      if (this.rsaPublicKey) {
+      if (!this.rsaPublicKey) {
         this.$snackbar.error('配置获取失败，请检查后端服务状态')
         return
       }
