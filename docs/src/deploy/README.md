@@ -8,7 +8,7 @@
 > 帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
 > <img src="/assets/image/QQPD.jpg" width="400"/><img src="/assets/image/WeChatPD.jpg" width="400"/>
 
-## 2.1 Docker Compose
+## 2.1 Docker Compose 部署
 
 ### 2.1.0 Tips
 
@@ -117,6 +117,6 @@ services:
 
 ## 2.2 本地打包运行
 
-1. clone项目到本地
+1. 克隆项目到本地 `git clone https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly.git`
 2. 后端打包 `./gradlew clean bootJar`
 3. 前端打包 `npm install && npm run build`
