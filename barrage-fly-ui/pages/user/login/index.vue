@@ -86,23 +86,6 @@ import Cookies from 'js-cookie'
 
 export default {
   layout: 'empty',
-  async asyncData ({
-    $apis,
-    store,
-    route,
-    redirect
-  }) {
-    const redirectPath = route.query.redirect || '/'
-    const userInfo = store.getters['user/getUserInfo']
-    if (userInfo) {
-      redirect(redirectPath)
-    } else {
-      return {
-        rsaPublicKey: (await $apis.app.configurations()).rsaPublicKey,
-        redirect: redirectPath
-      }
-    }
-  },
   data: () => ({
     loading: false,
     showPassword: false,
@@ -123,9 +106,27 @@ export default {
   created () {
     // 能进入到login页面说明store/index.js初始化userInfo的token无效
     Cookies.remove('token')
+
+    const redirectPath = this.$route.query.redirect || '/'
+    const userInfo = this.$store.getters['user/getUserInfo']
+    if (userInfo) {
+      this.$router.replace({ path: redirectPath })
+    } else {
+      this.$apis.app.configurations().then((data) => {
+        this.rsaPublicKey = data.rsaPublicKey
+      }).catch(() => {
+        this.$snackbar.info('配置获取失败，请检查后端服务状态')
+      })
+      this.redirect = redirectPath
+    }
   },
   methods: {
     login () {
+      if (this.rsaPublicKey) {
+        this.$snackbar.error('配置获取失败，请检查后端服务状态')
+        return
+      }
+
       this.loading = true
       const json = JSON.stringify(this.model)
       const JSEncrypt = require('jsencrypt').JSEncrypt
