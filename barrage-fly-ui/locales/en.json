@@ -35,6 +35,9 @@
       "pleaseLoginHint": "Please login first",
       "remember": "Remember Me"
     },
+    "messages": {
+      "noRsaPublicKeyError": "Fetch configuration failed, please check the backend service status"
+    },
     "password": "Password",
     "username": "Username"
   },

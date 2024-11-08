@@ -114,8 +114,6 @@ export default {
     } else {
       this.$apis.app.configurations().then((data) => {
         this.rsaPublicKey = data.rsaPublicKey
-      }).catch(() => {
-        this.$snackbar.info('配置获取失败，请检查后端服务状态')
       })
       this.redirect = redirectPath
     }
@@ -123,7 +121,7 @@ export default {
   methods: {
     login () {
       if (!this.rsaPublicKey) {
-        this.$snackbar.error('配置获取失败，请检查后端服务状态')
+        this.$snackbar.info(this.$t('barrageFlyUser.messages.noRsaPublicKeyError'))
         return
       }
 

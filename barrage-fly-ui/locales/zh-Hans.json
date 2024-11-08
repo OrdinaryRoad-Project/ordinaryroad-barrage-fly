@@ -35,6 +35,9 @@
       "pleaseLoginHint": "请先登录",
       "remember": "记住我"
     },
+    "messages": {
+      "noRsaPublicKeyError":"配置获取失败，请检查后端服务状态"
+    },
     "password": "密码",
     "username": "用户名"
   },
