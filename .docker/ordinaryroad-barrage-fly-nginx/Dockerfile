@@ -1,6 +1,6 @@
 FROM nginx:1.21.3
 
-MAINTAINER mjz(or-mjz@qq.com)
+LABEL maintainer="1962247851@qq.com"
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 

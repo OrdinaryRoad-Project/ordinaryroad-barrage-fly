@@ -9,7 +9,6 @@
 # SPRING_BOOT_ADMIN_BASE_URL（根据后端部署情况设置Spring Boot Admin的地址）
 # SUB_BASE_URL（根据后端部署情况设置Client要连接的WebSocket地址，注意请勿用localhost、127.0.0.1）
 
-version: "3.0"
 services:
   ordinaryroad-barrage-fly-ui:
     image: ordinaryroad-barrage-fly-ui

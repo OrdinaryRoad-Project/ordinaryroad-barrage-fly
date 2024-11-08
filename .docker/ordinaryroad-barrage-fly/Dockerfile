@@ -1,6 +1,6 @@
-FROM btgoose/jdk17
+FROM meddream/jdk17
 
-MAINTAINER mjz(or-mjz@qq.com)
+LABEL maintainer="1962247851@qq.com"
 
 ARG APP_NAME=ordinaryroad-barrage-fly
 

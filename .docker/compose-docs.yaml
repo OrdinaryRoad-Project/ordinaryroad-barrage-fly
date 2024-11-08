@@ -1,4 +1,3 @@
-version: "3.0"
 services:
   ordinaryroad-barrage-fly-docs:
     image: ordinaryroad-barrage-fly-docs
