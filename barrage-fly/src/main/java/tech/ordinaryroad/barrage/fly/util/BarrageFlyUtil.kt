@@ -23,10 +23,10 @@ import cn.hutool.extra.spring.SpringUtil
 import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum
 import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
-import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressContext
 import tech.ordinaryroad.barrage.fly.express.BarrageFlyExpressRunner
 import tech.ordinaryroad.barrage.fly.express.operator.OperatorSendDanmu.Companion.KEY_DO_SEND_DANMU_BOOLEAN
+import tech.ordinaryroad.barrage.fly.pojo.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.DanmuMsgMsg
 import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SendGiftMsg
 import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.SuperChatMessageMsg
