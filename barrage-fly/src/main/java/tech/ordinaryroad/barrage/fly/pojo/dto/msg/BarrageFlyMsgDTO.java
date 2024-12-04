@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.ordinaryroad.barrage.fly.dto.msg;
+package tech.ordinaryroad.barrage.fly.pojo.dto.msg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import tech.ordinaryroad.barrage.fly.constant.MsgTypeEnum;

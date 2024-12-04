@@ -20,7 +20,7 @@ import cn.hutool.core.thread.ThreadUtil
 import org.reactivestreams.Publisher
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
-import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit

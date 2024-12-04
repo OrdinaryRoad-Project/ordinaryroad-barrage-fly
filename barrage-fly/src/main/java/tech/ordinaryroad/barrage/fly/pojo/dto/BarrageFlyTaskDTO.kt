@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tech.ordinaryroad.barrage.fly.dto
+package tech.ordinaryroad.barrage.fly.pojo.dto
 
 import cn.hutool.core.bean.BeanUtil
 import com.fasterxml.jackson.annotation.JsonProperty

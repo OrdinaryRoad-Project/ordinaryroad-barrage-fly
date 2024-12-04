@@ -21,9 +21,9 @@ import com.ql.util.express.InstructionSetContext
 import com.ql.util.express.OperateData
 import com.ql.util.express.exception.QLException
 import org.springframework.stereotype.Component
-import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO
-import tech.ordinaryroad.barrage.fly.dto.BarrageFlyTaskDTO.Companion.toDTO
 import tech.ordinaryroad.barrage.fly.express.operator.base.BaseBarrageFlyOperator
+import tech.ordinaryroad.barrage.fly.pojo.dto.BarrageFlyTaskDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.BarrageFlyTaskDTO.Companion.toDTO
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 
 /**

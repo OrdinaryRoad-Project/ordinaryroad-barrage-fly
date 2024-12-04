@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.ordinaryroad.barrage.fly.dto
+package tech.ordinaryroad.barrage.fly.pojo.dto
 
 /**
  *

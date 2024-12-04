@@ -27,8 +27,8 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.awaitBody
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import reactor.core.publisher.Mono
-import tech.ordinaryroad.barrage.fly.dto.UserDTO
-import tech.ordinaryroad.barrage.fly.dto.UserInfoDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.UserDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.UserInfoDTO
 import tech.ordinaryroad.barrage.fly.property.AdminProperties
 import tech.ordinaryroad.live.chat.client.commons.util.OrJacksonUtil
 
