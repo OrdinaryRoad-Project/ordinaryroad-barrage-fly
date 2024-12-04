@@ -20,6 +20,12 @@ import errorCode from './errorCode'
 export default function (context, inject) {
   // $dialog和$snackbar必须通过context.$xxx方式调用
   const { $axios, route, app, redirect } = context
+
+  $axios.interceptors.request.use((config) => {
+    config.withCredentials = true
+    return config
+  })
+
   const {
     store
     // router
