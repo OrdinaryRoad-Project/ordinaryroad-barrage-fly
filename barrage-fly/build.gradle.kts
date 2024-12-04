@@ -38,11 +38,11 @@ configurations {
 }
 
 repositories {
+    mavenCentral() // 如果提示未找到依赖，尝试把这行放到第一行
     maven { url = uri("https://maven.aliyun.com/repository/public") }
     maven { url = uri("https://maven.aliyun.com/repository/central") }
     maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
     maven { url = uri("https://ordinaryroad-maven.pkg.coding.net/repository/ordinaryroad/maven-pro/") }
-    mavenCentral() // 如果提示未找到依赖，尝试把这行放到第一行
     mavenLocal()
 }
 
@@ -52,7 +52,7 @@ extra["springBootAdminVersion"] = "2.7.4"
 
 dependencies {
     // https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client
-    val liveChatClientVersion = "1.2.1"
+    val liveChatClientVersion = "1.2.3"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
