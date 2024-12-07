@@ -22,6 +22,7 @@ export APP_VERSION=1.5.0
 # 1 后端
 cd ../barrage-fly
 rm -rf ./src/main/resources/public/*
+rm -rf ./src/main/resources/static/*
 ./gradlew clean bootJar
 cd ../.docker/ordinaryroad-barrage-fly
 
