@@ -56,3 +56,5 @@ docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-p
 docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui ordinaryroad-barrage-fly-ui
 
 #docker logout ordinaryroad-docker.pkg.coding.net
+
+echo "deploy finished, please refer to https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages"
