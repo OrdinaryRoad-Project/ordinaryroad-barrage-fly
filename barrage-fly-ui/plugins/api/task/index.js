@@ -23,19 +23,16 @@ export default {
     $axios = $axios || axios
   },
   apis: {
-    create: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }, start = false) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
+    create: (data, start = false) => {
       return $axios({ url: `/task?start=${start}`, method: 'post', data })
     },
     delete: (id) => {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
-    update: ({ id, platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }, start = false) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
-      return $axios({ url: `/task?id=${id}&start=${start}`, method: 'put', data })
+    update: (data, start = false) => {
+      return $axios({ url: `/task?id=${data.id}&start=${start}`, method: 'put', data })
     },
-    validate: ({ platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }) => {
-      const data = { platform, roomId, remark, cookie, msgPreMapExpress, msgFilterExpress, msgPostMapExpress, socks5ProxyHost, socks5ProxyPort, socks5ProxyUsername, socks5ProxyPassword }
+    validate: (data) => {
       return $axios({ url: '/task/validate', method: 'put', data })
     },
     validateExpress: ({ msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
@@ -74,6 +71,9 @@ export default {
     },
     platformOptions () {
       return $axios({ url: '/task/platform/options', method: 'get' })
+    },
+    platformConfigs () {
+      return $axios({ url: '/task/platform/configs', method: 'get' })
     }
   }
 }

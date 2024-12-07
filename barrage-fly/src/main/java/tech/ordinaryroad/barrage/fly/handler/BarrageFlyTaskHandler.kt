@@ -29,12 +29,16 @@ import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.pojo.dto.BarrageFlyTaskDTO.Companion.toDTO
-import tech.ordinaryroad.barrage.fly.pojo.vo.PlatformClientConfigVO
+import tech.ordinaryroad.barrage.fly.pojo.dto.client.config.ClientConfigItemDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.client.config.ClientConfigOptionItemDTO
+import tech.ordinaryroad.barrage.fly.pojo.vo.ClientConfigVO
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validate
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validateTaskExpress
 import tech.ordinaryroad.commons.core.base.request.query.BaseQueryRequest
 import tech.ordinaryroad.commons.mybatis.utils.PageUtils
+import tech.ordinaryroad.live.chat.client.codec.kuaishou.constant.RoomInfoGetTypeEnum
+import tech.ordinaryroad.live.chat.client.kuaishou.config.KuaishouLiveChatClientConfig
 
 @Component
 class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskService) {
@@ -222,6 +226,58 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
                         this["text"] = it.text
                         this["value"] = it.name
                     }
+                }
+            )
+    }
+
+    /**
+     * 获取平台专属的配置
+     */
+    fun platformConfigs(request: ServerRequest): Mono<ServerResponse> {
+        return ServerResponse.ok()
+            .body(Flux.fromArray(PlatformEnum.values())
+                .map { platform ->
+                    ClientConfigVO(
+                        platform, when (platform) {
+                            PlatformEnum.BILIBILI -> {
+                                emptyList()
+                            }
+
+                            PlatformEnum.DOUYU -> {
+                                emptyList()
+                            }
+
+                            PlatformEnum.HUYA -> {
+                                emptyList()
+                            }
+
+                            PlatformEnum.DOUYIN -> {
+                                emptyList()
+                            }
+
+                            PlatformEnum.KUAISHOU -> {
+                                arrayListOf(
+                                    ClientConfigItemDTO(
+                                        "roomInfoGetType",
+                                        KuaishouLiveChatClientConfig.builder().build().roomInfoGetType,
+                                        "RoomInfo获取方式",
+                                        "如果提示需要滑块验证可切换为 不使用Cookie",
+                                        arrayListOf(
+                                            ClientConfigOptionItemDTO("使用Cookie", RoomInfoGetTypeEnum.COOKIE),
+                                            ClientConfigOptionItemDTO(
+                                                "不使用Cookie",
+                                                RoomInfoGetTypeEnum.NOT_COOKIE
+                                            )
+                                        )
+                                    )
+                                )
+                            }
+
+                            else -> {
+                                emptyList()
+                            }
+                        }
+                    )
                 }
             )
     }

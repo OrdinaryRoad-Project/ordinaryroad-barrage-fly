@@ -54,6 +54,49 @@
       :label="$t('barrageFlyTask.cookie')"
       hint="浏览器Cookie，一般只有要发送弹幕时才需要（B站未设置Cookie无法查看用户信息）"
     />
+
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      hover
+    >
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            Client设置
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div>
+            <div
+              v-for="(config,index) in platformConfigs.data.filter(item=>item.platform===model.platform)[0]?.configs"
+              :key="index"
+            >
+              <div v-if="config.options">
+                <v-radio-group
+                  v-model="model[config.key]"
+                  persistent-hint
+                  row
+                  :label="config.label"
+                  :hint="config.hint"
+                >
+                  <v-radio
+                    v-for="(option,optionIndex) in config.options"
+                    :key="optionIndex"
+                    :label="option.text"
+                    :value="option.value"
+                  />
+                </v-radio-group>
+              </div>
+              <div v-else>
+                input
+              </div>
+            </div>
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
     <v-expansion-panels
       class="mt-2 pa-0 v-sheet--outlined"
       flat
@@ -74,9 +117,11 @@
                 type="info"
                 dismissible
               >
-                以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
+                以下设置需要先了解
+                <or-link href="https://github.com/alibaba/QLExpress#readme">
                   QLExpress
-                </or-link><br>
+                </or-link>
+                <br>
                 <or-link href="https://barragefly.ordinaryroad.tech/guide/msgflow.html#_4-4-一些例子">
                   一些例子
                 </or-link>
@@ -185,6 +230,10 @@ export default {
       loading: true,
       data: []
     },
+    platformConfigs: {
+      loading: true,
+      data: []
+    },
     model: {}
   }),
   watch: {
@@ -211,6 +260,14 @@ export default {
       })
       .catch(() => {
         this.platformOptions.loading = false
+      })
+    this.$apis.task.platformConfigs()
+      .then((data) => {
+        this.platformConfigs.loading = false
+        this.platformConfigs.data = data
+      })
+      .catch(() => {
+        this.platformConfigs.loading = false
       })
   },
   mounted () {
