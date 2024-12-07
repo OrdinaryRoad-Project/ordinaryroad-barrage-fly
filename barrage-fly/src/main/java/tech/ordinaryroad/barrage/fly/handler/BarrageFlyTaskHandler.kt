@@ -29,7 +29,6 @@ import tech.ordinaryroad.barrage.fly.constant.PlatformEnum
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.barrage.fly.dal.entity.BarrageFlyTaskDO
 import tech.ordinaryroad.barrage.fly.pojo.dto.BarrageFlyTaskDTO.Companion.toDTO
-import tech.ordinaryroad.barrage.fly.pojo.vo.PlatformClientConfigVO
 import tech.ordinaryroad.barrage.fly.service.BarrageFlyTaskService
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validate
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validateTaskExpress
