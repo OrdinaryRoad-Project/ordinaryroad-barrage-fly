@@ -1,0 +1,14 @@
+[versions]
+springBoot = "2.7.16"
+liveChatClient = "1.3.2"
+
+[libraries]
+liveChatClientBilibili = { group = "tech.ordinaryroad", name = "live-chat-client-bilibili", version.ref = "liveChatClient" }
+liveChatClientDouyu = { group = "tech.ordinaryroad", name = "live-chat-client-douyu", version.ref = "liveChatClient" }
+liveChatClientHuya = { group = "tech.ordinaryroad", name = "live-chat-client-huya", version.ref = "liveChatClient" }
+liveChatClientDouyin = { group = "tech.ordinaryroad", name = "live-chat-client-douyin", version.ref = "liveChatClient" }
+liveChatClientKuaishou = { group = "tech.ordinaryroad", name = "live-chat-client-kuaishou", version.ref = "liveChatClient" }
+
+[plugins]
+springframeworkBoot = { id = "org.springframework.boot", version = "2.7.16" }
+
