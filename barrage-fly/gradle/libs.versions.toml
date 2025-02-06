@@ -1,6 +1,6 @@
 [versions]
 springBoot = "2.7.16"
-liveChatClient = "1.3.2"
+liveChatClient = "1.4.0-b1"
 
 [libraries]
 liveChatClientBilibili = { group = "tech.ordinaryroad", name = "live-chat-client-bilibili", version.ref = "liveChatClient" }

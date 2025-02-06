@@ -215,13 +215,14 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
 
     fun platformOptions(request: ServerRequest): Mono<ServerResponse> {
         return ServerResponse.ok()
-            .body(Flux.fromArray(PlatformEnum.values())
-                .map {
-                    HashMap<String, String>(2).apply {
-                        this["text"] = it.text
-                        this["value"] = it.name
+            .body(
+                Flux.fromArray(PlatformEnum.values())
+                    .map {
+                        HashMap<String, String>(2).apply {
+                            this["text"] = it.text
+                            this["value"] = it.name
+                        }
                     }
-                }
             )
     }
 }
