@@ -63,6 +63,7 @@ class BarrageFlyTaskRoutingConfiguration(val apiProperties: ApiProperties) {
                 GET("/page/{offset}/{limit}/", handler::pageTask)
                 GET("/statuses", handler::statuses)
                 GET("/platform/options", handler::platformOptions)
+                GET("/platform/configs", handler::platformConfigs)
             }
         }
     }

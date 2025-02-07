@@ -54,6 +54,54 @@
       :label="$t('barrageFlyTask.cookie')"
       hint="浏览器Cookie，一般只有要发送弹幕时才需要（B站未设置Cookie无法查看用户信息）"
     />
+
+    <v-expansion-panels
+      class="mt-2 pa-0 v-sheet--outlined"
+      flat
+      hover
+    >
+      <v-expansion-panel v-if="currentPlatformConfigs && currentPlatformConfigs.length">
+        <v-expansion-panel-header class="pa-0 pe-4">
+          <v-toolbar-title class="v-card__title">
+            平台设置
+          </v-toolbar-title>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div>
+            <div
+              v-for="config in currentPlatformConfigs"
+              :key="config.key"
+            >
+              <div v-if="config.options && config.options.length">
+                <v-radio-group
+                  v-model="platformConfig[`${model.platform}_${config.key}`]"
+                  persistent-hint
+                  row
+                  :label="config.label"
+                  :hint="config.hint"
+                >
+                  <v-radio
+                    v-for="option in config.options"
+                    :key="option.value"
+                    :label="option.text"
+                    :value="option.value"
+                  />
+                </v-radio-group>
+              </div>
+              <div v-else>
+                <v-text-field
+                  v-model="platformConfig[`${model.platform}_${config.key}`]"
+                  persistent-hint
+                  :label="config.label"
+                  :hint="config.hint"
+                />
+              </div>
+            </div>
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
     <v-expansion-panels
       class="mt-2 pa-0 v-sheet--outlined"
       flat
@@ -74,9 +122,11 @@
                 type="info"
                 dismissible
               >
-                以下设置需要先了解<or-link href="https://github.com/alibaba/QLExpress#readme">
+                以下设置需要先了解
+                <or-link href="https://github.com/alibaba/QLExpress#readme">
                   QLExpress
-                </or-link><br>
+                </or-link>
+                <br>
                 <or-link href="https://barragefly.ordinaryroad.tech/guide/msgflow.html#_4-4-一些例子">
                   一些例子
                 </or-link>
@@ -176,7 +226,8 @@ export default {
         socks5ProxyHost: null,
         socks5ProxyPort: null,
         socks5ProxyUsername: null,
-        socks5ProxyPassword: null
+        socks5ProxyPassword: null,
+        platformConfigJson: null
       })
     }
   },
@@ -185,8 +236,19 @@ export default {
       loading: true,
       data: []
     },
-    model: {}
+    platformConfigs: {
+      loading: true,
+      data: []
+    },
+    model: {},
+    // 暂存平台设置，用于生成 model.platformConfigJson
+    platformConfig: {}
   }),
+  computed: {
+    currentPlatformConfigs () {
+      return this.platformConfigs.data.filter(item => item.platform === this.model.platform)[0]?.configs
+    }
+  },
   watch: {
     preset: {
       handler (val) {
@@ -201,6 +263,27 @@ export default {
       },
       deep: true,
       immediate: true
+    },
+    'model.platform': {
+      handler () {
+        // 平台变化后更新 platformConfig 来更新 platformConfigJson
+        this.$set(this.platformConfig, '_date', new Date().toString())
+      },
+      immediate: true
+    },
+    platformConfig: {
+      handler (val) {
+        const tmpPlatformConfig = {}
+        Object.keys(val).forEach((key) => {
+          const value = val[key]
+          if (key.startsWith(this.model.platform)) {
+            tmpPlatformConfig[key.replace(`${this.model.platform}_`, '')] = value
+          }
+        })
+        this.$set(this.model, 'platformConfigJson', JSON.stringify(tmpPlatformConfig))
+      },
+      deep: true,
+      immediate: true
     }
   },
   created () {
@@ -211,6 +294,25 @@ export default {
       })
       .catch(() => {
         this.platformOptions.loading = false
+      })
+    this.$apis.task.platformConfigs()
+      .then((data) => {
+        const presetPlatformConfig = JSON.parse(this.preset.platformConfigJson || '{}')
+        // 使用platformConfig保存所有的平台配置信息
+        for (const i in data) {
+          const platformConfig = data[i]
+          for (const j in platformConfig.configs) {
+            const config = platformConfig.configs[j]
+            const key = `${platformConfig.platform}_${config.key}`
+            // 默认值设置
+            this.$set(this.platformConfig, key, this.platformConfig[key] || presetPlatformConfig[config.key] || config.defaultValue)
+          }
+        }
+        this.platformConfigs.data = data
+        this.platformConfigs.loading = false
+      })
+      .catch(() => {
+        this.platformConfigs.loading = false
       })
   },
   mounted () {
