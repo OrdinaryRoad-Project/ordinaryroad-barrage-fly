@@ -30,9 +30,9 @@ CREATE TABLE `barrage_fly_task`
     `id`                   bigint(20)                        NOT NULL AUTO_INCREMENT COMMENT '主键ID',
     `uuid`                 varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '主键UUID',
     `created_time`         datetime                          NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `create_by`            varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '创建者',
+    `create_by`            varchar(32) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '创建者',
     `update_time`          datetime                          NULL DEFAULT NULL COMMENT '更新时间',
-    `update_by`            varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '更新者',
+    `update_by`            varchar(32) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '更新者',
 
     `platform`             varchar(11) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '平台',
     `room_id`              varchar(50)                       NULL DEFAULT NULL COMMENT '房间号',

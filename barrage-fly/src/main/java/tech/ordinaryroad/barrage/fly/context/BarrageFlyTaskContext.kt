@@ -74,7 +74,7 @@ class BarrageFlyTaskContext(
     val rSocketClientMsgPublishers = ConcurrentHashMap<Int, Publisher<IMsg>>()
     private val log = LoggerFactory.getLogger(BarrageFlyTaskContext::class.java)
 
-    private var client: BaseLiveChatClient<*, *>? = null
+    private var client: BaseLiveChatClient<*, *, *>? = null
 
     var status = BarrageFlyTaskStatusEnum.NEW
         set(status) {
@@ -189,7 +189,7 @@ class BarrageFlyTaskContext(
         }
     }
 
-    private fun <Client : BaseLiveChatClient<*, *>> createClient(
+    private fun <Client : BaseLiveChatClient<*, *, *>> createClient(
         platform: PlatformEnum, clientConfigJson: String
     ): Client {
         return when (platform) {

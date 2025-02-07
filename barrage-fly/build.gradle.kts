@@ -16,9 +16,10 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+import java.nio.charset.StandardCharsets
 
 plugins {
-    id("org.springframework.boot") version "2.7.16"
+    alias(libs.plugins.springframeworkBoot)
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
@@ -52,12 +53,13 @@ extra["springBootAdminVersion"] = "2.7.4"
 
 dependencies {
     // https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client
-    val liveChatClientVersion = "1.2.3"
     val liveChatClientBrotliVersion = "1.16.0"
     val ordinaryroadVersion = "1.6.0"
     val saTokenVersion = "1.36.0"
     val qLExpressVersion = "3.3.2"
 
+    // 指定版本
+    implementation("org.apache.commons:commons-lang3:3.14.0")
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("de.codecentric:spring-boot-admin-starter-server")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -69,11 +71,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.integration:spring-integration-rsocket")
-    implementation("tech.ordinaryroad:live-chat-client-bilibili:$liveChatClientVersion")
-    implementation("tech.ordinaryroad:live-chat-client-douyu:$liveChatClientVersion")
-    implementation("tech.ordinaryroad:live-chat-client-huya:$liveChatClientVersion")
-    implementation("tech.ordinaryroad:live-chat-client-douyin:$liveChatClientVersion")
-    implementation("tech.ordinaryroad:live-chat-client-kuaishou:$liveChatClientVersion")
+    implementation(libs.liveChatClientBilibili)
+    implementation(libs.liveChatClientDouyu)
+    implementation(libs.liveChatClientHuya)
+    implementation(libs.liveChatClientDouyin)
+    implementation(libs.liveChatClientKuaishou)
     implementation("tech.ordinaryroad:ordinaryroad-commons-core:$ordinaryroadVersion") {
         exclude("org.springframework")
         exclude("org.springframework.cloud")
@@ -148,6 +150,20 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("de.codecentric:spring-boot-admin-dependencies:${property("springBootAdminVersion")}")
+    }
+}
+
+/**
+ * 生成版本信息
+ */
+tasks.withType<ProcessResources> {
+    doLast {
+        val propertiesFile = file("src/main/resources/properties/generated/version.properties")
+        if (propertiesFile.exists()) {
+            propertiesFile.delete()
+        }
+        propertiesFile.parentFile.mkdirs()
+        propertiesFile.appendText("liveChatClientVersion=${libs.versions.liveChatClient.get()}", StandardCharsets.UTF_8)
     }
 }
 

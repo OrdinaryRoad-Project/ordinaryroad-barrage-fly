@@ -16,9 +16,11 @@
 
 package tech.ordinaryroad.barrage.fly
 
+import cn.hutool.core.util.StrUtil
 import de.codecentric.boot.admin.server.config.EnableAdminServer
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.core.io.support.PropertiesLoaderUtils
 import tech.ordinaryroad.barrage.fly.context.BarrageFlyTaskContext
 import tech.ordinaryroad.commons.core.config.PasswordEncoderConfig
 import tech.ordinaryroad.commons.core.config.RedisTemplateConfiguration
@@ -37,6 +39,8 @@ class OrdinaryroadBarrageFlyApplication {
         @JvmStatic
         fun main(args: Array<String>) {
             runApplication<OrdinaryroadBarrageFlyApplication>(*args)
+            val properties = PropertiesLoaderUtils.loadAllProperties("properties/generated/version.properties")
+            println(StrUtil.format("LiveChatClient Version: {}", properties.getProperty("liveChatClientVersion")))
         }
     }
 
