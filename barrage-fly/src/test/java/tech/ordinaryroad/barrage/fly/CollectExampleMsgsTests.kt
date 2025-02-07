@@ -19,7 +19,7 @@ package tech.ordinaryroad.barrage.fly
 import cn.hutool.core.date.DateUtil
 import cn.hutool.core.io.FileUtil
 import org.junit.jupiter.api.Test
-import tech.ordinaryroad.barrage.fly.dto.msg.BarrageFlyMsgDTO
+import tech.ordinaryroad.barrage.fly.pojo.dto.msg.BarrageFlyMsgDTO
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener
