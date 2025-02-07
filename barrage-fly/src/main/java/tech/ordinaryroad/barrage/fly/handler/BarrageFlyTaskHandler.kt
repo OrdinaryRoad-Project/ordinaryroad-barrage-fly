@@ -37,7 +37,13 @@ import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validate
 import tech.ordinaryroad.barrage.fly.util.BarrageFlyUtil.validateTaskExpress
 import tech.ordinaryroad.commons.core.base.request.query.BaseQueryRequest
 import tech.ordinaryroad.commons.mybatis.utils.PageUtils
+import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.codec.bilibili.constant.ProtoverEnum
+import tech.ordinaryroad.live.chat.client.codec.douyin.constant.DouyinGiftCountCalculationTimeEnum
 import tech.ordinaryroad.live.chat.client.codec.kuaishou.constant.RoomInfoGetTypeEnum
+import tech.ordinaryroad.live.chat.client.douyin.config.DouyinLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.douyu.config.DouyuLiveChatClientConfig
+import tech.ordinaryroad.live.chat.client.huya.config.HuyaLiveChatClientConfig
 import tech.ordinaryroad.live.chat.client.kuaishou.config.KuaishouLiveChatClientConfig
 
 @Component
@@ -104,6 +110,7 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
             socks5ProxyPort = task.socks5ProxyPort
             socks5ProxyUsername = task.socks5ProxyUsername
             socks5ProxyPassword = task.socks5ProxyPassword
+            platformConfigJson = task.platformConfigJson
         }
 
         val update = barrageFlyTaskService.updateSelective(barrageFlyTaskDO)
@@ -220,13 +227,14 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
 
     fun platformOptions(request: ServerRequest): Mono<ServerResponse> {
         return ServerResponse.ok()
-            .body(Flux.fromArray(PlatformEnum.values())
-                .map {
-                    HashMap<String, String>(2).apply {
-                        this["text"] = it.text
-                        this["value"] = it.name
+            .body(
+                Flux.fromArray(PlatformEnum.values())
+                    .map {
+                        HashMap<String, String>(2).apply {
+                            this["text"] = it.text
+                            this["value"] = it.name
+                        }
                     }
-                }
             )
     }
 
@@ -235,50 +243,124 @@ class BarrageFlyTaskHandler(private val barrageFlyTaskService: BarrageFlyTaskSer
      */
     fun platformConfigs(request: ServerRequest): Mono<ServerResponse> {
         return ServerResponse.ok()
-            .body(Flux.fromArray(PlatformEnum.values())
-                .map { platform ->
-                    ClientConfigVO(
-                        platform, when (platform) {
-                            PlatformEnum.BILIBILI -> {
-                                emptyList()
-                            }
+            .body(
+                Flux.fromArray(PlatformEnum.values())
+                    .map { platform ->
+                        ClientConfigVO(
+                            platform, when (platform) {
+                                PlatformEnum.BILIBILI -> {
+                                    val defaultBilibiliLiveChatClientConfig =
+                                        BilibiliLiveChatClientConfig.builder().build()
+                                    arrayListOf(
+                                        ClientConfigItemDTO(
+                                            "protover",
+                                            defaultBilibiliLiveChatClientConfig.protover,
+                                            "protover",
+                                            "压缩方式，一般不需要修改",
+                                            arrayListOf(
+                                                ClientConfigOptionItemDTO(
+                                                    "普通包正文不使用压缩",
+                                                    ProtoverEnum.NORMAL_NO_COMPRESSION
+                                                ),
+                                                ClientConfigOptionItemDTO(
+                                                    "心跳及认证包正文不使用压缩",
+                                                    ProtoverEnum.HEARTBEAT_AUTH_NO_COMPRESSION
+                                                ),
+                                                ClientConfigOptionItemDTO(
+                                                    "普通包正文使用zlib压缩",
+                                                    ProtoverEnum.NORMAL_ZLIB
+                                                ),
+                                                ClientConfigOptionItemDTO(
+                                                    "普通包正文使用brotli压缩,解压为一个带头部的协议0普通包",
+                                                    ProtoverEnum.NORMAL_BROTLI
+                                                ),
+                                            )
+                                        ),
+                                    )
+                                }
 
-                            PlatformEnum.DOUYU -> {
-                                emptyList()
-                            }
+                                PlatformEnum.DOUYU -> {
+                                    val defaultDouyuLiveChatClientConfig = DouyuLiveChatClientConfig.builder().build()
+                                    arrayListOf(
+                                        ClientConfigItemDTO(
+                                            "ver",
+                                            defaultDouyuLiveChatClientConfig.ver,
+                                            "ver",
+                                            "用于构建认证包，一般不需要修改"
+                                        ),
+                                        ClientConfigItemDTO(
+                                            "aver",
+                                            defaultDouyuLiveChatClientConfig.aver,
+                                            "aver",
+                                            "用于构建认证包，一般不需要修改"
+                                        )
+                                    )
+                                }
 
-                            PlatformEnum.HUYA -> {
-                                emptyList()
-                            }
+                                PlatformEnum.HUYA -> {
+                                    val defaultHuyaLiveChatClientConfig = HuyaLiveChatClientConfig.builder().build()
+                                    arrayListOf(
+                                        ClientConfigItemDTO(
+                                            "websocketUri",
+                                            defaultHuyaLiveChatClientConfig.websocketUri,
+                                            "websocketUri",
+                                            "实际连接的虎牙 WebSocket 地址，一般不需要修改"
+                                        ),
+                                        ClientConfigItemDTO(
+                                            "ver",
+                                            defaultHuyaLiveChatClientConfig.ver,
+                                            "ver",
+                                            "用于构建认证包，一般不需要修改"
+                                        )
+                                    )
+                                }
 
-                            PlatformEnum.DOUYIN -> {
-                                emptyList()
-                            }
+                                PlatformEnum.DOUYIN -> {
+                                    val defaultDouyinLiveChatClientConfig = DouyinLiveChatClientConfig.builder().build()
+                                    arrayListOf(
+                                        ClientConfigItemDTO(
+                                            "giftCountCalculationTime",
+                                            defaultDouyinLiveChatClientConfig.giftCountCalculationTime,
+                                            "礼物个数计算时机",
+                                            "一般不需要修改",
+                                            arrayListOf(
+                                                ClientConfigOptionItemDTO(
+                                                    "收到礼物消息后立即计算礼物个数",
+                                                    DouyinGiftCountCalculationTimeEnum.IMMEDIATELY
+                                                ),
+                                                ClientConfigOptionItemDTO(
+                                                    "等待礼物连击结束后再计算礼物个数",
+                                                    DouyinGiftCountCalculationTimeEnum.COMBO_END
+                                                )
+                                            )
+                                        ),
+                                    )
+                                }
 
-                            PlatformEnum.KUAISHOU -> {
-                                arrayListOf(
-                                    ClientConfigItemDTO(
-                                        "roomInfoGetType",
-                                        KuaishouLiveChatClientConfig.builder().build().roomInfoGetType,
-                                        "RoomInfo获取方式",
-                                        "如果提示需要滑块验证可切换为 不使用Cookie",
-                                        arrayListOf(
-                                            ClientConfigOptionItemDTO("使用Cookie", RoomInfoGetTypeEnum.COOKIE),
-                                            ClientConfigOptionItemDTO(
-                                                "不使用Cookie",
-                                                RoomInfoGetTypeEnum.NOT_COOKIE
+                                PlatformEnum.KUAISHOU -> {
+                                    arrayListOf(
+                                        ClientConfigItemDTO(
+                                            "roomInfoGetType",
+                                            KuaishouLiveChatClientConfig.builder().build().roomInfoGetType,
+                                            "RoomInfo获取方式",
+                                            "如果提示需要滑块验证可切换为 不使用Cookie",
+                                            arrayListOf(
+                                                ClientConfigOptionItemDTO("使用Cookie", RoomInfoGetTypeEnum.COOKIE),
+                                                ClientConfigOptionItemDTO(
+                                                    "不使用Cookie",
+                                                    RoomInfoGetTypeEnum.NOT_COOKIE
+                                                )
                                             )
                                         )
                                     )
-                                )
-                            }
+                                }
 
-                            else -> {
-                                emptyList()
+                                else -> {
+                                    emptyList()
+                                }
                             }
-                        }
-                    )
-                }
+                        )
+                    }
             )
     }
 }

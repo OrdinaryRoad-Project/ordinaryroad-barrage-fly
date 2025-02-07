@@ -60,36 +60,41 @@
       flat
       hover
     >
-      <v-expansion-panel>
+      <v-expansion-panel v-if="currentPlatformConfigs && currentPlatformConfigs.length">
         <v-expansion-panel-header class="pa-0 pe-4">
           <v-toolbar-title class="v-card__title">
-            Client设置
+            平台设置
           </v-toolbar-title>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div>
             <div
-              v-for="(config,index) in platformConfigs.data.filter(item=>item.platform===model.platform)[0]?.configs"
-              :key="index"
+              v-for="config in currentPlatformConfigs"
+              :key="config.key"
             >
-              <div v-if="config.options">
+              <div v-if="config.options && config.options.length">
                 <v-radio-group
-                  v-model="model[config.key]"
+                  v-model="platformConfig[`${model.platform}_${config.key}`]"
                   persistent-hint
                   row
                   :label="config.label"
                   :hint="config.hint"
                 >
                   <v-radio
-                    v-for="(option,optionIndex) in config.options"
-                    :key="optionIndex"
+                    v-for="option in config.options"
+                    :key="option.value"
                     :label="option.text"
                     :value="option.value"
                   />
                 </v-radio-group>
               </div>
               <div v-else>
-                input
+                <v-text-field
+                  v-model="platformConfig[`${model.platform}_${config.key}`]"
+                  persistent-hint
+                  :label="config.label"
+                  :hint="config.hint"
+                />
               </div>
             </div>
           </div>
@@ -221,7 +226,8 @@ export default {
         socks5ProxyHost: null,
         socks5ProxyPort: null,
         socks5ProxyUsername: null,
-        socks5ProxyPassword: null
+        socks5ProxyPassword: null,
+        platformConfigJson: null
       })
     }
   },
@@ -234,8 +240,15 @@ export default {
       loading: true,
       data: []
     },
-    model: {}
+    model: {},
+    // 暂存平台设置，用于生成 model.platformConfigJson
+    platformConfig: {}
   }),
+  computed: {
+    currentPlatformConfigs () {
+      return this.platformConfigs.data.filter(item => item.platform === this.model.platform)[0]?.configs
+    }
+  },
   watch: {
     preset: {
       handler (val) {
@@ -247,6 +260,27 @@ export default {
     model: {
       handler (val) {
         this.$emit('update', val)
+      },
+      deep: true,
+      immediate: true
+    },
+    'model.platform': {
+      handler () {
+        // 平台变化后更新 platformConfig 来更新 platformConfigJson
+        this.$set(this.platformConfig, '_date', new Date().toString())
+      },
+      immediate: true
+    },
+    platformConfig: {
+      handler (val) {
+        const tmpPlatformConfig = {}
+        Object.keys(val).forEach((key) => {
+          const value = val[key]
+          if (key.startsWith(this.model.platform)) {
+            tmpPlatformConfig[key.replace(`${this.model.platform}_`, '')] = value
+          }
+        })
+        this.$set(this.model, 'platformConfigJson', JSON.stringify(tmpPlatformConfig))
       },
       deep: true,
       immediate: true
@@ -263,8 +297,19 @@ export default {
       })
     this.$apis.task.platformConfigs()
       .then((data) => {
-        this.platformConfigs.loading = false
+        const presetPlatformConfig = JSON.parse(this.preset.platformConfigJson || '{}')
+        // 使用platformConfig保存所有的平台配置信息
+        for (const i in data) {
+          const platformConfig = data[i]
+          for (const j in platformConfig.configs) {
+            const config = platformConfig.configs[j]
+            const key = `${platformConfig.platform}_${config.key}`
+            // 默认值设置
+            this.$set(this.platformConfig, key, this.platformConfig[key] || presetPlatformConfig[config.key] || config.defaultValue)
+          }
+        }
         this.platformConfigs.data = data
+        this.platformConfigs.loading = false
       })
       .catch(() => {
         this.platformConfigs.loading = false

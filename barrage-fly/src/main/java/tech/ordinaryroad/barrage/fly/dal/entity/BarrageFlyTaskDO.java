@@ -37,6 +37,8 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     /**
      * 平台，bilibili/douyu
+     *
+     * @see PlatformEnum
      */
     @Column
     private PlatformEnum platform;
@@ -100,6 +102,13 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
      * @since v1.2.0
      */
     private String socks5ProxyPassword;
+
+    /**
+     * 平台配置信息
+     *
+     * @since v1.5.0
+     */
+    private String platformConfigJson;
 
     public PlatformEnum getPlatform() {
         return platform;
@@ -187,5 +196,13 @@ public class BarrageFlyTaskDO extends BaseBarrageFlyDO {
 
     public void setSocks5ProxyPassword(String socks5ProxyPassword) {
         this.socks5ProxyPassword = socks5ProxyPassword;
+    }
+
+    public String getPlatformConfigJson() {
+        return platformConfigJson;
+    }
+
+    public void setPlatformConfigJson(String platformConfigJson) {
+        this.platformConfigJson = platformConfigJson;
     }
 }
