@@ -18,12 +18,12 @@
   <v-container fluid>
     <or-base-data-iterator
       ref="dataIterator"
-      :sort-by="sortBy"
-      :sort-desc="sortDesc"
-      :single-select="singleSelect"
-      selectable-key="selectable"
       :hide-default-footer="hideDefaultFooter"
       :item-keys="itemKeys"
+      :single-select="singleSelect"
+      :sort-by="sortBy"
+      :sort-desc="sortDesc"
+      selectable-key="selectable"
       @getItems="onGetItems"
       @insertItem="onInsertItem"
     >
@@ -54,13 +54,13 @@
         >
           <v-select
             v-model="searchParams.platform"
-            clearable
             :items="platformOptions.data"
-            :loading="platformOptions.loading"
-            dense
-            outlined
-            hide-details="auto"
             :label="$t('barrageFlyTask.platform')"
+            :loading="platformOptions.loading"
+            clearable
+            dense
+            hide-details="auto"
+            outlined
             @change="$refs.dataIterator.searchItems()"
           />
         </v-col>
@@ -71,12 +71,12 @@
         >
           <v-text-field
             v-model.trim="searchParams.roomId"
-            dense
-            outlined
+            :label="$t('barrageFlyTask.roomId')"
             clearable
+            dense
             hide-details="auto"
             maxlength="200"
-            :label="$t('barrageFlyTask.roomId')"
+            outlined
             @keydown.enter="$refs.dataIterator.searchItems()"
           />
         </v-col>
@@ -87,19 +87,19 @@
         >
           <v-text-field
             v-model.trim="searchParams.remark"
-            dense
-            outlined
+            :label="$t('barrageFlyTask.remark')"
             clearable
+            dense
             hide-details="auto"
             maxlength="200"
-            :label="$t('barrageFlyTask.remark')"
+            outlined
             @keydown.enter="$refs.dataIterator.searchItems()"
           />
         </v-col>
       </template>
 
       <template #default="{ props }">
-        <slot name="default" :props="props" />
+        <slot :props="props" name="default" />
       </template>
 
       <!-- { items, originalItemsLength, pagination, options, groupedItems, updateOptions, sort, sortArray, group } -->
@@ -107,7 +107,7 @@
         v-if="hideDefaultFooter"
         #footer="props"
       >
-        <slot name="footer" :props="props" />
+        <slot :props="props" name="footer" />
       </template>
 
       <!-- { pageStart, pageStop, itemsLength } -->
@@ -115,20 +115,20 @@
         v-if="hideDefaultFooter"
         #[`footer.page-text`]="props"
       >
-        <slot name="footer.page-text" :props="props" />
+        <slot :props="props" name="footer.page-text" />
       </template>
     </or-base-data-iterator>
     <or-base-dialog
       ref="createTaskDialog"
-      persistent
-      loading
       :title="$t('barrageFlyTask.actions.create')"
+      loading
+      persistent
       @onConfirm="createTask"
     >
       <or-barrage-fly-task-save-form
         ref="taskSaveForm"
-        @update="onItemUpdate"
         @submit="$refs.createTaskDialog.confirm()"
+        @update="onItemUpdate"
       />
     </or-base-dialog>
   </v-container>
