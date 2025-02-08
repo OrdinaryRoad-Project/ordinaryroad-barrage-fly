@@ -19,7 +19,7 @@ highlights:
     features:
       - title: 监听不同平台不同直播间的弹幕，支持B站、斗鱼、虎牙、抖音、快手
       - title: 使用统一的协议将弹幕转发出去，DANMU、GIFT、SUPER_CHAT、ENTER_ROOM、LIKE、LIVE_STATUS_CHANGE、ROOM_STATS、SOCIAL
-      - title: 支持弹幕流的过滤与转换，前置处理、消息过滤、后置处理、弹幕发送
+      - title: 支持弹幕流的过滤与转换，前置处理、消息过滤、后置处理、弹幕发送*
       - title: 内置简易实时弹幕显示、实时任务状态统计
   - header: 作用
     description: 屏蔽不同平台直播平台弹幕协议的差异，便于开发其他与弹幕相关的应用
@@ -41,6 +41,9 @@ highlights:
       - title: QLExpress
         link: https://github.com/alibaba/QLExpress
 ---
+
+> *
+弹幕发送存在平台差异，详见 https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client?tab=readme-ov-file#平台适配情况表
 
 | <img src="/assets/image/task.png" width="400"/>              | <img src="/assets/image/task-detail-1.png" width="400"/> | <img src="/assets/image/task-detail-2.png" width="400"/> |
 |--------------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
