@@ -40,7 +40,7 @@
 - WebSocket地址：wss://barragefly-rsocket.demo.ordinaryroad.tech
 
 > 帐号请前往[QQ频道](https://pd.qq.com/s/3id0n7fvs)获取
-> <img src="/assets/image/QQPD.jpg" width="400"/><img src="/assets/image/WeChatPD.jpg" width="400"/>
+> <img src="assets/QQ频道.jpg" width="200px"><img src="assets/微信频道.jpg" width="200px">
 
 ## 3 在线文档
 
