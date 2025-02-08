@@ -25,24 +25,24 @@
               v-for="countOption in countOptions"
               :key="countOption.to"
               cols="12"
-              sm="12"
-              md="6"
               lg="3"
+              md="6"
+              sm="12"
               xl="3"
             >
               <v-hover :disabled="!countOption.to">
                 <template #default="{ hover }">
                   <v-card
-                    :outlined="!countOption.to"
                     :elevation="hover?4:countOption.to?2:0"
-                    class="transition-swing"
+                    :outlined="!countOption.to"
                     :to="countOption.to"
+                    class="transition-swing"
                   >
                     <v-card-title>
                       <v-icon
                         v-if="countOption.icon"
-                        left
                         color="primary"
+                        left
                       >
                         {{ countOption.icon }}
                       </v-icon>
@@ -56,9 +56,9 @@
                         >{{ countOption.loading ? '-' : countOption.data }}</span>
                         <v-icon
                           v-else
-                          style="position: absolute; right: 16px"
-                          size="24"
                           class="ma-2"
+                          size="24"
+                          style="position: absolute; right: 16px"
                         >
                           mdi-chevron-right
                         </v-icon>
@@ -82,16 +82,16 @@
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
+                  :href="`${$config.SPRING_BOOT_ADMIN_BASE_URL}/wallboard`"
                   icon
                   target="_blank"
-                  :href="`${$config.SPRING_BOOT_ADMIN_BASE_URL}/wallboard`"
                   v-bind="attrs"
                   v-on="on"
                 >
                   <v-img
+                    class="ma-1"
                     src="icon-spring-boot-admin.svg"
                     width="20"
-                    class="ma-1"
                   />
                 </v-btn>
               </template>
@@ -101,18 +101,18 @@
           <v-row class="ma-1">
             <v-col
               cols="12"
-              sm="12"
-              md="12"
               lg="6"
+              md="12"
+              sm="12"
               xl="5"
             >
-              <or-barrage-fly-stats-app-heap-memory-line :loading="loading" :heap-memory-statuses="heapMemoryStatuses" />
+              <or-barrage-fly-stats-app-heap-memory-line :heap-memory-statuses="heapMemoryStatuses" :loading="loading" />
             </v-col>
             <v-col
               cols="12"
-              sm="12"
-              md="12"
               lg="6"
+              md="12"
+              sm="12"
               xl="5"
             >
               <or-barrage-fly-stats-app-thread-line :loading="loading" :thread-statuses="threadStatuses" />
@@ -129,18 +129,18 @@
           <v-row class="ma-1">
             <v-col
               cols="12"
-              sm="12"
-              md="12"
               lg="6"
+              md="12"
+              sm="12"
               xl="5"
             >
               <or-barrage-fly-stats-task-status-pie :loading="loading" :task-statuses="taskStatuses" />
             </v-col>
             <v-col
               cols="12"
-              sm="12"
-              md="12"
               lg="6"
+              md="12"
+              sm="12"
               xl="5"
             >
               <or-barrage-fly-stats-task-clients-line :loading="loading" :task-clients="taskClients" />
