@@ -17,7 +17,7 @@
 #
 docker login ordinaryroad-docker.pkg.coding.net
 
-export APP_VERSION=1.5.0
+export APP_VERSION=1.6.0
 
 # 1 后端
 cd ../barrage-fly
