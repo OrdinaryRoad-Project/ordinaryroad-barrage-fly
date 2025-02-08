@@ -168,7 +168,7 @@
             </v-card-actions>
           </v-card>
 
-          <v-card outlined>
+          <v-card class="mt-4" outlined>
             <v-card-title>Socks5代理设置</v-card-title>
             <v-card-text>
               <v-row>
