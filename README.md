@@ -46,8 +46,16 @@
 
 ## 交流讨论
 
-扫描二维码<img src="assets/QQ频道.jpg" width="200px"><img src="assets/微信频道.jpg" width="200px">
-或点击链接加入QQ频道【OrdinaryRoad】：https://pd.qq.com/s/3id0n7fvs
+扫描二维码加入QQ/微信频道，或点击链接加入QQ频道【OrdinaryRoad】：https://pd.qq.com/s/3id0n7fvs
+
+<img src="assets/QQ频道.jpg" width="200px">
+<img src="assets/微信频道.jpg" width="200px">
+
+## 捐赠
+
+> 开源不易，您的认可与支持是我不断更新的最大动力！
+>
+> <img src="assets/donate_alipay.jpg" width="200px"><img src="assets/donate_vxpay.png" width="200px"><img src="assets/donate_qqpay.png" width="200px">
 
 ## 其他
 

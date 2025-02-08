@@ -42,8 +42,7 @@ highlights:
         link: https://github.com/alibaba/QLExpress
 ---
 
-> *
-弹幕发送存在平台差异，详见 https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client?tab=readme-ov-file#平台适配情况表
+> *弹幕发送存在平台差异，详见 https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client?tab=readme-ov-file#平台适配情况表
 
 | <img src="/assets/image/task.png" width="400"/>              | <img src="/assets/image/task-detail-1.png" width="400"/> | <img src="/assets/image/task-detail-2.png" width="400"/> |
 |--------------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|

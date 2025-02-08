@@ -1,6 +1,9 @@
 # 2 项目部署
 
 项目前后端分离，可以使用Docker Compose进行部署，或者clone项目到本地后分别打包后部署
+::: info
+如需协助部署，请前往频道联系频道主
+:::
 
 - 演示DEMO：[https://barragefly.demo.ordinaryroad.tech](https://barragefly.demo.ordinaryroad.tech)
 - WebSocket地址：wss://barragefly-rsocket.demo.ordinaryroad.tech
