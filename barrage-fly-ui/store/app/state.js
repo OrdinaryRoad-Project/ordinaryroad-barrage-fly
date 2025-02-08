@@ -43,5 +43,6 @@ export default () => ({
       icon: 'mdi-arm-flex-outline'
     }
   ],
-  systemPrefersColorScheme: 'light'
+  systemPrefersColorScheme: 'light',
+  configurations: {}
 })

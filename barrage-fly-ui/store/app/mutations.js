@@ -126,5 +126,8 @@ export default {
   UPDATE_SYSTEM_PREFERS_COLOR_SCHEME: (state, value) => {
     state.systemPrefersColorScheme = value
     setSystemPrefersColorScheme(value)
+  },
+  SET_CONFIGURATIONS: (state, value) => {
+    state.configurations = value
   }
 }

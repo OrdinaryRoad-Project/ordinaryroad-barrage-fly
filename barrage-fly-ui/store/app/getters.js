@@ -45,5 +45,9 @@ export default {
 
   getSystemPrefersColorScheme (state) {
     return state.systemPrefersColorScheme
+  },
+
+  getConfigurations (state) {
+    return state.configurations
   }
 }

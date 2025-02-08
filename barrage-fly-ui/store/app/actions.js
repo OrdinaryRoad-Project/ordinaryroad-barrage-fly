@@ -42,5 +42,8 @@ export default {
   },
   updateSystemPrefersColorScheme ({ commit }, value) {
     commit('UPDATE_SYSTEM_PREFERS_COLOR_SCHEME', value)
+  },
+  setConfigurations ({ commit }, value) {
+    commit('SET_CONFIGURATIONS', value)
   }
 }
