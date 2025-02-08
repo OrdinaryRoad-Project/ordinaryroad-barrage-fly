@@ -18,8 +18,8 @@ package tech.ordinaryroad.barrage.fly.context
 import cn.hutool.cache.impl.CacheObj
 import cn.hutool.cache.impl.TimedCache
 import cn.hutool.core.lang.mutable.Mutable
+import cn.hutool.core.util.StrUtil
 import com.fasterxml.jackson.databind.node.ObjectNode
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.reactivestreams.Publisher
 import org.slf4j.LoggerFactory
 import org.springframework.messaging.rsocket.RSocketRequester
@@ -292,15 +292,16 @@ class BarrageFlyTaskContext(
          * 任务启动时注册上下文，未注册时新建
          */
         fun getOrCreateContext(barrageFlyTaskDO: BarrageFlyTaskDO): BarrageFlyTaskContext {
-            val clientConfigJson =
-                (OrJacksonUtil.getInstance().readTree(barrageFlyTaskDO.platformConfigJson) as ObjectNode).apply {
-                    put("roomId", barrageFlyTaskDO.roomId)
-                    barrageFlyTaskDO.cookie?.let { put("cookie", it) }
-                    barrageFlyTaskDO.socks5ProxyHost?.let { put("socks5ProxyHost", it) }
-                    barrageFlyTaskDO.socks5ProxyPort?.let { put("socks5ProxyPort", it) }
-                    barrageFlyTaskDO.socks5ProxyUsername?.let { put("socks5ProxyUsername", it) }
-                    barrageFlyTaskDO.socks5ProxyPassword?.let { put("socks5ProxyPassword", it) }
-                }.toString()
+            val clientConfigJson = (OrJacksonUtil.getInstance().readTree(
+                StrUtil.blankToDefault(barrageFlyTaskDO.platformConfigJson, StrUtil.EMPTY_JSON)
+            ) as ObjectNode).apply {
+                put("roomId", barrageFlyTaskDO.roomId)
+                barrageFlyTaskDO.cookie?.let { put("cookie", it) }
+                barrageFlyTaskDO.socks5ProxyHost?.let { put("socks5ProxyHost", it) }
+                barrageFlyTaskDO.socks5ProxyPort?.let { put("socks5ProxyPort", it) }
+                barrageFlyTaskDO.socks5ProxyUsername?.let { put("socks5ProxyUsername", it) }
+                barrageFlyTaskDO.socks5ProxyPassword?.let { put("socks5ProxyPassword", it) }
+            }.toString()
             return taskContexts.getOrPut(barrageFlyTaskDO.uuid) {
                 BarrageFlyTaskContext(
                     barrageFlyTaskDO.uuid,
