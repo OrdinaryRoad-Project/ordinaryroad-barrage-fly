@@ -40,16 +40,16 @@
 
 ```bash
 # DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-# 拉取最新版1.5.0
-docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.5.0
-docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.5.0 
+# 拉取最新版1.6.0
+docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.0
+docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.0 
 ```
 
 3 给镜像重新打TAG
 
 ```bash
-docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.5.0 ordinaryroad-barrage-fly
-docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.5.0 ordinaryroad-barrage-fly-ui
+docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.0 ordinaryroad-barrage-fly
+docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.0 ordinaryroad-barrage-fly-ui
 ```
 
 4 进入`compose.yaml`文件所在的文件夹，执行启动容器命令`docker compose up -d`
