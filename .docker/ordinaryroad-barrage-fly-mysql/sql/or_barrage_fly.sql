@@ -62,7 +62,7 @@ ALTER TABLE `barrage_fly_task`
     ADD `socks5_proxy_username` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——用户名' AFTER `socks5_proxy_port`,
     ADD `socks5_proxy_password` VARCHAR(255) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'Socks5代理——密码' AFTER `socks5_proxy_username`;
 
-# since v1.5.0
+# since v1.6.0
 ALTER TABLE `barrage_fly_task`
     ADD `platform_config_json` text CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '平台配置信息';
 
