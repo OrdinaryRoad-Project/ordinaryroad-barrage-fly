@@ -60,14 +60,15 @@
       flat
       hover
     >
-      <v-expansion-panel v-if="currentPlatformConfigs && currentPlatformConfigs.length">
+      <v-expansion-panel>
         <v-expansion-panel-header class="pa-0 pe-4">
           <v-toolbar-title class="v-card__title">
             平台设置
+            <v-progress-circular v-if="platformConfigs.loading" class="ms-2" indeterminate size="18" width="2" />
           </v-toolbar-title>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div>
+          <div v-if="currentPlatformConfigs && currentPlatformConfigs.length">
             <div
               v-for="config in currentPlatformConfigs"
               :key="config.key"
@@ -97,6 +98,11 @@
                 />
               </div>
             </div>
+          </div>
+          <div v-else>
+            <v-card-text>
+              {{ model.platform }}平台暂无可配置内容
+            </v-card-text>
           </div>
         </v-expansion-panel-content>
       </v-expansion-panel>
