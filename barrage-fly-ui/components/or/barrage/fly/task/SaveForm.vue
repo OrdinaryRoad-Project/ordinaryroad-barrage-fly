@@ -20,15 +20,15 @@
       <v-col v-if="preset.id" cols="12" md="4">
         <v-text-field
           v-model="model.id"
-          readonly
           label="taskId"
+          readonly
         />
       </v-col>
       <v-col cols="12" md="4">
         <v-select
           v-model="model.platform"
-          :label="$t('barrageFlyTask.platform')"
           :items="platformOptions.data"
+          :label="$t('barrageFlyTask.platform')"
           :loading="platformOptions.loading"
           :rules="[$or.rules.required]"
         />
@@ -36,16 +36,16 @@
       <v-col cols="12" md="8">
         <v-text-field
           v-model="model.roomId"
-          :rules="[$or.rules.notBlank,$or.rules.max50Chars]"
           :label="$t('barrageFlyTask.roomId')"
+          :rules="[$or.rules.notBlank,$or.rules.max50Chars]"
           @keydown.enter="$emit('submit')"
         />
       </v-col>
       <v-col cols="12" md="12">
         <v-text-field
           v-model="model.remark"
-          :rules="[$or.rules.max200Chars]"
           :label="$t('barrageFlyTask.remark')"
+          :rules="[$or.rules.max200Chars]"
         />
       </v-col>
     </v-row>
@@ -75,10 +75,10 @@
               <div v-if="config.options && config.options.length">
                 <v-radio-group
                   v-model="platformConfig[`${model.platform}_${config.key}`]"
+                  :hint="config.hint"
+                  :label="config.label"
                   persistent-hint
                   row
-                  :label="config.label"
-                  :hint="config.hint"
                 >
                   <v-radio
                     v-for="option in config.options"
@@ -91,9 +91,9 @@
               <div v-else>
                 <v-text-field
                   v-model="platformConfig[`${model.platform}_${config.key}`]"
-                  persistent-hint
-                  :label="config.label"
                   :hint="config.hint"
+                  :label="config.label"
+                  persistent-hint
                 />
               </div>
             </div>
@@ -118,9 +118,9 @@
             <v-card-title>弹幕流设置</v-card-title>
             <v-card-text>
               <v-alert
+                dismissible
                 outlined
                 type="info"
-                dismissible
               >
                 以下设置需要先了解
                 <or-link href="https://github.com/alibaba/QLExpress#readme">
@@ -133,28 +133,28 @@
               </v-alert>
               <v-textarea
                 v-model="model.msgPreMapExpress"
-                persistent-hint
-                hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
                 :label="$t('barrageFlyTask.msgPreMapExpress')"
+                hint="参数：msg；返回值：Object，将传递给消息过滤规则中"
+                persistent-hint
               />
               <v-textarea
                 v-model="model.msgFilterExpress"
-                persistent-hint
-                hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
                 :label="$t('barrageFlyTask.msgFilterExpress')"
+                hint="参数：msg: 前置处理的返回值；返回值：Boolean，false表示不需要这个消息"
+                persistent-hint
               />
               <v-textarea
                 v-model="model.msgPostMapExpress"
-                persistent-hint
-                hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
                 :label="$t('barrageFlyTask.msgPostMapExpress')"
+                hint="参数：msg: 前置处理的返回值；返回值：Object，将传递给Client"
+                persistent-hint
               />
             </v-card-text>
             <v-card-actions>
               <v-spacer />
               <v-btn
-                text
                 color="primary"
+                text
                 @click="onClickTest"
               >
                 测试一下
@@ -175,8 +175,8 @@
                 <v-col>
                   <v-text-field
                     v-model="model.socks5ProxyPort"
-                    type="number"
                     label="端口"
+                    type="number"
                   />
                 </v-col>
               </v-row>
