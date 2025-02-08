@@ -13,8 +13,7 @@
 3. 支持弹幕流的过滤与转换，前置处理、消息过滤、后置处理、弹幕发送*
 4. 内置简易实时弹幕显示、实时任务状态统计
 
-> *
-弹幕发送存在平台差异，详见 https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client?tab=readme-ov-file#平台适配情况表
+> *弹幕发送存在平台差异，详见 https://github.com/OrdinaryRoad-Project/ordinaryroad-live-chat-client?tab=readme-ov-file#平台适配情况表
 
 | <img src="docs/src/.vuepress/public/assets/image/task.png" width="400"/>              | <img src="docs/src/.vuepress/public/assets/image/task-detail-1.png" width="400"/> | <img src="docs/src/.vuepress/public/assets/image/task-detail-2.png" width="400"/> |
 |---------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
