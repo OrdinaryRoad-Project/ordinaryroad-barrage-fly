@@ -30,10 +30,16 @@ export default {
       return $axios({ url: `/task?id=${id}`, method: 'delete' })
     },
     update: (data, start = false) => {
-      return $axios({ url: `/task?id=${data.id}&start=${start}`, method: 'put', data })
+      const _data = Object.assign({}, data)
+      _data.id = null
+      _data.uuid = null
+      return $axios({ url: `/task?id=${data.id}&start=${start}`, method: 'put', data: _data })
     },
     validate: (data) => {
-      return $axios({ url: '/task/validate', method: 'put', data })
+      const _data = Object.assign({}, data)
+      _data.id = null
+      _data.uuid = null
+      return $axios({ url: '/task/validate', method: 'put', data: _data })
     },
     validateExpress: ({ msgPreMapExpress, msgFilterExpress, msgPostMapExpress }) => {
       const data = { msgPreMapExpress, msgFilterExpress, msgPostMapExpress }
