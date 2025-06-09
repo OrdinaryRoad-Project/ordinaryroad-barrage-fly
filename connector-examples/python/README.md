@@ -6,8 +6,8 @@
 ## 1 安装依赖（Requires: Python >=3.8）
 
 ```shell
-pip3 install rsocket
-pip3 install aiohttp
+pip3 install rsocket==0.4.15
+pip3 install aiohttp==3.9.3
 ```
 
 ## 2 运行查看效果
