@@ -25,7 +25,9 @@
     - `docker compose -f compose.yaml build ordinaryroad-barrage-fly-mysql`
     - `docker compose -f compose.yaml build ordinaryroad-barrage-fly-nginx`
 
-镜像加速与拉取：[仓库链接](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages)
+镜像加速与拉取：[仓库链接](https://cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/-/packages)
+
+- [旧版仓库链接](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages)
 
 ### 2.1.1 Example
 
@@ -39,17 +41,16 @@
 2 拉取镜像
 
 ```bash
-# DOCKER_OPTS="--registry-mirror=https://mirror.ccs.tencentyun.com"
-# 拉取最新版1.6.2
-docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.2
-docker pull ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.2 
+# 拉取最新版1.6.3
+docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.3
+docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.3 
 ```
 
 3 给镜像重新打TAG
 
 ```bash
-docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.2 ordinaryroad-barrage-fly
-docker tag ordinaryroad-docker.pkg.coding.net/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.2 ordinaryroad-barrage-fly-ui
+docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.3 ordinaryroad-barrage-fly
+docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.3 ordinaryroad-barrage-fly-ui
 ```
 
 4 进入`compose.yaml`文件所在的文件夹，执行启动容器命令`docker compose up -d`
