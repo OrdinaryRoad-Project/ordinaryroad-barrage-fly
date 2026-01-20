@@ -1,6 +1,6 @@
-FROM meddream/jdk17
+FROM phenompeople/openjdk17:MCS
 
-LABEL maintainer="1962247851@qq.com"
+LABEL maintainer="or-mjz@qq.com"
 
 ARG APP_NAME=ordinaryroad-barrage-fly
 

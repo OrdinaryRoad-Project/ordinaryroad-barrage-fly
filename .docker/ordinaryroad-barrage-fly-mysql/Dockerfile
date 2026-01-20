@@ -1,6 +1,6 @@
 FROM mysql/mysql-server:8.0.26
 
-LABEL maintainer="1962247851@qq.com"
+LABEL maintainer="or-mjz@qq.com"
 
 ENV TZ=Asia/Shanghai
 
