@@ -1,6 +1,6 @@
 # barrage-fly 让弹幕飞
 
-[![license](https://img.shields.io/github/license/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/blob/main/LICENSE) [![release](https://img.shields.io/github/v/release/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/releases) [![docker_images-coding](https://img.shields.io/badge/docker_images-coding-green)](https://ordinaryroad.coding.net/public-artifacts/ordinaryroad-barrage-fly/docker-pub/packages) [![在线文档](https://img.shields.io/badge/document-在线文档-blue)](https://barragefly.ordinaryroad.tech)
+[![license](https://img.shields.io/github/license/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/blob/main/LICENSE) [![release](https://img.shields.io/github/v/release/OrdinaryRoad-Project/ordinaryroad-barrage-fly)](https://github.com/OrdinaryRoad-Project/ordinaryroad-barrage-fly/releases) [![docker_images-cnb](https://img.shields.io/badge/docker_images-cnb-green)](https://cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/-/packages) [![在线文档](https://img.shields.io/badge/document-在线文档-blue)](https://barragefly.ordinaryroad.tech)
 
 一个弹幕转发、过滤、处理平台
 
