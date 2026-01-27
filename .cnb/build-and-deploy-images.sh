@@ -15,9 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+export PWD_PATH=$(pwd)
+
 docker login -u cnb docker.cnb.cool
 
-export APP_VERSION=1.6.3
+export APP_VERSION=1.6.4
 
 # 1 后端
 cd ../barrage-fly
@@ -60,5 +62,7 @@ docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordi
 echo "deploy finished, please refer to https://cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/-/packages?type=docker&ordering=last_push_at"
 
 # docs
+# cd ${PWD_PATH}
+# cd ../.docker/ordinaryroad-barrage-fly-docs
 # docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs:${APP_VERSION}
 # docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs
