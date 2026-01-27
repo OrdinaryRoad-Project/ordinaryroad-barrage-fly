@@ -59,10 +59,10 @@ docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordi
 
 #docker logout docker.cnb.cool
 
-echo "deploy finished, please refer to https://cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/-/packages?type=docker&ordering=last_push_at"
-
 # docs
-# cd ${PWD_PATH}
-# cd ../.docker/ordinaryroad-barrage-fly-docs
-# docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs:${APP_VERSION}
-# docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs
+cd ${PWD_PATH}
+cd ../.docker/ordinaryroad-barrage-fly-docs
+docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs:${APP_VERSION}
+docker buildx build --platform linux/arm64,linux/amd64 --push . -f Dockerfile -t docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-docs
+
+echo "deploy finished, please refer to https://cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/-/packages?type=docker&ordering=last_push_at"
