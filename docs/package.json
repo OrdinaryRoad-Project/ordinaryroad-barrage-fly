@@ -1,6 +1,6 @@
 {
   "name": "ordinaryroad-barrage-fly",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "让弹幕飞",
   "license": "Apache License",
   "type": "module",
@@ -10,7 +10,8 @@
     "docs:clean-dev": "vuepress dev src --clean-cache",
     "docs:dev": "vuepress dev src",
     "docs:update-package": "npx vp-update",
-    "docs:build-gp": "export BUILD_TYPE=GIT_PAGE && vuepress build src"
+    "docs:build-gp": "export BUILD_TYPE=GIT_PAGE && vuepress build src",
+    "copyDist": "rsync -av ./src/.vuepress/dist/ ../.docker/ordinaryroad-barrage-fly-docs/app"
   },
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.67",

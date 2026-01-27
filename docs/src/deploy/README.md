@@ -41,16 +41,16 @@
 2 拉取镜像
 
 ```bash
-# 拉取最新版1.6.3
-docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.3
-docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.3 
+# 拉取最新版1.6.4
+docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.4
+docker pull docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.4 
 ```
 
 3 给镜像重新打TAG
 
 ```bash
-docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.3 ordinaryroad-barrage-fly
-docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.3 ordinaryroad-barrage-fly-ui
+docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly:1.6.4 ordinaryroad-barrage-fly
+docker tag docker.cnb.cool/ordinaryroad/ordinaryroad-barrage-fly/docker-pub/ordinaryroad-barrage-fly-ui:1.6.4 ordinaryroad-barrage-fly-ui
 ```
 
 4 进入`compose.yaml`文件所在的文件夹，执行启动容器命令`docker compose up -d`
